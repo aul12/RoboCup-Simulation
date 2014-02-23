@@ -1,0 +1,455 @@
+<!--
+Junior Robo-Soccer Simulator
+Paul Nykiel 1.2.14
+
+Todo:
+
+-->
+
+<!DOCTYPE html>
+<html>
+	<head>		
+		<title>Robot</title>		
+	</head>
+	<body>
+	<canvas id="myCanvas" width="720" height="480">
+	</canvas><p>
+	<button type="button" onclick="isr_init()">Start</button>
+	<p id="debb">0</>
+    <span id="sound"></span>
+	
+	<script>	
+		const SPEED=3;
+	
+		var robot_1_x;
+		var robot_1_y;
+		var robot_2_x;
+		var robot_2_y;
+		var ball_x;
+		var ball_y;
+        var alt_ball_x;
+        var alt_ball_y;
+		var ball_speed_x=0;
+		var ball_speed_y=0;
+		var goals_team1=0;
+		var goals_team2=0;
+
+        var lack_of_progress=false;
+        var lop_timer=false;
+		var isr_started=false;
+		
+		var canvas = document.getElementById('myCanvas');
+		var ctx = canvas.getContext("2d");
+		
+		//######################Init#########################################
+        start();
+		draw_clear();
+		draw();
+
+		//######################Draw#########################################
+		function draw_robot(x,y,color,visible)
+		{
+			if (canvas && canvas.getContext && visible) 
+			{
+				if (ctx) 
+				{  
+					if(color==1)
+						ctx.fillStyle = "#0000FF";
+					else
+						ctx.fillStyle = "#FF0000";
+					ctx.strokeStyle = "#000000";
+					ctx.beginPath();
+					ctx.arc(x, y, 40, 0, Math.PI*2, false);
+					ctx.fill();
+					ctx.stroke();
+				}
+			}
+		}
+		
+		function draw_ball(x,y,visible)	                                                                                //Ball zeichnen
+		{
+			if (canvas && canvas.getContext && visible) 
+			{
+				if (ctx) 
+				{  
+					ctx.fillStyle = "#000000";
+					ctx.strokeStyle = "#000000";
+					ctx.beginPath();
+					ctx.arc(x, y, 14, 0, Math.PI*2, false);
+					ctx.fill();
+					ctx.stroke();
+				}
+			}
+		}
+				
+		function draw_clear()	                                                                                        //Rasen neu Zeichen
+		{
+			if (canvas && canvas.getContext) 
+			{
+			   if (ctx) 
+			   {
+				  ctx.fillStyle = "#008000";
+				  ctx.fillRect(0,0,ctx.canvas.width, ctx.canvas.height);
+				  
+				  ctx.strokeStyle = "#000000";
+				  ctx.lineWidth = 1;			
+				  ctx.strokeRect (0,(ctx.canvas.height/2)-120,10,240);
+				  ctx.strokeRect (ctx.canvas.width,(ctx.canvas.height/2)-120,-10,240);
+				  ctx.beginPath();
+				  ctx.arc(ctx.canvas.width/2, ctx.canvas.height/2, 80, 0, Math.PI*2, false);
+				  ctx.stroke();
+				}
+			}
+		}
+		
+		function draw()	                                                                                                //Zeichnen
+		{
+			draw_clear();
+			draw_robot(robot_1_x,robot_1_y,1,true);
+			draw_robot(robot_2_x,robot_2_y,1,true);
+			draw_ball(ball_x,ball_y,true);			
+		}
+
+        //######################Physic-Engine#########################################
+		function physics()
+		{
+			var delta_x=ball_x-robot_1_x;
+			var delta_y=ball_y-robot_1_y;
+            var alpha;
+            alt_ball_x=ball_x;
+            alt_ball_y=ball_y;
+
+			if(Math.sqrt(delta_x*delta_x+delta_y*delta_y)<54)                                                           //Ball "in" Roboter 1
+			{
+				alpha=Math.atan(delta_y/delta_x);
+				if((delta_x<0))
+					alpha-=Math.PI;
+				if(alpha>2*Math.PI)
+					alpha-=2*Math.PI;
+				if(alpha<0)
+					alpha+=2*Math.PI;
+				ball_x+=40-delta_x;
+				ball_y+=40-delta_y;
+				ball_speed_x=Math.cos(alpha)*SPEED*1.5;
+				ball_speed_y=Math.sin(alpha)*SPEED*1.5;
+			}
+			
+			delta_x=ball_x-robot_2_x;
+			delta_y=ball_y-robot_2_y;
+			if(Math.sqrt(delta_x*delta_x+delta_y*delta_y)<54)                                                           //Ball "in" Roboter 2
+			{
+				alpha=Math.atan(delta_y/delta_x);
+				if((delta_x<0)&&(delta_y<0))
+					alpha-=Math.PI; 
+				if(alpha>2*Math.PI)
+					alpha-=2*Math.PI;
+				if(alpha<0)
+					alpha+=2*Math.PI;
+				ball_x+=40-delta_x;
+				ball_y+=40-delta_y;
+				ball_speed_x=Math.cos(alpha)*SPEED*1.5;
+				ball_speed_y=Math.sin(alpha)*SPEED*1.5;
+			}
+			
+			delta_x=(robot_2_x-robot_1_x);
+			delta_y=(robot_2_y-robot_1_y);	
+			if(Math.sqrt(delta_x*delta_x+delta_y*delta_y)<80)                                                           //Roboter "in" Roboter 1
+			{
+				delta_x/=30;
+				delta_y/=30;
+				robot_1_x-=delta_x;
+				robot_1_y-=delta_y;
+				robot_2_x+=delta_x;
+				robot_2_y+=delta_y;					
+			}
+			
+			if((robot_1_x-40)<=0)																				        //Roboter 1 an Wand
+				robot_1_x=40;
+			else if((robot_1_x+40)>=ctx.canvas.width)
+				robot_1_x=ctx.canvas.width-40;
+			if((robot_1_y-40)<=0)
+				robot_1_y=40;
+			else if((robot_1_y+40)>=ctx.canvas.height)
+				robot_1_y=ctx.canvas.height-40;
+				
+			if((robot_2_x-40)<=0)																				        //Roboter 2 an Wand
+				robot_2_x=40;
+			else if((robot_2_x+40)>=ctx.canvas.width)
+				robot_2_x=ctx.canvas.width-40;
+			if((robot_2_y-40)<=0)
+				robot_2_y=40;
+			else if((robot_2_y+40)>=ctx.canvas.height)
+				robot_2_y=ctx.canvas.height-40;
+			
+			ball_x+=ball_speed_x;	                                                                                    //Ball rollen
+			ball_y+=ball_speed_y;	
+			ball_speed_x*=0.98;		                                                                                    //Ball bremsen
+			ball_speed_y*=0.98;
+
+            if((ball_x-14)<0)																					        //Ball an Wand
+            {
+                if(ball_y>(ctx.canvas.height/2)-120&&ball_y<(ctx.canvas.height/2)+120)
+                {
+                    goals_team1++;
+                    alert(goals_team2+" : "+goals_team1);
+                    start();
+                    return;
+                }
+                ball_x=14;
+                ball_speed_x*=-0.7;
+            }
+            else if((ball_x+14)>ctx.canvas.width)
+            {
+                if(ball_y>(ctx.canvas.height/2)-120&&ball_y<(ctx.canvas.height/2)+120)
+                {
+                    goals_team2++;
+                    alert(goals_team2+" : "+goals_team1);
+                    start();
+                    return;
+                }
+                ball_x=ctx.canvas.width-14;
+                ball_speed_x*=-0.7;
+            }
+            if((ball_y-14)<0)
+            {
+                ball_speed_y*=-0.7;
+                ball_y=14;
+            }
+            else if((ball_y+14)>ctx.canvas.height)
+            {
+                ball_speed_y*=-0.7;
+                ball_y=ctx.canvas.height-14;
+            }
+
+            delta_x=ball_x-robot_1_x;
+            delta_y=ball_y-robot_1_y;
+            if(Math.sqrt(delta_x*delta_x+delta_y*delta_y)<54)                                                           //Ball "in" Roboter 1
+            {
+                robot_1_x+=40-delta_x;
+                robot_1_y+=40-delta_y;
+            }
+
+            delta_x=ball_x-robot_2_x;
+            delta_y=ball_y-robot_2_y;
+            if(Math.sqrt(delta_x*delta_x+delta_y*delta_y)<54)                                                           //Ball "in" Roboter 2
+            {
+                robot_2_x-=40-delta_x;
+                robot_2_y-=40-delta_y;
+            }
+
+            if((Math.abs(alt_ball_x-ball_x)+Math.abs(alt_ball_y-ball_y))<0.1)                                           //Lack of Progress
+                lack_of_progress=true;
+            else
+                lack_of_progress=false;
+			
+		}
+
+        function Lack_Of_Progress()
+        {
+            if(lack_of_progress&&lop_timer)
+            {
+                lop_timer=false;
+
+                if(ball_x<ctx.canvas.width)
+                {
+                    if(ball_y<ctx.canvas.height)                                                                        //Ball links oben
+                    {
+                        ball_x=ctx.canvas.width-150;
+                        ball_y=100;
+                    }
+                    else                                                                                                //Ball links unten
+                    {
+                        ball_x=ctx.canvas.width-150;
+                        ball_y=ctx.canvas.height-100;
+                    }
+                }
+                else
+                {
+                    if(ball_y<ctx.canvas.height)                                                                        //Ball rechts oben
+                    {
+                        ball_x=150;
+                        ball_y=100;
+                    }
+                    else                                                                                                //Ball rechts unten
+                    {
+                        ball_x=150;
+                        ball_y=ctx.canvas.height-100;
+                    }
+                }
+
+                ball_speed_x=0;
+                ball_speed_y=0;
+                alert("Lack of Progress");
+            }
+            if(lack_of_progress)
+                lop_timer=true;
+        }
+		
+		function move_robot_1(ball_angle)
+		{
+            var delta_x= Math.cos(ball_angle)*SPEED;
+            var delta_y= Math.sin(ball_angle)*SPEED;
+            robot_1_x+=delta_x;
+            robot_1_y+=delta_y;
+		}
+
+        function robot_1_ball_angle()
+        {
+            var delta_x =ball_x-robot_1_x;
+            var delta_y =ball_y-robot_1_y;
+            var angle=Math.atan(delta_y/delta_x);
+            if((delta_x<0))
+                angle-=Math.PI;
+            if(angle>2*Math.PI)
+                angle-=2*Math.PI;
+            if(angle<0)
+                angle+=2*Math.PI;
+
+            return angle;
+        }
+
+        function robot_1_ball_distance()
+        {
+            var delta_x=ball_x-robot_1_x;
+            var delta_y=ball_y-robot_1_y;
+            return Math.sqrt(delta_x*delta_x+delta_y*delta_y);
+        }
+		
+		function move_robot_2(ball_angle)
+		{
+			var delta_x= Math.cos(ball_angle)*SPEED;
+			var delta_y= Math.sin(ball_angle)*SPEED;
+			robot_2_x+=delta_x;
+			robot_2_y+=delta_y;
+		}
+
+        function robot_2_ball_angle()
+        {
+            var delta_x =ball_x-robot_2_x;
+            var delta_y =ball_y-robot_2_y;
+            var angle=Math.atan(delta_y/delta_x);
+            if((delta_x<0))
+                angle-=Math.PI;
+            if(angle>2*Math.PI)
+                angle-=2*Math.PI;
+            if(angle<0)
+                angle+=2*Math.PI;
+
+            return angle;
+        }
+
+        function robot_2_ball_distance()
+        {
+            var delta_x=ball_x-robot_2_x;
+            var delta_y=ball_y-robot_2_y;
+            return Math.sqrt(delta_x*delta_x+delta_y*delta_y);
+        }
+		
+		//######################Robot Software#########################################
+        function robot_1_software()
+        {
+            if(ball_x<250)
+            {
+
+                var ball_angle=robot_1_ball_angle();
+
+                if(robot_1_ball_distance()<=150)          //Wenn Ball da
+                {
+                    ball_angle+=(0.5*Math.PI);
+
+                    if(ball_angle>2*Math.PI)
+                        ball_angle-=2*Math.PI;
+                    if(ball_angle<0)
+                        ball_angle+=2*Math.PI;
+
+                    if((ball_angle>(Math.PI*-100/180))&&(robot_2_ball_angle<(Math.PI*-80/180)))                     //Wenn Ball vorne
+                        ball_angle=0;
+                    else                                                                                                    //Spiralenanfahrt
+                    {
+
+                        if((ball_y-robot_1_y)<0)
+                            ball_angle-=(0.3*Math.PI);
+                        else
+                            ball_angle+=(0.3*Math.PI);
+                    }
+                    ball_angle-=(0.5*Math.PI);
+                    if(ball_angle>2*Math.PI)
+                        ball_angle-=2*Math.PI;
+                    if(ball_angle<0)
+                        ball_angle+=2*Math.PI;
+
+                }
+                move_robot_1(ball_angle);
+            }
+            else
+            {
+                if(robot_1_x!=60&&robot_1_y!=(ctx.canvas.height/2))
+                {
+                    var delta_x=60-robot_1_x;
+                    var delta_y=(ctx.canvas.height/2)-robot_1_y;
+                    var alpha = Math.atan(delta_y/delta_x);
+                    move_robot_1(180+alpha);
+                }
+            }
+        }
+
+		function robot_2_software()
+        {
+            var angle = robot_2_ball_angle();
+
+
+			if(robot_2_ball_distance()<=200)          //Wenn Ball da
+			{
+					
+					if((ball_y-robot_2_y)<5)
+						angle-=(0.3*Math.PI);
+					else if ((ball_y-robot_2_y)>-5)
+						angle+=(0.3*Math.PI);
+                    else
+                        angle=0;
+
+				if(angle>2*Math.PI)
+					angle-=2*Math.PI;
+				if(angle<0)
+					angle+=2*Math.PI;
+					
+			}
+			move_robot_2(angle);
+		}
+		
+		//######################Main#########################################
+		function interrupt()
+		{
+            robot_1_software();
+			robot_2_software();
+			physics();
+			draw();
+		}
+		
+		//######################Start Software#########################################
+		function start()
+		{
+			robot_1_x=60;
+            robot_1_y =(ctx.canvas.height/2);
+            robot_2_x =(ctx.canvas.width/2)-60;
+            robot_2_y =(ctx.canvas.height/2);
+            ball_x = 100;//(ctx.canvas.width/2);
+            ball_y = 100;//(ctx.canvas.height/2);
+            ball_speed_x=0;
+            ball_speed_y=0;
+		}
+		
+		function isr_init()
+		{
+			start();
+			if(isr_started==false)
+			{
+				setInterval(interrupt,20);
+                setInterval(Lack_Of_Progress,2500);
+				isr_started=true;
+			}
+		}
+		
+	</script>
+	</body>
+</html>
