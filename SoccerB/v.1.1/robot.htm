@@ -25,12 +25,12 @@ Geschwindigkeit optimieren
         var canvas = document.getElementById('myCanvas');
         var ctx = canvas.getContext("2d");
 
-		const SPEED=5;
+		const SPEED=6;
         const LEFT=120;
         const RIGHT=ctx.canvas.width-120;
         const TOP=120;
         const BOTTOM = ctx.canvas.height-120;
-        const ROBOTS = 2;
+        const ROBOTS = 4;
 
         var robot_x = new Array(ROBOTS+1);
         var robot_y = new Array(ROBOTS+1);
@@ -40,6 +40,8 @@ Geschwindigkeit optimieren
         var robot_out_timer = [0,0,0,0,0];
         var robot_dribbler = new Array(ROBOTS+1);
         var robot_shoot= new Array(ROBOTS+1);
+        var robot_x_vect = new Array(ROBOTS+1);
+        var robot_y_vect = new Array(ROBOTS+1);
 
 
 		var ball_x;
@@ -48,6 +50,7 @@ Geschwindigkeit optimieren
         var alt_ball_y;
 		var ball_speed_x=0;
 		var ball_speed_y=0;
+
 		var goals_team1=0;
 		var goals_team2=0;
 
@@ -82,6 +85,14 @@ Geschwindigkeit optimieren
 					ctx.arc(x, y, 40, 0, Math.PI*2, false);
 					ctx.fill();
 					ctx.stroke();
+
+                    ctx.fillStyle = "#F8911A";
+
+                    if(color==1)
+                        ctx.fillRect(x+30,y-15,10, 30);
+                    else
+                        ctx.fillRect(x-30,y-15,-10, 30);
+
 				}
 			}
 		}
@@ -450,13 +461,33 @@ Geschwindigkeit optimieren
 		function move_robot(angle, robot, speed, degree)
 		{
             if(degree)
-                angle=angle*180/Math.PI;
+                angle=angle/180*Math.PI;
             if(angle>2*Math.PI)
                 angle-=2*Math.PI;
             if(angle<0)
                 angle+=2*Math.PI;
             var delta_x= Math.cos(angle)*speed;
             var delta_y= Math.sin(angle)*speed;
+            if(angle>Math.PI)
+            {
+                angle-=2*Math.PI;
+            }
+            if(Math.abs(robot_driving_angle[robot]-angle)>Math.PI*0.5)
+            {
+                robot_x_vect[robot]=1;
+                robot_y_vect[robot]=1;
+            }
+            else
+            {
+                robot_x_vect[robot]*=1.05;
+                robot_y_vect[robot]*=1.05;
+                if(robot_x_vect[robot]>1)
+                    robot_x_vect[robot]=1;
+                if(robot_y_vect[robot]>1)
+                    robot_y_vect[robot]=1;
+            }
+            delta_x*=robot_x_vect[robot];
+            delta_y*=robot_y_vect[robot];
             robot_x[robot]+=delta_x;
             robot_y[robot]+=delta_y;
             robot_driving_speed[robot]=speed;
@@ -513,39 +544,8 @@ Geschwindigkeit optimieren
 		//######################Robot Software#########################################
         function robot_1_software()
         {
-            enable_dribbler(1,true);
-            if(robot_line(1)==-1)
-            {
-                if(ball_x<200+LEFT)
-                {
-
-                    var ball_angle=robot_ball_angle(1, true);
-
-                    if(robot_ball_distance(1)<=50)          //Wenn Ball da
-                    {
-
-                        if(ball_angle>180||ball_angle<0)
-                            ball_angle=270;
-                        else
-                            ball_angle=90;
-
-                    }
-                    move_robot(ball_angle, 1, true);
-                }
-                else
-                {
-                    if(robot_x[1]!=60&&robot_y[1]!=(ctx.canvas.height/2))
-                    {
-                        var delta_x=(60+LEFT)-robot_x[1]
-                        var delta_y=robot_y[1]-(ctx.canvas.height/2);
-                        var alpha = Math.atan(delta_y/delta_x)*180/Math.PI;
-                        move_robot(alpha, 1, SPEED, true);
-                    }
-                }
-            }
-            else
-            {
-                switch(robot_line(1))
+               enable_dribbler(1,true);
+               switch(robot_line(1))
                 {
                     case 0:
                         move_robot(180, 1, SPEED, true);
@@ -559,8 +559,14 @@ Geschwindigkeit optimieren
                     case 270:
                         move_robot(90, 1, SPEED, true);
                         break;
+                    default:
+                        var ball_angle=robot_ball_angle(1, true);
+                        if(ball_angle>180||ball_angle<0)
+                            ball_angle=270;
+                        else
+                            ball_angle=90;
+                        move_robot(ball_angle, 1, SPEED,true);
                 }
-            }
         }
 
 		function robot_2_software()
@@ -586,23 +592,26 @@ Geschwindigkeit optimieren
                         angle+=2*Math.PI;
 
                 }
-                move_robot(angle, 2, SPEED);
+                move_robot(angle, 2, SPEED, false);
+
+                if(robot_ball_distance(2)<60&&robot_y[2]>TOP+150&&robot_y[2]<BOTTOM-150)
+                    shoot(2)
             }
             else
             {
                 switch(robot_line(2))
                 {
                     case 0:
-                        move_robot(180, 2, SPEED);
+                        move_robot(180, 2, SPEED, false);
                         break;
                     case 90:
-                        move_robot(270, 2, SPEED);
+                        move_robot(270, 2, SPEED, false);
                         break;
                     case 180:
-                        move_robot(0, 2, SPEED);
+                        move_robot(0, 2, SPEED, false);
                         break;
                     case 270:
-                        move_robot(90, 2, SPEED);
+                        move_robot(90, 2, SPEED, false);
                         break;
                 }
             }
@@ -610,6 +619,7 @@ Geschwindigkeit optimieren
 
         function program_goaly()
         {
+            enable_dribbler(3,true);
             if(robot_line(3)==-1)
             {
                 if(ball_x>RIGHT-200)
@@ -632,7 +642,7 @@ Geschwindigkeit optimieren
                 {
                     if(robot_x[1]!=60&&robot_y[1]!=(ctx.canvas.height/2))
                     {
-                        var delta_x=(60+LEFT)-robot_x[1]
+                        var delta_x=(60+LEFT)-robot_x[1];
                         var delta_y=robot_y[1]-(ctx.canvas.height/2);
                         var alpha = Math.atan(delta_y/delta_x)*180/Math.PI;
                         move_robot(alpha, 1, SPEED, true);
@@ -661,7 +671,7 @@ Geschwindigkeit optimieren
 
         function program_striker()
         {
-
+            enable_dribbler(4,true);
         }
 
         function robot_software(robot)
@@ -702,7 +712,6 @@ Geschwindigkeit optimieren
             }
 			physics();
 			draw();
-
 		}
 		
 		//######################Start Software#########################################
@@ -720,6 +729,12 @@ Geschwindigkeit optimieren
             ball_y = (ctx.canvas.height/2);
             ball_speed_x=0;
             ball_speed_y=0;
+            for(var robot_counter =1 ; robot_counter<=ROBOTS; robot_counter++)
+            {
+                robot_x_vect[robot_counter]=0.1;
+                robot_y_vect[robot_counter]=0.1;
+            }
+
 		}
 		
 		function isr_init()
@@ -727,7 +742,7 @@ Geschwindigkeit optimieren
 			start();
 			if(!isr_started)
 			{
-				setInterval(interrupt,20);
+				setInterval(interrupt,10);
                 lop_timer_pointer=setInterval(Lack_Of_Progress,2500);
 				isr_started=true;
 			}
