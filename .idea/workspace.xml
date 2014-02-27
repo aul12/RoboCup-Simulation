@@ -26,7 +26,7 @@
       <file leaf-file-name="robot.htm" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SoccerB/v.1.1/robot.htm">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="24" selection-start="702" selection-end="702" vertical-scroll-proportion="0.6267281" vertical-offset="0" max-vertical-offset="2618">
+            <state line="611" column="37" selection-start="21371" selection-end="21371" vertical-scroll-proportion="0.697076" vertical-offset="5898" max-vertical-offset="8075">
               <folding>
                 <element signature="e#1792#2374#0" expanded="false" />
                 <element signature="e#2510#2809#0" expanded="false" />
@@ -34,24 +34,12 @@
                 <element signature="e#3249#4459#0" expanded="false" />
                 <element signature="e#4590#5018#0" expanded="false" />
                 <element signature="e#5060#5511#0" expanded="false" />
-                <element signature="e#5554#5866#0" expanded="false" />
-                <element signature="e#5978#13331#0" expanded="false" />
-                <element signature="e#13377#16624#0" expanded="false" />
-                <element signature="e#16670#16880#0" expanded="false" />
-                <element signature="e#16937#18046#0" expanded="false" />
-                <element signature="e#18105#18538#0" expanded="false" />
-                <element signature="e#18592#18766#0" expanded="false" />
-                <element signature="e#18811#19247#0" expanded="false" />
-                <element signature="e#19304#19356#0" expanded="false" />
-                <element signature="e#19396#19444#0" expanded="false" />
-                <element signature="e#19574#20495#0" expanded="false" />
-                <element signature="e#20535#21992#0" expanded="false" />
-                <element signature="e#22035#23658#0" expanded="false" />
-                <element signature="e#23703#23751#0" expanded="false" />
-                <element signature="e#23800#24242#0" expanded="false" />
-                <element signature="e#24340#24979#0" expanded="false" />
-                <element signature="e#25086#25793#0" expanded="false" />
-                <element signature="e#25821#25991#0" expanded="false" />
+                <element signature="e#11450#14697#0" expanded="false" />
+                <element signature="e#15084#16215#0" expanded="false" />
+                <element signature="e#16818#16992#0" expanded="false" />
+                <element signature="e#17037#17473#0" expanded="false" />
+                <element signature="e#17530#17582#0" expanded="false" />
+                <element signature="e#17622#17670#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -106,7 +94,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -159,6 +146,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -170,6 +158,14 @@
     <property name="FullScreen" value="false" />
   </component>
   <component name="RunManager">
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+      <option name="VMOptions" />
+      <option name="arguments" />
+      <option name="filePath" />
+      <option name="scope" value="ALL" />
+      <option name="testName" />
+      <method />
+    </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -180,23 +176,15 @@
       <option name="showConsoleOnStdOut" value="false" />
       <method />
     </configuration>
-    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
-      <option name="VMOptions" />
-      <option name="arguments" />
-      <option name="filePath" />
-      <option name="scope" value="ALL" />
-      <option name="testName" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" singleton="true" config-file="">
-      <envs />
-      <method />
-    </configuration>
     <configuration default="true" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
       <setting name="configLocationType" value="CONFIG_FILE" />
       <setting name="settingsFile" value="" />
       <setting name="serverType" value="INTERNAL" />
       <setting name="preferredDebugBrowser" value="CHROME" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" singleton="true" config-file="">
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
@@ -228,16 +216,16 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20595238" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934782" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -255,16 +243,30 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/SoccerB/v.1.1/robot.htm</url>
-          <line>461</line>
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="1" />
+      <option name="time" value="3" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/SoccerB/v.1.1/robot.htm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="24" selection-start="702" selection-end="702" vertical-scroll-proportion="0.0" vertical-offset="544" max-vertical-offset="2618">
+          <folding>
+            <element signature="e#1792#2374#0" expanded="false" />
+            <element signature="e#2510#2809#0" expanded="false" />
+            <element signature="e#2860#3109#0" expanded="false" />
+            <element signature="e#3249#4459#0" expanded="false" />
+            <element signature="e#4590#5018#0" expanded="false" />
+            <element signature="e#5060#5511#0" expanded="false" />
+            <element signature="e#11450#14697#0" expanded="false" />
+            <element signature="e#15084#16215#0" expanded="false" />
+            <element signature="e#16818#16992#0" expanded="false" />
+            <element signature="e#17037#17473#0" expanded="false" />
+            <element signature="e#17530#17582#0" expanded="false" />
+            <element signature="e#17622#17670#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/SoccerB/v.1.1/robot.htm">
       <provider selected="true" editor-type-id="text-editor">
         <state line="6" column="25" selection-start="107" selection-end="107" vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="5253">
@@ -275,31 +277,19 @@
             <element signature="e#3249#4459#0" expanded="false" />
             <element signature="e#4590#5018#0" expanded="false" />
             <element signature="e#5060#5511#0" expanded="false" />
-            <element signature="e#5554#5866#0" expanded="false" />
-            <element signature="e#5978#13331#0" expanded="false" />
-            <element signature="e#13377#16624#0" expanded="false" />
-            <element signature="e#16670#16880#0" expanded="false" />
-            <element signature="e#16937#18046#0" expanded="false" />
-            <element signature="e#18105#18538#0" expanded="false" />
-            <element signature="e#18592#18766#0" expanded="false" />
-            <element signature="e#18811#19247#0" expanded="false" />
-            <element signature="e#19304#19356#0" expanded="false" />
-            <element signature="e#19396#19444#0" expanded="false" />
-            <element signature="e#19574#20495#0" expanded="false" />
-            <element signature="e#20535#21992#0" expanded="false" />
-            <element signature="e#22035#23658#0" expanded="false" />
-            <element signature="e#23703#23751#0" expanded="false" />
-            <element signature="e#23800#24242#0" expanded="false" />
-            <element signature="e#24340#24979#0" expanded="false" />
-            <element signature="e#25086#25793#0" expanded="false" />
-            <element signature="e#25821#25991#0" expanded="false" />
+            <element signature="e#11450#14697#0" expanded="false" />
+            <element signature="e#15084#16215#0" expanded="false" />
+            <element signature="e#16818#16992#0" expanded="false" />
+            <element signature="e#17037#17473#0" expanded="false" />
+            <element signature="e#17530#17582#0" expanded="false" />
+            <element signature="e#17622#17670#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SoccerB/v.1.1/robot.htm">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="24" selection-start="702" selection-end="702" vertical-scroll-proportion="0.6267281" vertical-offset="0" max-vertical-offset="2618">
+        <state line="611" column="37" selection-start="21371" selection-end="21371" vertical-scroll-proportion="0.697076" vertical-offset="5898" max-vertical-offset="8075">
           <folding>
             <element signature="e#1792#2374#0" expanded="false" />
             <element signature="e#2510#2809#0" expanded="false" />
@@ -307,24 +297,12 @@
             <element signature="e#3249#4459#0" expanded="false" />
             <element signature="e#4590#5018#0" expanded="false" />
             <element signature="e#5060#5511#0" expanded="false" />
-            <element signature="e#5554#5866#0" expanded="false" />
-            <element signature="e#5978#13331#0" expanded="false" />
-            <element signature="e#13377#16624#0" expanded="false" />
-            <element signature="e#16670#16880#0" expanded="false" />
-            <element signature="e#16937#18046#0" expanded="false" />
-            <element signature="e#18105#18538#0" expanded="false" />
-            <element signature="e#18592#18766#0" expanded="false" />
-            <element signature="e#18811#19247#0" expanded="false" />
-            <element signature="e#19304#19356#0" expanded="false" />
-            <element signature="e#19396#19444#0" expanded="false" />
-            <element signature="e#19574#20495#0" expanded="false" />
-            <element signature="e#20535#21992#0" expanded="false" />
-            <element signature="e#22035#23658#0" expanded="false" />
-            <element signature="e#23703#23751#0" expanded="false" />
-            <element signature="e#23800#24242#0" expanded="false" />
-            <element signature="e#24340#24979#0" expanded="false" />
-            <element signature="e#25086#25793#0" expanded="false" />
-            <element signature="e#25821#25991#0" expanded="false" />
+            <element signature="e#11450#14697#0" expanded="false" />
+            <element signature="e#15084#16215#0" expanded="false" />
+            <element signature="e#16818#16992#0" expanded="false" />
+            <element signature="e#17037#17473#0" expanded="false" />
+            <element signature="e#17530#17582#0" expanded="false" />
+            <element signature="e#17622#17670#0" expanded="false" />
           </folding>
         </state>
       </provider>
