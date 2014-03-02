@@ -257,14 +257,17 @@ Geschwindigkeit optimieren
                     ball_speed_y=Math.sin(alpha)*SPEED*factor;
                 }
 
-                if((robot_x[robot_counter]+40)<=LEFT)																	//Linie
-                    reset_robot(robot_counter);
-                else if((robot_x[robot_counter]-40)>=RIGHT)
-                    reset_robot(robot_counter);
-                if((robot_y[robot_counter]+40)<=TOP)
-                    reset_robot(robot_counter);
-                else if((robot_y[robot_counter]-40)>=BOTTOM)
-                    reset_robot(robot_counter);
+                if(robot_inside[robot_counter])
+                {
+                    if((robot_x[robot_counter]+40)<=LEFT)																	//Linie
+                        reset_robot(robot_counter);
+                    else if((robot_x[robot_counter]-40)>=RIGHT)
+                        reset_robot(robot_counter);
+                    if((robot_y[robot_counter]+40)<=TOP)
+                        reset_robot(robot_counter);
+                    else if((robot_y[robot_counter]-40)>=BOTTOM)
+                        reset_robot(robot_counter);
+                }
 
                 if(robot_x[robot_counter]-40<LEFT&&robot_x[robot_counter]>LEFT-30-40&&robot_y[robot_counter]<(ctx.canvas.height/2)-120&&robot_y[robot_counter]>(ctx.canvas.height/2)+120)                                 //Im Tor stehen
                 {
@@ -306,7 +309,7 @@ Geschwindigkeit optimieren
             }
 
 
-           if(ball_y>(ctx.canvas.height/2)-120&&ball_y<(ctx.canvas.height/2)+120&&ball_x<LEFT&&ball_x>=LEFT-30)                                //Tor
+           if(ball_y>(ctx.canvas.height/2)-120&&ball_y<(ctx.canvas.height/2)+120&&ball_x<LEFT&&ball_x>=LEFT-50)                                //Tor
             {
                 goals_team1++;
                 alert(goals_team2+" : "+goals_team1);
@@ -314,7 +317,7 @@ Geschwindigkeit optimieren
                 return;
             }
 
-            if(ball_y>(ctx.canvas.height/2)-120&&ball_y<(ctx.canvas.height/2)+120&&ball_x>RIGHT&&ball_x>=RIGHT+30)
+            if(ball_y>(ctx.canvas.height/2)-120&&ball_y<(ctx.canvas.height/2)+120&&ball_x>RIGHT)//&&ball_x>=RIGHT+50)
             {
                 goals_team2++;
                 alert(goals_team2+" : "+goals_team1);
@@ -408,8 +411,8 @@ Geschwindigkeit optimieren
         {
             robot_inside[robot]=false;
             alert("Der Roboter ist aus dem Feld gefahren");
-            robot_x[robot]=(ctx.canvas.width/2);
-            robot_y[robot] =(ctx.canvas.height/2);
+            robot_x[robot]=0;
+            robot_y[robot] =0;
             robot_x_vect[robot]=0.1;
             robot_y_vect[robot]=0.1;
         }
@@ -456,7 +459,10 @@ Geschwindigkeit optimieren
             var delta_y = ball_y-robot_y[robot];
             var angle=Math.atan(delta_y/delta_x);
             if(robot>=3)
+            {
                 angle+=Math.PI;
+                angle*=-1;
+            }
             if((delta_x<0))
                 angle-=Math.PI;
             if(angle>2*Math.PI)
@@ -549,7 +555,7 @@ Geschwindigkeit optimieren
                 default:
                         if(angle>180)
                             angle-=360;
-                    move_robot(angle*1.5, 2, SPEED, true);
+                    move_robot(robot_ball_angle(2, true)*1.5, 2, SPEED, true);
 
                     if(robot_ball_distance(2)<60&&robot_y[2]>TOP+150&&robot_y[2]<BOTTOM-150)
                     {
@@ -609,7 +615,7 @@ Geschwindigkeit optimieren
                 default:
                     if(angle>180)
                         angle-=360;
-                    move_robot(angle*1.5, 4, SPEED, true);
+                    move_robot(angle*2, 4, SPEED, true);
 
                     if(robot_ball_distance(4)<60&&robot_y[4]>TOP+150&&robot_y[4]<BOTTOM-150)
                     {
@@ -618,6 +624,7 @@ Geschwindigkeit optimieren
                     }
                     break;
             }
+            document.getElementById("debb").innerHTML = robot_ball_angle(4, true);
         }
 
         function robot_software(robot)
@@ -650,7 +657,7 @@ Geschwindigkeit optimieren
                     if(++robot_out_timer[robot_counter]>=200)
                     {
                         robot_inside[robot_counter]=true;
-                        robot_x[robot_counter]=60+120;
+                        robot_x[robot_counter]=(ctx.canvas.width/2);
                         robot_y[robot_counter] =(ctx.canvas.height/2);
                         robot_out_timer[robot_counter]=0;
                     }
