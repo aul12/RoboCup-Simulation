@@ -203,7 +203,7 @@ Geschwindigkeit optimieren
         //######################Physic-Engine#########################################
 		function physics()
 		{
-            var delta_x, delta_y, alpha, not_robot_counter;
+            var delta_x, delta_y, alpha, not_robot_counter, einfall;
             for(var robot_counter= 1; robot_counter<=ROBOTS; robot_counter++)
             {
                 for(not_robot_counter=1; not_robot_counter<=ROBOTS ; not_robot_counter++)
@@ -214,12 +214,15 @@ Geschwindigkeit optimieren
                         delta_y=robot_y[not_robot_counter]-robot_y[robot_counter];
                         if(Math.sqrt(delta_x*delta_x+delta_y*delta_y)<80)                                                   //Roboter "in" Roboter
                         {
-                            delta_x/=30;
-                            delta_y/=30;
-                            robot_x[robot_counter]-=delta_x;
-                            robot_y[robot_counter]-=delta_y;
-                            robot_x[not_robot_counter]+=delta_x;
-                            robot_y[not_robot_counter]+=delta_y;
+                            alpha=Math.atan(delta_y/delta_x);
+                            if((delta_x<0))
+                                alpha-=Math.PI;
+                            if(alpha>2*Math.PI)
+                                alpha-=2*Math.PI;
+                            if(alpha<0)
+                                alpha+=2*Math.PI;
+                            robot_x[not_robot_counter]=robot_x[robot_counter]+Math.cos(alpha)*80;
+                            robot_y[not_robot_counter]=robot_y[robot_counter]+Math.sin(alpha)*80;
                             robot_x_vect[robot_counter]=0.1;
                             robot_y_vect[robot_counter]=0.1;
                             robot_x_vect[not_robot_counter]=0.1;
@@ -242,6 +245,26 @@ Geschwindigkeit optimieren
                         alpha-=2*Math.PI;
                     if(alpha<0)
                         alpha+=2*Math.PI;
+
+                    if(ball_speed_x!=0&&ball_speed_y!=0)
+                    {
+                        einfall=Math.atan(ball_speed_y/ball_speed_x);
+                        if((ball_speed_x<0))
+                            einfall-=Math.PI;
+                        if(einfall>2*Math.PI)
+                            einfall-=2*Math.PI;
+                        if(einfall<0)
+                            einfall+=2*Math.PI;
+                    }
+                    else
+                        einfall=alpha;
+                    einfall=alpha-einfall;
+                   // alpha+=einfall;
+                    if(alpha>2*Math.PI)
+                        alpha-=2*Math.PI;
+                    if(alpha<0)
+                        alpha+=2*Math.PI;
+
                     var factor=1;
                     ball_x=robot_x[robot_counter]+Math.cos(alpha)*54;
                     ball_y=robot_y[robot_counter]+Math.sin(alpha)*54;
@@ -273,16 +296,10 @@ Geschwindigkeit optimieren
                         reset_robot(robot_counter);
                 }
 
-                if(robot_x[robot_counter]-40<LEFT&&robot_x[robot_counter]>LEFT-30-40&&robot_y[robot_counter]<(ctx.canvas.height/2)-120&&robot_y[robot_counter]>(ctx.canvas.height/2)+120)                                 //Im Tor stehen
-                {
-                    robot_x[robot_counter]=60+120;
-                    robot_y[robot_counter]=(ctx.canvas.height/2);
-                }
-                else if(robot_x[robot_counter]+40<RIGHT&&robot_x[robot_counter]+40>RIGHT+30&&robot_y[robot_counter]<(ctx.canvas.height/2)-120&&robot_y[robot_counter]>(ctx.canvas.height/2)+120)
-                {
-                    robot_x[robot_counter]=60+120;
-                    robot_y[robot_counter] =(ctx.canvas.height/2);
-                }
+                if(robot_y[robot_counter]>(ctx.canvas.height/2)-120&&robot_y[robot_counter]<(ctx.canvas.height/2)+120&&robot_x[robot_counter]<LEFT+40)                                 //Im Tor stehen
+                    robot_x[robot_counter]=LEFT+40;
+                else if(robot_y[robot_counter]>(ctx.canvas.height/2)-120&&robot_y[robot_counter]<(ctx.canvas.height/2)+120&&robot_x[robot_counter]>RIGHT-40)
+                    robot_x[robot_counter]=RIGHT-40;
             }
 
 			
@@ -313,7 +330,7 @@ Geschwindigkeit optimieren
             }
 
 
-           if(ball_y>(ctx.canvas.height/2)-120&&ball_y<(ctx.canvas.height/2)+120&&ball_x<LEFT&&ball_x>=LEFT-50)                                //Tor
+           if(ball_y>(ctx.canvas.height/2)-120&&ball_y<(ctx.canvas.height/2)+120&&ball_x<LEFT)                                //Tor
             {
                 goals_team1++;
                 alert(goals_team2+" : "+goals_team1);
@@ -321,7 +338,7 @@ Geschwindigkeit optimieren
                 return;
             }
 
-            if(ball_y>(ctx.canvas.height/2)-120&&ball_y<(ctx.canvas.height/2)+120&&ball_x>RIGHT)//&&ball_x>=RIGHT+50)
+            if(ball_y>(ctx.canvas.height/2)-120&&ball_y<(ctx.canvas.height/2)+120&&ball_x>RIGHT)
             {
                 goals_team2++;
                 alert(goals_team2+" : "+goals_team1);
@@ -394,19 +411,14 @@ Geschwindigkeit optimieren
                         break ;
                     default:
                         break;
-
-
                 }
-
-
-
                 ball_speed_x=0;
                 ball_speed_y=0;
                 alert("Lack of Progress");
                 clearInterval(lop_timer_pointer);
                 lop_timer_pointer=setInterval(Lack_Of_Progress,2500);
-
             }
+
             if(lack_of_progress)
                 lop_timer=true;
         }
@@ -508,6 +520,39 @@ Geschwindigkeit optimieren
         {
             robot_shoot[robot]=true;
         }
+
+        function robot_distance(robot, direction)
+        {
+            if(robot<=2)
+            {
+                switch(direction)
+                {
+                    case 1:
+                        return ctx.canvas.width-robot_x[robot];
+                    case 2:
+                        return ctx.canvas.height-robot_y[robot];
+                    case 3:
+                        return robot_x[robot];
+                    case 4:
+                        return robot_y[robot];
+                }
+            }
+            else
+            {
+                switch(direction)
+                {
+                    case 1:
+                        return robot_x[robot];
+                    case 2:
+                        return robot_y[robot];
+                    case 3:
+                        return ctx.canvas.width-robot_x[robot];
+                    case 4:
+                        return ctx.canvas.height-robot_y[robot];
+                }
+            }
+            return 0;
+        }
 		
 		//######################Robot Software#########################################
         function robot_1_software()
@@ -561,7 +606,7 @@ Geschwindigkeit optimieren
                             angle-=360;
                     move_robot(robot_ball_angle(2, true)*1.5, 2, SPEED, true);
 
-                    if(robot_ball_distance(2)<60&&robot_y[2]>TOP+150&&robot_y[2]<BOTTOM-150)
+                    if(robot_ball_distance(2)<60&&robot_distance(2,4)>200&&robot_distance(2,2)>200)
                     {
                         enable_dribbler(2, false);
                         shoot(2);
@@ -621,14 +666,13 @@ Geschwindigkeit optimieren
                         angle-=360;
                     move_robot(angle*2, 4, SPEED, true);
 
-                    if(robot_ball_distance(4)<60&&robot_y[4]>TOP+150&&robot_y[4]<BOTTOM-150)
+                    if(robot_ball_distance(4)<60&&robot_distance(4,4)>200&&robot_distance(4,2)>200)
                     {
                         enable_dribbler(4, false);
                         shoot(4);
                     }
                     break;
             }
-            document.getElementById("debb").innerHTML = robot_ball_angle(4, true);
         }
 
         function robot_software(robot)
@@ -669,6 +713,19 @@ Geschwindigkeit optimieren
             }
 			physics();
 			draw();
+
+            var einfall;
+            if(ball_speed_x!=0&&ball_speed_y!=0)
+                einfall=Math.atan(ball_speed_y/ball_speed_x);
+            else
+                einfall=0;
+            if((ball_speed_x<0))
+                einfall-=Math.PI;
+            if(einfall>2*Math.PI)
+                einfall-=2*Math.PI;
+            if(einfall<0)
+                einfall+=2*Math.PI;
+            document.getElementById("debb").innerHTML = einfall;
 		}
 		
 		//######################Start Software#########################################
