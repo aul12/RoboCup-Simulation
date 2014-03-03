@@ -220,6 +220,10 @@ Geschwindigkeit optimieren
                             robot_y[robot_counter]-=delta_y;
                             robot_x[not_robot_counter]+=delta_x;
                             robot_y[not_robot_counter]+=delta_y;
+                            robot_x_vect[robot_counter]=0.1;
+                            robot_y_vect[robot_counter]=0.1;
+                            robot_x_vect[not_robot_counter]=0.1;
+                            robot_y_vect[not_robot_counter]=0.1;
                         }
                     }
                 }
