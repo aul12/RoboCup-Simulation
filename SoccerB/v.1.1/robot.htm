@@ -315,15 +315,15 @@ Geschwindigkeit optimieren
                         if(robot_dribbler[robot_counter])
                         {
                             factor=0.5;
-                            ball_x=robot_x[robot_counter]+Math.cos(alpha)*41;
-                            ball_y=robot_y[robot_counter]+Math.sin(alpha)*41;
+                            ball_x=(99*(robot_x[robot_counter]+Math.cos(alpha)*(ROBOT_SIZE+5))+(robot_x[robot_counter]+(ROBOT_SIZE+5)))/100;
+                            ball_y=robot_y[robot_counter]+Math.sin(alpha)*ROBOT_SIZE;
                         }
                         if(robot_shoot[robot_counter])
                             factor+=SHOOT_POWER;
                     }
                     robot_shoot[robot_counter]=false;
-                    ball_speed_x=Math.cos(alpha)*SPEED*factor;
-                    ball_speed_y=Math.sin(alpha)*SPEED*factor;
+                    ball_speed_x=Math.cos(alpha)*SPEED*factor*robot_x_vect[robot_counter];
+                    ball_speed_y=Math.sin(alpha)*SPEED*factor*robot_y_vect[robot_counter];
                 }
 
                 if(robot_inside[robot_counter])
@@ -388,6 +388,17 @@ Geschwindigkeit optimieren
                     robot_x[robot_counter]=ctx.canvas.width/2;
                     robot_y[robot_counter]=ctx.canvas.height/2;
                     alert("Pushing");
+                }
+                for(not_robot_counter=1; not_robot_counter<=ROBOTS ; not_robot_counter++)
+                {
+                    if((robot_x[robot_counter]<(120+STRAFRAUM_WIDTH)||robot_x[robot_counter]>(ctx.canvas.width-120-STRAFRAUM_WIDTH))
+                            &&((robot_y[robot_counter]>(ctx.canvas.height-STRAFRAUM_HEIGHT/2))&&(robot_y[robot_counter]<(ctx.canvas.height+STRAFRAUM_HEIGHT/2)))
+                            &&robot_x[not_robot_counter]<(120+STRAFRAUM_WIDTH)||robot_x[not_robot_counter]>(ctx.canvas.width-120-STRAFRAUM_WIDTH)
+                            &&((robot_y[not_robot_counter]>(ctx.canvas.height-STRAFRAUM_HEIGHT/2))&&(robot_y[not_robot_counter]<(ctx.canvas.height+STRAFRAUM_HEIGHT/2)))
+                            &&not_robot_counter!=robot_counter)
+                    {
+                           alert("Double defence");
+                    }
                 }
 
             }
@@ -675,8 +686,9 @@ Geschwindigkeit optimieren
                         angle-=360;
 
 
-                    if(robot_ball_distance(2)<2)
+                    if(robot_ball_distance(2)<2&&angle>-10&&angle<10)
                     {
+                        angle=0;
                         if(Math.abs(robot_distance(2,4)-robot_distance(2,2))<20)
                         {
                             enable_dribbler(2, false);
