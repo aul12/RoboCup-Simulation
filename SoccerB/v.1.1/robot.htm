@@ -269,8 +269,6 @@ Geschwindigkeit optimieren
                             delta_y=ball_y-robot_y[not_robot_counter];
                             pushing[not_robot_counter] = Math.sqrt(delta_x * delta_x + delta_y * delta_y) < 14+ROBOT_SIZE;
 
-                          //  if(pushing[robot_counter])
-
                         }
                     }
                 }
@@ -383,8 +381,8 @@ Geschwindigkeit optimieren
 
             for(robot_counter=0; robot_counter<ROBOTS; robot_counter++)
             {
-                if(robot_x[robot_counter]<120+STRAFRAUM_WIDTH||robot_x[robot_counter]>ctx.canvas.width-120-STRAFRAUM_WIDTH
-                        &&robot_y[robot_counter]>ctx.canvas.height-STRAFRAUM_HEIGHT/2&&robot_y[robot_counter]<ctx.canvas.height+STRAFRAUM_HEIGHT/2
+                if((robot_x[robot_counter]<(120+STRAFRAUM_WIDTH)||robot_x[robot_counter]>(ctx.canvas.width-120-STRAFRAUM_WIDTH))
+                        &&((robot_y[robot_counter]>(ctx.canvas.height-STRAFRAUM_HEIGHT/2))&&(robot_y[robot_counter]<(ctx.canvas.height+STRAFRAUM_HEIGHT/2)))
                         &&pushing[robot_counter])
                 {
                     robot_x[robot_counter]=ctx.canvas.width/2;
