@@ -268,7 +268,7 @@ Geschwindigkeit optimieren
                             delta_x=ball_x-robot_x[not_robot_counter];
                             delta_y=ball_y-robot_y[not_robot_counter];
                             pushing[not_robot_counter] = Math.sqrt(delta_x * delta_x + delta_y * delta_y) < 14+ROBOT_SIZE;
-
+                            continue;
                         }
                     }
                 }
@@ -324,32 +324,43 @@ Geschwindigkeit optimieren
                     robot_shoot[robot_counter]=false;
                     ball_speed_x=Math.cos(alpha)*SPEED*factor*robot_x_vect[robot_counter];
                     ball_speed_y=Math.sin(alpha)*SPEED*factor*robot_y_vect[robot_counter];
+                    continue;
                 }
 
                 if(robot_inside[robot_counter])
                 {
-                    var push_out=false;
+                    var out=false;
                     if((robot_x[robot_counter]+ROBOT_SIZE)<=LEFT)																	//Linie
-                        push_out=true;
+                        out=true;
                     else if((robot_x[robot_counter]-ROBOT_SIZE)>=RIGHT)
-                        push_out=true;
+                        out=true;
                     if((robot_y[robot_counter]+ROBOT_SIZE)<=TOP)
-                        push_out=true;
+                        out=true;
                     else if((robot_y[robot_counter]-ROBOT_SIZE)>=BOTTOM)
-                        push_out=true;
-                    if(push_out&&touch_robot)
+                        out=true;
+                    if(out)
                     {
-                        robot_x[robot_counter]=ctx.canvas.width/2;
-                        robot_y[robot_counter]=ctx.canvas.height/2;
+                        if(touch_robot)
+                        {
+                            robot_x[robot_counter]=ctx.canvas.width/2;
+                            robot_y[robot_counter]=ctx.canvas.height/2;
+                        }
+                        else
+                            reset_robot(robot_counter);
                     }
-                    else if(push_out&&!touch_robot)
-                        reset_robot();
+                    continue;
                 }
 
                 if(robot_y[robot_counter]>(ctx.canvas.height/2)-(GOAL_WIDTH/2)&&robot_y[robot_counter]<(ctx.canvas.height/2)+(GOAL_WIDTH/2)&&robot_x[robot_counter]<LEFT+40)                                 //Im Tor stehen
-                    robot_x[robot_counter]=LEFT+40;
+                {
+                    robot_x[robot_counter] = LEFT + ROBOT_SIZE;
+                    continue;
+                }
                 else if(robot_y[robot_counter]>(ctx.canvas.height/2)-(GOAL_WIDTH/2)&&robot_y[robot_counter]<(ctx.canvas.height/2)+(GOAL_WIDTH/2)&&robot_x[robot_counter]>RIGHT-40)
-                    robot_x[robot_counter]=RIGHT-40;
+                {
+                    robot_x[robot_counter] = RIGHT - ROBOT_SIZE;
+                    continue
+                }
             }
 
 			
@@ -424,7 +435,7 @@ Geschwindigkeit optimieren
                 return;
             }
 
-            lack_of_progress = (Math.abs(alt_ball_x - ball_x) + Math.abs(alt_ball_y - ball_y)) < 3;
+            lack_of_progress = (Math.abs(alt_ball_x - ball_x) + Math.abs(alt_ball_y - ball_y)) < 0.1 && ball_speed_x+ball_speed_y<0.00001;
 		}
 
         function Lack_Of_Progress()
@@ -517,6 +528,8 @@ Geschwindigkeit optimieren
 		{
             if(degree)
                 angle=angle/180*Math.PI;
+            if(robot>2)
+                angle+=Math.PI;
             if(angle>2*Math.PI)
                 angle-=2*Math.PI;
             if(angle<0)
