@@ -398,6 +398,8 @@ Geschwindigkeit optimieren
                             &&not_robot_counter!=robot_counter)
                     {
                            alert("Double defence");
+                           robot_x[robot_counter]=ctx.canvas.width/2;
+                            robot_y[robot_counter]=ctx.canvas.height/2;
                     }
                 }
 
@@ -525,8 +527,8 @@ Geschwindigkeit optimieren
             {
                 angle-=2*Math.PI;
             }
-            angle=(angle+robot_driving_angle[robot])/2;
-            speed=(speed*19+robot_driving_speed[robot])/20;
+            angle=(angle+robot_driving_angle[robot]*19)/20;
+            speed=(speed+robot_driving_speed[robot]*199)/200;
             if(Math.abs((robot_driving_angle[robot]+Math.PI)-(angle+Math.PI))>Math.PI*0.5)
             {
                 robot_x_vect[robot]=SPEED_SLOW;
