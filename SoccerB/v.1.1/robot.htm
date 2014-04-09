@@ -24,6 +24,9 @@ Geschwindigkeit optimieren
         <input type="checkbox" id="check_mute">
     </form>
     <p id="debb"></p>
+
+    <input type="file" id="files" name="files[]" multiple />
+
 	
 	<script>
 
@@ -231,6 +234,27 @@ Geschwindigkeit optimieren
             lop_timer_pointer=setInterval(Lack_Of_Progress,3000);
         }
 
+        function handleFileSelect(evt)
+        {
+            // Check for the various File API support.
+            if (window.File && window.FileReader && window.FileList && window.Blob)
+            {
+                // Great success! All the File APIs are supported.
+
+                var files = evt.target.files; // FileList object
+
+                var reader = new FileReader(files);
+            }
+            else
+            {
+                alert('The File APIs are not fully supported in this browser.');
+            }
+
+
+        }
+
+        document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
         //######################Physic-Engine#########################################
 		function physics()
 		{
@@ -239,6 +263,16 @@ Geschwindigkeit optimieren
             var pushing= new Array(ROBOTS);
             for(var robot_counter= 1; robot_counter<=ROBOTS; robot_counter++)
             {
+                if(robot_y[robot_counter]>(ctx.canvas.height/2)-(GOAL_WIDTH/2)&&robot_y[robot_counter]<(ctx.canvas.height/2)+(GOAL_WIDTH/2)&&robot_x[robot_counter]<LEFT+40)                                 //Im Tor stehen
+                {
+                    robot_x[robot_counter] = LEFT + ROBOT_SIZE;
+                    continue;
+                }
+                else if(robot_y[robot_counter]>(ctx.canvas.height/2)-(GOAL_WIDTH/2)&&robot_y[robot_counter]<(ctx.canvas.height/2)+(GOAL_WIDTH/2)&&robot_x[robot_counter]>RIGHT-40)
+                {
+                    robot_x[robot_counter] = RIGHT - ROBOT_SIZE;
+                    continue;
+                }
                 touch_robot=false;
                 for(not_robot_counter=1; not_robot_counter<=ROBOTS ; not_robot_counter++)
                 {
@@ -349,17 +383,6 @@ Geschwindigkeit optimieren
                             reset_robot(robot_counter);
                     }
                     continue;
-                }
-
-                if(robot_y[robot_counter]>(ctx.canvas.height/2)-(GOAL_WIDTH/2)&&robot_y[robot_counter]<(ctx.canvas.height/2)+(GOAL_WIDTH/2)&&robot_x[robot_counter]<LEFT+40)                                 //Im Tor stehen
-                {
-                    robot_x[robot_counter] = LEFT + ROBOT_SIZE;
-                    continue;
-                }
-                else if(robot_y[robot_counter]>(ctx.canvas.height/2)-(GOAL_WIDTH/2)&&robot_y[robot_counter]<(ctx.canvas.height/2)+(GOAL_WIDTH/2)&&robot_x[robot_counter]>RIGHT-40)
-                {
-                    robot_x[robot_counter] = RIGHT - ROBOT_SIZE;
-                    continue
                 }
             }
 
