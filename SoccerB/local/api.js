@@ -93,6 +93,13 @@ function shoot(robot)
     robot_shoot[robot]=true;
 }
 
+Distance = {
+    FRONT : 1,
+    RIGHT : 2,
+    BACK  : 3,
+    LEFT  : 4
+};
+
 function robot_distance(robot, direction)
 {
     if(robot<=2)
