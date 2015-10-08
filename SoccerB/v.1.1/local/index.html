@@ -1,0 +1,50 @@
+<!--
+Junior Robo-Soccer Simulator
+Paul Nykiel 1.2.14
+
+Todo:
+Abprallen nach Physik
+Geschwindigkeit optimieren
+
+-->
+
+<!DOCTYPE html>
+<html>
+	<head>		
+		<title>Robot</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	</head>
+	<body>
+        <table>
+            <tr>
+                <td>
+                    <canvas id="myCanvas" width="840" height="600" onclick="ball_click()"></canvas>
+                </td>
+                <td style="padding: 20px; vertical-align: top">
+                    <button style="margin: 4px" class="btn btn-primary" type="button" onclick="isr_init()">Start</button><br>
+                    <button style="margin: 4px" class="btn btn-default" type="button" onclick="shoot(2)">Shoot</button>
+                    <input type="file" id="files" title="Datei auswählen">
+                </td>
+            </tr>
+        </table>
+
+
+
+    <script type="text/javascript" src="draw.js"></script>
+    <script type="text/javascript" src="globals.js"></script>
+    <script type="text/javascript" src="eventHandler.js"></script>
+    <script type="text/javascript" src="program.js"></script>
+    <script type="text/javascript" src="physics.js"></script>
+    <script type="text/javascript" src="api.js"></script>
+    <script type="text/javascript" src="fileloader.js"></script>
+
+    <script type="text/javascript" src="program/robot1.js"></script>
+    <script type="text/javascript" src="program/robot2.js"></script>
+    <script type="text/javascript" src="program/globals.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	</body>
+</html>
