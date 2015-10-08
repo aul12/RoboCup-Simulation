@@ -1,6 +1,11 @@
-RoboterSimulation
-=================
+#RoboterSimulation
 
-A RoboCup Junior Soccer Simulation. The physics are working (more or less) and the robots, too. Now I am working on an API to use this Simulation.
+A RoboCup Junior Soccer-B Simulation.
 
-If you're interrested contact me, i can help you using it.
+##API-Reference
+**The complete API is WIP at the moment**
+
+| Function          | Alias         | Usage                                                           |
+| ----------------- | ------------- | ----------------------------------------------------------------|
+| move_robot        | -             | Move a robot by a specicified speed in a certain angle          |
+| robot_ball_angle  | -             | Get the current angle to the ball                               |
