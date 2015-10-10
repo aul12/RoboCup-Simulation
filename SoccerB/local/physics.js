@@ -6,18 +6,22 @@ function physics()
 {
     var delta_x, delta_y, alpha, not_robot_counter, einfall;
     var touch_robot=false;
-    var pushing= new Array(ROBOTS);
+
     for(var robot_counter= 0; robot_counter<ROBOTS; robot_counter++)
     {
         //Check if the robots are standing in the goal
         if(robot[robot_counter].y>(ctx.canvas.height/2)-(GOAL_WIDTH/2)&&robot[robot_counter].y<(ctx.canvas.height/2)+(GOAL_WIDTH/2)&&robot[robot_counter].x<LEFT+40)
         {
             robot[robot_counter].x = LEFT + ROBOT_SIZE;
+            robot[robot_counter].speed.x = SPEED_SLOW;
+            robot[robot_counter].speed.y = SPEED_SLOW;
             continue;
         }
         else if(robot[robot_counter]>(ctx.canvas.height/2).y-(GOAL_WIDTH/2)&&robot[robot_counter].y<(ctx.canvas.height/2)+(GOAL_WIDTH/2)&&robot[robot_counter].x>RIGHT-40)
         {
             robot[robot_counter].x = RIGHT - ROBOT_SIZE;
+            robot[robot_counter].speed.x = SPEED_SLOW;
+            robot[robot_counter].speed.y = SPEED_SLOW;
             continue;
         }
         touch_robot=false;

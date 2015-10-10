@@ -12,6 +12,7 @@ var robot_driving_speed = new Array(ROBOTS);
 var robot_out_timer = [0,0,0,0];
 var robot_dribbler = new Array(ROBOTS);
 var robot_shoot= new Array(ROBOTS);
+var pushing= new Array(ROBOTS);
 
 var ball = new gameObject(ctx.canvas.width/2, ctx.canvas.height/2, BALL_SIZE);
 

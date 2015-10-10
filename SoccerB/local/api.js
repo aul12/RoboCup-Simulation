@@ -6,8 +6,10 @@ function move_robot(angle, robotn, speed, degree)
 
     if(degree)
         angle=angle/180*Math.PI;
-    if(robotn>2)
-        angle+=Math.PI;
+    if(robotn>=2) {
+        angle += Math.PI;
+        angle *= -1;
+    }
     if(angle>2*Math.PI)
         angle-=2*Math.PI;
     if(angle<0)

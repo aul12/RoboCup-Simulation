@@ -9,6 +9,10 @@ feldImage.onload = function(){
     draw_clear();
     draw();
 };
+ballImage.onload = function(){
+    draw_clear();
+    draw();
+};
 
 
 function mouse_pos(evt)
@@ -51,10 +55,20 @@ function interrupt()
 
         if(robot_inside[robot_counter])
         {
-            if(robot_counter==0)
-                robot_1_software();
-            else if(robot_counter==1) {
-                robot_2_software();
+            switch(robot_counter)
+            {
+                case 0:
+                    robot_1_software();
+                    break;
+                case 1:
+                    robot_2_software();
+                    break;
+                case 2:
+                    program_striker();
+                    break;
+                case 3:
+                    program_goaly();
+                    break;
             }
         }
         else

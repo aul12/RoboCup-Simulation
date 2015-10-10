@@ -50,8 +50,9 @@ function checkPushing(){
 
 function checkDoubleDefence(){
     for(var robot_counter=0; robot_counter<ROBOTS; robot_counter++) {
-        for(var not_robot_counter=1; not_robot_counter<=ROBOTS ; not_robot_counter++)
+        for(var not_robot_counter=0; not_robot_counter<ROBOTS ; not_robot_counter++)
         {
+
             if((robot[robot_counter].x<(120+STRAFRAUM_WIDTH)||robot[robot_counter].x>(ctx.canvas.width-120-STRAFRAUM_WIDTH))
                 &&((robot[robot_counter].y>(ctx.canvas.height-STRAFRAUM_HEIGHT/2))&&(robot[robot_counter].y<(ctx.canvas.height+STRAFRAUM_HEIGHT/2)))
                 &&robot[not_robot_counter].x<(120+STRAFRAUM_WIDTH)||robot[not_robot_counter].x>(ctx.canvas.width-120-STRAFRAUM_WIDTH)

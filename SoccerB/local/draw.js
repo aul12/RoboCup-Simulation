@@ -8,7 +8,7 @@ function draw_robot(x,y,color,visible)
         if (ctx)
         {
 
-            if(color==1)
+            if(color==2)
                 ctx.fillStyle = "#0000FF";
             else
                 ctx.fillStyle = "#FFFF00";
