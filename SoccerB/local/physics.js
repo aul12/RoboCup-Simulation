@@ -27,9 +27,11 @@ function physics()
         {
             if(robot_counter!=not_robot_counter)
             {
-                if(robot[robot_counter].isTouching(not_robot_counter))
+                if(robot[robot_counter].isTouching(robot[not_robot_counter]))
                 {
+
                     alpha = robot[not_robot_counter].angleTo(robot[robot_counter]);
+
 
                     robot[not_robot_counter].x=robot[robot_counter].x+Math.cos(alpha)*ROBOT_SIZE*2;
                     robot[not_robot_counter].y=robot[robot_counter].y+Math.sin(alpha)*ROBOT_SIZE*2;
