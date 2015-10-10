@@ -1,4 +1,4 @@
-#RoboterSimulation
+#RoboCup-Simulation
 
 A RoboCup Junior Soccer-B Simulation.
 
