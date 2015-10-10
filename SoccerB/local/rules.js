@@ -12,12 +12,12 @@ function checkGoal(){
     if(ball_y>(ctx.canvas.height/2)-(GOAL_WIDTH/2)&&ball_y<(ctx.canvas.height/2)+(GOAL_WIDTH/2))    //Check Y
     {
         //Check X
-        if(ball_x+28<LEFT)
+        if((ball_x-14)<(LEFT-20))
         {
             goals_team1++;
             goal = true;
         }
-        else if(ball_x-28>RIGHT)
+        else if((ball_x+14)>(RIGHT+20))
         {
             goals_team2++;
             goal = true;
@@ -66,7 +66,7 @@ function checkDoubleDefence(){
 }
 
 function checkLine(){
-    for(robot_counter=0; robot_counter<ROBOTS; robot_counter++) {
+    for(var robot_counter=0; robot_counter<ROBOTS; robot_counter++) {
         if (robot_inside[robot_counter]) {
             var out = false;
             if ((robot_x[robot_counter] + ROBOT_SIZE) <= LEFT)																	//Linie
@@ -78,12 +78,7 @@ function checkLine(){
             else if ((robot_y[robot_counter] - ROBOT_SIZE) >= BOTTOM)
                 out = true;
             if (out) {
-                if (touch_robot) {
-                    robot_x[robot_counter] = ctx.canvas.width / 2;
-                    robot_y[robot_counter] = ctx.canvas.height / 2;
-                }
-                else
-                    reset_robot(robot_counter);
+                reset_robot(robot_counter);
             }
         }
     }

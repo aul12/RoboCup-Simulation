@@ -7,10 +7,10 @@ var feldImage = new Image();
 var ballImage = new Image();
 
 const SPEED=3;
-const LEFT=120;
-const RIGHT=ctx.canvas.width-120;
-const TOP=120;
-const BOTTOM = ctx.canvas.height-120;
+const LEFT=100;
+const RIGHT=ctx.canvas.width-100;
+const TOP=100;
+const BOTTOM = ctx.canvas.height-100;
 const ROBOTS = 2;
 const SPEED_SLOW=0.3;
 const ACCELERATION = 1.3;

@@ -71,14 +71,14 @@ function robot_ball_distance(robot)
 
 function robot_line(robot)
 {
-    if(robot_y[robot]>BOTTOM-20&&robot_y[robot]<BOTTOM+20)
-        return 90;
-    else if(robot_y[robot]>TOP-20&&robot_y[robot]<TOP+20)
-        return 270;
-    else if(robot_x[robot]>LEFT-20&&robot_x[robot]<LEFT+20)
+    if ((robot_x[robot] - ROBOT_SIZE) <= LEFT)																	//Linie
         return 180;
-    else if (robot_x[robot]>RIGHT-20&&robot_x[robot]<RIGHT+20)
+    else if ((robot_x[robot] + ROBOT_SIZE) >= RIGHT)
         return 0;
+    else if ((robot_y[robot] - ROBOT_SIZE) <= TOP)
+        return 270;
+    else if ((robot_y[robot] + ROBOT_SIZE) >= BOTTOM)
+        return 90;
     else
         return -1;
 }
