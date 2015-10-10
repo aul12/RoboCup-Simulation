@@ -29,16 +29,14 @@ function physics()
             {
                 if(robot[robot_counter].isTouching(robot[not_robot_counter]))
                 {
-
                     alpha = robot[not_robot_counter].angleTo(robot[robot_counter]);
-
 
                     robot[not_robot_counter].x=robot[robot_counter].x+Math.cos(alpha)*ROBOT_SIZE*2;
                     robot[not_robot_counter].y=robot[robot_counter].y+Math.sin(alpha)*ROBOT_SIZE*2;
-                    robot_x_vect[robot_counter]=SPEED_SLOW;
-                    robot_y_vect[robot_counter]=SPEED_SLOW;
-                    robot_x_vect[not_robot_counter]=SPEED_SLOW;
-                    robot_y_vect[not_robot_counter]=SPEED_SLOW;
+                    robot[robot_counter].speed.x=SPEED_SLOW;
+                    robot[robot_counter].speed.y=SPEED_SLOW;
+                    robot[not_robot_counter].speed.x=SPEED_SLOW;
+                    robot[not_robot_counter].speed.y=SPEED_SLOW;
                     touch_robot=true;
                     delta_x=ball.x-robot[robot_counter].x;
                     delta_y=ball.y-robot[robot_counter].y;
@@ -56,10 +54,10 @@ function physics()
         {
             alpha = ball.angleTo(robot[robot_counter]);
 
-            if(ball_speed_x!=0&&ball_speed_y!=0)
+            if(ball.speed.x!=0&&ball.speed.y!=0)
             {
-                einfall=Math.atan(ball_speed_y/ball_speed_x);
-                if((ball_speed_x<0))
+                einfall=Math.atan(ball.speed.y/ball.speed.x);
+                if((ball.speed.x<0))
                     einfall-=Math.PI;
                 if(einfall>2*Math.PI)
                     einfall-=2*Math.PI;
@@ -90,38 +88,38 @@ function physics()
                     factor+=SHOOT_POWER;
             }
             robot_shoot[robot_counter]=false;
-            ball_speed_x=Math.cos(alpha)*SPEED*factor*robot_x_vect[robot_counter];
-            ball_speed_y=Math.sin(alpha)*SPEED*factor*robot_y_vect[robot_counter];
+            ball.speed.x=Math.cos(alpha)*SPEED*factor*robot[robot_counter].speed.x;
+            ball.speed.y=Math.sin(alpha)*SPEED*factor*robot[robot_counter].speed.y;
             continue;
         }
     }
 
     //Ball Rolling
 
-    ball.x+=ball_speed_x;
-    ball.y+=ball_speed_y;
-    ball_speed_x*=0.98;
-    ball_speed_y*=0.98;
+    ball.x+=ball.speed.x;
+    ball.y+=ball.speed.y;
+    ball.speed.x*=0.98;
+    ball.speed.y*=0.98;
 
     //Ball reflection
     if((ball.x-14)<0)
     {
         ball.x=14;
-        ball_speed_x*=-0.7;
+        ball.speed.x*=-0.7;
     }
     else if((ball.x+14)>ctx.canvas.width)
     {
         ball.x=ctx.canvas.width-14;
-        ball_speed_x*=-0.7;
+        ball.speed.x*=-0.7;
     }
     if((ball.y-14)<0)
     {
-        ball_speed_y*=-0.7;
+        ball.speed.y*=-0.7;
         ball.y=14;
     }
     else if((ball.y+14)>ctx.canvas.height)
     {
-        ball_speed_y*=-0.7;
+        ball.speed.y*=-0.7;
         ball.y=ctx.canvas.height-14;
     }
 

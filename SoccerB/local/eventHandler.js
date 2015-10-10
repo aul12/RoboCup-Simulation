@@ -36,8 +36,8 @@ function ball_click(evt)
     var p = mouse_pos(evt);
     ball.x = p.left;
     ball.y = p.top;
-    ball_speed_x=0;
-    ball_speed_y=0;
+    ball.speed.x=0;
+    ball.speed.y=0;
     clearInterval(lop_timer_pointer);
     lop_timer_pointer=setInterval(Lack_Of_Progress,3000);
 }
@@ -87,12 +87,12 @@ function start()
     robot[3] = new gameObject((ctx.canvas.width/2)+120, (ctx.canvas.height/2), ROBOT_SIZE);
     ball.x = ctx.canvas.width /2;
     ball.y = ctx.canvas.height /2;
-    ball_speed_x=0;
-    ball_speed_y=0;
+    ball.speed.x = 0;
+    ball.speed.y = 0;
     for(var robot_counter = 0 ; robot_counter<ROBOTS; robot_counter++)
     {
-        robot_x_vect[robot_counter]=SPEED_SLOW;
-        robot_y_vect[robot_counter]=SPEED_SLOW;
+        robot[robot_counter].speed.x = SPEED_SLOW;
+        robot[robot_counter].speed.y = SPEED_SLOW;
         robot_driving_speed[robot_counter]=0;
     }
 }

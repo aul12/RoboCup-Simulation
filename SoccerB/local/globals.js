@@ -12,15 +12,8 @@ var robot_driving_speed = new Array(ROBOTS+1);
 var robot_out_timer = [0,0,0,0,0];
 var robot_dribbler = new Array(ROBOTS+1);
 var robot_shoot= new Array(ROBOTS+1);
-var robot_x_vect = new Array(ROBOTS+1);
-var robot_y_vect = new Array(ROBOTS+1);
-
 
 var ball = new gameObject(ctx.canvas.width/2, ctx.canvas.height/2, BALL_SIZE);
-var alt_ball = new gameObject(ctx.canvas.width/2, ctx.canvas.height/2, BALL_SIZE);
-
-var ball_speed_x=0;
-var ball_speed_y=0;
 
 var goals_team1=0;
 var goals_team2=0;

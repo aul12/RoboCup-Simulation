@@ -165,6 +165,6 @@ function reset_robot(robotn)
         console.log("Der Roboter ist aus dem Feld gefahren");
     robot[robotn].x=0;
     robot[robotn].y =0;
-    robot_x_vect[robotn]=SPEED_SLOW;
-    robot_y_vect[robotn]=SPEED_SLOW;
+    robot[robotn].speed.x = SPEED_SLOW;
+    robot[robotn].speed.y = SPEED_SLOW;
 }

@@ -23,20 +23,20 @@ function move_robot(angle, robotn, speed, degree)
     speed=(speed+robot_driving_speed[robotn]*199)/200;
     if(Math.abs((robot_driving_angle[robotn]+Math.PI)-(angle+Math.PI))>Math.PI*0.5)
     {
-        robot_x_vect[robotn]=SPEED_SLOW;
-        robot_y_vect[robotn]=SPEED_SLOW;
+        robot[robotn].speed.x=SPEED_SLOW;
+        robot[robotn].speed.y=SPEED_SLOW;
     }
     else
     {
-        robot_x_vect[robotn]*=ACCELERATION;
-        robot_y_vect[robotn]*=ACCELERATION;
-        if(robot_x_vect[robotn]>1)
-            robot_x_vect[robotn]=1;
-        if(robot_y_vect[robotn]>1)
-            robot_y_vect[robotn]=1;
+        robot[robotn].speed.x*=ACCELERATION;
+        robot[robotn].speed.y*=ACCELERATION;
+        if(robot[robotn].speed.x>1)
+            robot[robotn].speed.x=1;
+        if(robot[robotn].speed.y>1)
+            robot[robotn].speed.y=1;
     }
-    delta_x*=robot_x_vect[robotn];
-    delta_y*=robot_y_vect[robotn];
+    delta_x*=robot[robotn].speed.x;
+    delta_y*=robot[robotn].speed.y;
     robot[robotn].x+=delta_x;
     robot[robotn].y+=delta_y;
 
