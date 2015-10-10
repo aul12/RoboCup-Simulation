@@ -4,7 +4,8 @@ function checkRules(){
     checkGoal();
     checkLine();
 
-    lack_of_progress = (Math.abs(alt_ball.x - ball.x) + Math.abs(alt_ball.y - ball.y)) < 0.1 && ball_speed_x+ball_speed_y<0.00001;
+    lack_of_progress = ball.speed.x < 0.00001 && ball.speed.y < 0.00001;
+
 }
 
 function checkGoal(){
@@ -147,8 +148,8 @@ function Lack_Of_Progress()
             default:
                 break;
         }
-        ball_speed_x=0;
-        ball_speed_y=0;
+        ball.speed.x = 0;
+        ball.speed.y = 0;
         console.log("Lack of Progress");
         clearInterval(lop_timer_pointer);
         lop_timer_pointer=setInterval(Lack_Of_Progress,3000);
