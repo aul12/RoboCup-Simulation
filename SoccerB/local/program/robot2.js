@@ -22,10 +22,10 @@ function robot_2_software()
         default:
             if(angle>180)
                 angle-=360;
-            if(robot_ball_distance(2)<2&&angle>-10&&angle<10)
+            if(robot_ball_in_dribbler(2))
             {
                 angle=0;
-                if(Math.abs(robot_distance(2,4)-robot_distance(2,2))<20)
+                if(Math.abs(robot_distance(2,Distance.LEFT)-robot_distance(2,Distance.RIGHT))<(GOAL_WIDTH/2))
                 {
                     enable_dribbler(2, false);
                     shoot(2);

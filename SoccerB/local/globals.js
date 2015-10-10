@@ -3,6 +3,8 @@
  */
 var canvas = document.getElementById('myCanvas');
 var ctx = canvas.getContext("2d");
+var feldImage = new Image();
+var ballImage = new Image();
 
 const SPEED=3;
 const LEFT=120;
@@ -46,14 +48,10 @@ var goals_team2=0;
 var lack_of_progress=false;
 var lop_timer=false;
 var isr_started=false;
+var isr_pointer;
 var lop_timer_pointer;
 var neutral_x_abstand = 135;
 var neutral_y_abstand = 90;
 
 var robot_prog;
 const DEGREE = true;
-
-const VORNE = 0;
-const HINTEN = 2;
-const LINKS = 1;
-const RECHTS = 3;

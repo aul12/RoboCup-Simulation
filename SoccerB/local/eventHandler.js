@@ -3,8 +3,13 @@
  */
 //######################Init#########################################
 start();
-draw_clear();
-draw();
+feldImage.src = 'http://pi.bbcrobotics.org/support/img/Feild2k.png';
+ballImage.src = 'https://shop-legoeducation-com.srv103.128secure.net/Resources/Files/product-images/hitechnic-sensors/hitechnic-ir-electronic-ball-ms1005.png';
+feldImage.onload = function(){
+    draw_clear();
+    draw();
+};
+
 
 function mouse_pos(evt)
 {
@@ -60,6 +65,7 @@ function interrupt()
         }
     }
     physics();
+    checkRules();
     draw();
 }
 
@@ -84,7 +90,6 @@ function start()
         robot_y_vect[robot_counter]=SPEED_SLOW;
         robot_driving_speed[robot_counter]=0;
     }
-
 }
 
 function isr_init()
@@ -92,7 +97,7 @@ function isr_init()
     start();
     if(!isr_started)
     {
-        setInterval(interrupt,10);
+        isr_pointer = setInterval(interrupt,10);
         lop_timer_pointer=setInterval(Lack_Of_Progress,3000);
         isr_started=true;
     }

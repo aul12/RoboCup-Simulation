@@ -132,3 +132,15 @@ function robot_distance(robot, direction)
     }
     return 0;
 }
+
+function robot_ball_in_dribbler(robot) {
+    var delta_x = ball_x - robot_x[robot];
+    var delta_y = ball_y - robot_y[robot];
+
+
+    if (Math.sqrt(delta_x * delta_x + delta_y * delta_y) < ROBOT_SIZE + 14){
+        if(robot_ball_angle(robot,true)>345||robot_ball_angle(robot,true)<15)
+            return true;
+    }
+    return false;
+}
