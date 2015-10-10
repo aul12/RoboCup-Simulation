@@ -2,7 +2,7 @@ function gameObject(x,y,radius) {
     this.x = x;
     this.y = y;
     this.radius = radius;
-    this.speed = new Speed();
+    this.speed = new Vector(0,0);
 
     this.distanceTo = function(object){
         var delta_x = this.x-object.x;
@@ -31,7 +31,7 @@ function gameObject(x,y,radius) {
     }
 }
 
-function Speed(){
-    this.x = 0;
-    this.y = 0;
+function Vector(x,y){
+    this.x = x;
+    this.y = y;
 }

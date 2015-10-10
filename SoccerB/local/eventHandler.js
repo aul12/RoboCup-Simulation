@@ -11,9 +11,6 @@ feldImage.onload = function(){
 };
 
 
-
-
-
 function mouse_pos(evt)
 {
     if(!evt) evt = window.event;

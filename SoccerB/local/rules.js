@@ -96,20 +96,20 @@ function Lack_Of_Progress()
 
         var delta_x;
         var delta_y;
-        delta_x=(robot[1].x-(neutral_x_abstand+120))+(robot[2].x-(neutral_x_abstand+120));
-        delta_y=(robot[1].y-(neutral_y_abstand+120))+(robot[1].y-(neutral_y_abstand+120));
+        delta_x=(robot[1].x-(NEUTRAL_POSITION.x+120))+(robot[2].x-(NEUTRAL_POSITION.x+120));
+        delta_y=(robot[1].y-(NEUTRAL_POSITION.y+120))+(robot[1].y-(NEUTRAL_POSITION.y+120));
         abstand[1]=Math.sqrt(delta_x*delta_x+delta_y*delta_y);
 
-        delta_x=(robot[1].x-(neutral_x_abstand+120))+(robot[1].x-(neutral_x_abstand+120));
-        delta_y=(robot[1].y-(ctx.canvas.height-neutral_y_abstand-120))+(robot[1].y-(ctx.canvas.height-neutral_y_abstand-120));
+        delta_x=(robot[1].x-(NEUTRAL_POSITION.x+120))+(robot[1].x-(NEUTRAL_POSITION.x+120));
+        delta_y=(robot[1].y-(ctx.canvas.height-NEUTRAL_POSITION.y-120))+(robot[1].y-(ctx.canvas.height-NEUTRAL_POSITION.y-120));
         abstand[2]=Math.sqrt(delta_x*delta_x+delta_y*delta_y);
 
-        delta_x=(robot[1].x-(ctx.canvas.width-neutral_x_abstand-120))+(robot[1].x-(ctx.canvas.width-neutral_x_abstand-120));
-        delta_y=(robot[1].y-(neutral_y_abstand+120))+(robot[1].y-(neutral_y_abstand+120));
+        delta_x=(robot[1].x-(ctx.canvas.width-NEUTRAL_POSITION.x-120))+(robot[1].x-(ctx.canvas.width-NEUTRAL_POSITION.x-120));
+        delta_y=(robot[1].y-(NEUTRAL_POSITION.y+120))+(robot[1].y-(NEUTRAL_POSITION.y+120));
         abstand[3]=Math.sqrt(delta_x*delta_x+delta_y*delta_y);
 
-        delta_x=(robot[1].x-(ctx.canvas.width-neutral_x_abstand-120))+(robot[1].x-(ctx.canvas.width-neutral_x_abstand-120));
-        delta_y=(robot[1].y-(ctx.canvas.height-neutral_y_abstand-120))+(robot[1].y-(ctx.canvas.height-neutral_y_abstand-120));
+        delta_x=(robot[1].x-(ctx.canvas.width-NEUTRAL_POSITION.x-120))+(robot[1].x-(ctx.canvas.width-NEUTRAL_POSITION.x-120));
+        delta_y=(robot[1].y-(ctx.canvas.height-NEUTRAL_POSITION.y-120))+(robot[1].y-(ctx.canvas.height-NEUTRAL_POSITION.y-120));
         abstand[4]=Math.sqrt(delta_x*delta_x+delta_y*delta_y);
 
         delta_x=(robot[1].x-(ctx.canvas.width/2))+(robot[1].x-(ctx.canvas.width/2));
@@ -126,20 +126,20 @@ function Lack_Of_Progress()
         switch (kl)
         {
             case 1:
-                ball.x=neutral_x_abstand+120;
-                ball.y=neutral_y_abstand+120;
+                ball.x=NEUTRAL_POSITION.x+120;
+                ball.y=NEUTRAL_POSITION.y+120;
                 break;
             case 2:
-                ball.x=neutral_x_abstand+120;
-                ball.y=ctx.canvas.height-neutral_y_abstand-120;
+                ball.x=NEUTRAL_POSITION.x+120;
+                ball.y=ctx.canvas.height-NEUTRAL_POSITION.y-120;
                 break;
             case 3:
-                ball.x=ctx.canvas.width-neutral_x_abstand-120;
-                ball.y=neutral_y_abstand+120;
+                ball.x=ctx.canvas.width-NEUTRAL_POSITION.x-120;
+                ball.y=NEUTRAL_POSITION.y+120;
                 break;
             case 4:
-                ball.x=ctx.canvas.width-neutral_x_abstand-120;
-                ball.y=ctx.canvas.height-neutral_y_abstand-120;
+                ball.x=ctx.canvas.width-NEUTRAL_POSITION.x-120;
+                ball.y=ctx.canvas.height-NEUTRAL_POSITION.y-120;
                 break;
             case  5:
                 ball.x=ctx.canvas.width/2;

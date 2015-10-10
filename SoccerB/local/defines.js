@@ -15,10 +15,10 @@ const ROBOTS = 2;
 const SPEED_SLOW=0.3;
 const ACCELERATION = 1.3;
 const SHOOT_POWER = 1.0;
-const CAMERA_HEIGHT = 10;
-const ROBOT_HEIGHT=1;
 const STRAFRAUM_WIDTH = 90;
 const STRAFRAUM_HEIGHT  = 270;
 const GOAL_WIDTH = 180;
 const ROBOT_SIZE = 33;
 const BALL_SIZE = 14;
+
+const NEUTRAL_POSITION = new Vector(140, 78);
