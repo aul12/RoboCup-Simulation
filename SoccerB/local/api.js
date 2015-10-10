@@ -1,11 +1,12 @@
 /**
  * Created by paul on 11.03.15.
  */
-function move_robot(angle, robot, speed, degree)
+function move_robot(angle, robotn, speed, degree)
 {
+
     if(degree)
         angle=angle/180*Math.PI;
-    if(robot>2)
+    if(robotn>2)
         angle+=Math.PI;
     if(angle>2*Math.PI)
         angle-=2*Math.PI;
@@ -17,36 +18,39 @@ function move_robot(angle, robot, speed, degree)
     {
         angle-=2*Math.PI;
     }
-    angle=(angle+robot_driving_angle[robot]*19)/20;
-    speed=(speed+robot_driving_speed[robot]*199)/200;
-    if(Math.abs((robot_driving_angle[robot]+Math.PI)-(angle+Math.PI))>Math.PI*0.5)
+
+    angle=(angle+robot_driving_angle[robotn]*19)/20;
+    speed=(speed+robot_driving_speed[robotn]*199)/200;
+    if(Math.abs((robot_driving_angle[robotn]+Math.PI)-(angle+Math.PI))>Math.PI*0.5)
     {
-        robot_x_vect[robot]=SPEED_SLOW;
-        robot_y_vect[robot]=SPEED_SLOW;
+        robot_x_vect[robotn]=SPEED_SLOW;
+        robot_y_vect[robotn]=SPEED_SLOW;
     }
     else
     {
-        robot_x_vect[robot]*=ACCELERATION;
-        robot_y_vect[robot]*=ACCELERATION;
-        if(robot_x_vect[robot]>1)
-            robot_x_vect[robot]=1;
-        if(robot_y_vect[robot]>1)
-            robot_y_vect[robot]=1;
+        robot_x_vect[robotn]*=ACCELERATION;
+        robot_y_vect[robotn]*=ACCELERATION;
+        if(robot_x_vect[robotn]>1)
+            robot_x_vect[robotn]=1;
+        if(robot_y_vect[robotn]>1)
+            robot_y_vect[robotn]=1;
     }
-    delta_x*=robot_x_vect[robot];
-    delta_y*=robot_y_vect[robot];
-    robot_x[robot]+=delta_x;
-    robot_y[robot]+=delta_y;
-    robot_driving_speed[robot]=speed;
-    robot_driving_angle[robot]=angle;
+    delta_x*=robot_x_vect[robotn];
+    delta_y*=robot_y_vect[robotn];
+    robot[robotn].x+=delta_x;
+    robot[robotn].y+=delta_y;
+
+    robot_driving_speed[robotn]=speed;
+    robot_driving_angle[robotn]=angle;
+
 }
 
-function robot_ball_angle(robot, degree)
+function robot_ball_angle(robotn, degree)
 {
-    var delta_x = ball_x-robot_x[robot];
-    var delta_y = ball_y-robot_y[robot];
+    var delta_x = ball.x-robot[robotn].x;
+    var delta_y = ball.y-robot[robotn].y;
     var angle=Math.atan(delta_y/delta_x);
-    if(robot>=3)
+    if(robotn>=2)
     {
         angle+=Math.PI;
         angle*=-1;
@@ -62,35 +66,35 @@ function robot_ball_angle(robot, degree)
     return angle;
 }
 
-function robot_ball_distance(robot)
+function robot_ball_distance(robotn)
 {
-    var delta_x = ball_x-robot_x[robot];
-    var delta_y = ball_y-robot_y[robot];
+    var delta_x = ball.x-robot[robotn].x;
+    var delta_y = ball.y-robot[robotn].y;
     return (Math.sqrt(delta_x*delta_x+delta_y*delta_y)-ROBOT_SIZE-14)/4;
 }
 
-function robot_line(robot)
+function robot_line(robotn)
 {
-    if ((robot_x[robot] - ROBOT_SIZE) <= LEFT)																	//Linie
+    if ((robot[robotn].x - ROBOT_SIZE) <= LEFT)																	//Linie
         return 180;
-    else if ((robot_x[robot] + ROBOT_SIZE) >= RIGHT)
+    else if ((robot[robotn].x + ROBOT_SIZE) >= RIGHT)
         return 0;
-    else if ((robot_y[robot] - ROBOT_SIZE) <= TOP)
+    else if ((robot[robotn].y - ROBOT_SIZE) <= TOP)
         return 270;
-    else if ((robot_y[robot] + ROBOT_SIZE) >= BOTTOM)
+    else if ((robot[robotn].y + ROBOT_SIZE) >= BOTTOM)
         return 90;
     else
         return -1;
 }
 
-function enable_dribbler(robot, power)
+function enable_dribbler(robotn, power)
 {
-    robot_dribbler[robot]=power;
+    robot_dribbler[robotn]=power;
 }
 
-function shoot(robot)
+function shoot(robotn)
 {
-    robot_shoot[robot]=true;
+    robot_shoot[robotn]=true;
 }
 
 Distance = {
@@ -100,20 +104,20 @@ Distance = {
     LEFT  : 4
 };
 
-function robot_distance(robot, direction)
+function robot_distance(robotn, direction)
 {
-    if(robot<=2)
+    if(robotn<=2)
     {
         switch(direction)
         {
             case 1:
-                return ctx.canvas.width-robot_x[robot];
+                return ctx.canvas.width-robot[robotn].x;
             case 2:
-                return ctx.canvas.height-robot_y[robot];
+                return ctx.canvas.height-robot[robotn].y;
             case 3:
-                return robot_x[robot];
+                return robot[robotn].x;
             case 4:
-                return robot_y[robot];
+                return robot[robotn].y;
         }
     }
     else
@@ -121,25 +125,25 @@ function robot_distance(robot, direction)
         switch(direction)
         {
             case 1:
-                return robot_x[robot];
+                return robot[robotn].x;
             case 2:
-                return robot_y[robot];
+                return robot[robotn].y;
             case 3:
-                return ctx.canvas.width-robot_x[robot];
+                return ctx.canvas.width-robot[robotn].x;
             case 4:
-                return ctx.canvas.height-robot_y[robot];
+                return ctx.canvas.height-robot[robotn].y;
         }
     }
     return 0;
 }
 
-function robot_ball_in_dribbler(robot) {
-    var delta_x = ball_x - robot_x[robot];
-    var delta_y = ball_y - robot_y[robot];
+function robot_ball_in_dribbler(robotn) {
+    var delta_x = ball.x - robot[robotn].x;
+    var delta_y = ball.y - robot[robotn].y;
 
 
     if (Math.sqrt(delta_x * delta_x + delta_y * delta_y) < ROBOT_SIZE + 14){
-        if(robot_ball_angle(robot,true)>345||robot_ball_angle(robot,true)<15)
+        if(robot_ball_angle(robotn,true)>345||robot_ball_angle(robotn,true)<15)
             return true;
     }
     return false;

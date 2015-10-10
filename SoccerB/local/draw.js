@@ -2,15 +2,11 @@
 
 function draw_robot(x,y,color,visible)
 {
+
     if (canvas && canvas.getContext && visible)
     {
         if (ctx)
         {
-
-            var distance = Math.sqrt((x-ctx.canvas.width)*(x-ctx.canvas.width) + (y-ctx.canvas.height)*(y-ctx.canvas.height));
-            var alpha = Math.atan(distance/CAMERA_HEIGHT);
-            var movement =  Math.tan(alpha)* ROBOT_HEIGHT;
-            var movement_alpha = Math.atan((x-ctx.canvas.width)/(y-ctx.canvas.height));
 
             if(color==1)
                 ctx.fillStyle = "#0000FF";
@@ -49,14 +45,14 @@ function draw_clear()	                                                          
 function draw()	                                                                                                //Zeichnen
 {
     draw_clear();
-    draw_ball(ball_x,ball_y,true);
+    draw_ball(ball.x,ball.y,true);
     if(ROBOTS>=1)
-        draw_robot(robot_x[1],robot_y[1],1,robot_inside[1]);
+        draw_robot(robot[0].x,robot[0].y,1,robot_inside[0]);
     if(ROBOTS>=2)
-        draw_robot(robot_x[2],robot_y[2],1,robot_inside[2]);
+        draw_robot(robot[1].x,robot[1].y,1,robot_inside[1]);
     if(ROBOTS>=3)
-        draw_robot(robot_x[3],robot_y[3],2,robot_inside[3]);
+        draw_robot(robot[2].x,robot[2].y,2,robot_inside[2]);
     if(ROBOTS>=4)
-        draw_robot(robot_x[4],robot_y[4],2,robot_inside[4]);
+        draw_robot(robot[3].x,robot[3].y,2,robot_inside[3]);
 
 }

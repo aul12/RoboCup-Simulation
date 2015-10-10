@@ -7,49 +7,42 @@ function physics()
     var delta_x, delta_y, alpha, not_robot_counter, einfall;
     var touch_robot=false;
     var pushing= new Array(ROBOTS);
-    for(var robot_counter= 1; robot_counter<=ROBOTS; robot_counter++)
+    for(var robot_counter= 0; robot_counter<ROBOTS; robot_counter++)
     {
         //Check if the robots are standing in the goal
-        if(robot_y[robot_counter]>(ctx.canvas.height/2)-(GOAL_WIDTH/2)&&robot_y[robot_counter]<(ctx.canvas.height/2)+(GOAL_WIDTH/2)&&robot_x[robot_counter]<LEFT+40)                                 //Im Tor stehen
+        if(robot[robot_counter].y>(ctx.canvas.height/2)-(GOAL_WIDTH/2)&&robot[robot_counter].y<(ctx.canvas.height/2)+(GOAL_WIDTH/2)&&robot[robot_counter].x<LEFT+40)
         {
-            robot_x[robot_counter] = LEFT + ROBOT_SIZE;
+            robot[robot_counter].x = LEFT + ROBOT_SIZE;
             continue;
         }
-        else if(robot_y[robot_counter]>(ctx.canvas.height/2)-(GOAL_WIDTH/2)&&robot_y[robot_counter]<(ctx.canvas.height/2)+(GOAL_WIDTH/2)&&robot_x[robot_counter]>RIGHT-40)
+        else if(robot[robot_counter]>(ctx.canvas.height/2).y-(GOAL_WIDTH/2)&&robot[robot_counter].y<(ctx.canvas.height/2)+(GOAL_WIDTH/2)&&robot[robot_counter].x>RIGHT-40)
         {
-            robot_x[robot_counter] = RIGHT - ROBOT_SIZE;
+            robot[robot_counter].x = RIGHT - ROBOT_SIZE;
             continue;
         }
         touch_robot=false;
 
         //Check if the robots are touching
-        for(not_robot_counter=1; not_robot_counter<=ROBOTS ; not_robot_counter++)
+        for(not_robot_counter=0; not_robot_counter<ROBOTS ; not_robot_counter++)
         {
             if(robot_counter!=not_robot_counter)
             {
-                delta_x=robot_x[not_robot_counter]-robot_x[robot_counter];
-                delta_y=robot_y[not_robot_counter]-robot_y[robot_counter];
-                if(Math.sqrt(delta_x*delta_x+delta_y*delta_y)<ROBOT_SIZE*2)
+                if(robot[robot_counter].isTouching(not_robot_counter))
                 {
-                    alpha=Math.atan(delta_y/delta_x);
-                    if((delta_x<0))
-                        alpha-=Math.PI;
-                    if(alpha>2*Math.PI)
-                        alpha-=2*Math.PI;
-                    if(alpha<0)
-                        alpha+=2*Math.PI;
-                    robot_x[not_robot_counter]=robot_x[robot_counter]+Math.cos(alpha)*ROBOT_SIZE*2;
-                    robot_y[not_robot_counter]=robot_y[robot_counter]+Math.sin(alpha)*ROBOT_SIZE*2;
+                    alpha = robot[not_robot_counter].angleTo(robot[robot_counter]);
+
+                    robot[not_robot_counter].x=robot[robot_counter].x+Math.cos(alpha)*ROBOT_SIZE*2;
+                    robot[not_robot_counter].y=robot[robot_counter].y+Math.sin(alpha)*ROBOT_SIZE*2;
                     robot_x_vect[robot_counter]=SPEED_SLOW;
                     robot_y_vect[robot_counter]=SPEED_SLOW;
                     robot_x_vect[not_robot_counter]=SPEED_SLOW;
                     robot_y_vect[not_robot_counter]=SPEED_SLOW;
                     touch_robot=true;
-                    delta_x=ball_x-robot_x[robot_counter];
-                    delta_y=ball_y-robot_y[robot_counter];
+                    delta_x=ball.x-robot[robot_counter].x;
+                    delta_y=ball.y-robot[robot_counter].y;
                     pushing[robot_counter] = Math.sqrt(delta_x * delta_x + delta_y * delta_y) < 14+ROBOT_SIZE;
-                    delta_x=ball_x-robot_x[not_robot_counter];
-                    delta_y=ball_y-robot_y[not_robot_counter];
+                    delta_x=ball.x-robot[not_robot_counter].x;
+                    delta_y=ball.y-robot[not_robot_counter].y;
                     pushing[not_robot_counter] = Math.sqrt(delta_x * delta_x + delta_y * delta_y) < 14+ROBOT_SIZE;
                     continue;
                 }
@@ -57,20 +50,9 @@ function physics()
         }
 
         //Check if the robot is touching the ball
-        delta_x=ball_x-robot_x[robot_counter];
-        delta_y=ball_y-robot_y[robot_counter];
-        alt_ball_x=ball_x;
-        alt_ball_y=ball_y;
-
-        if(Math.sqrt(delta_x*delta_x+delta_y*delta_y)<ROBOT_SIZE+14)
+        if(robot[robot_counter].isTouching(ball))
         {
-            alpha=Math.atan(delta_y/delta_x);
-            if((delta_x<0))
-                alpha-=Math.PI;
-            if(alpha>2*Math.PI)
-                alpha-=2*Math.PI;
-            if(alpha<0)
-                alpha+=2*Math.PI;
+            alpha = ball.angleTo(robot[robot_counter]);
 
             if(ball_speed_x!=0&&ball_speed_y!=0)
             {
@@ -92,15 +74,15 @@ function physics()
 
             //Dribbler/Shoot
             var factor=1;
-            ball_x=robot_x[robot_counter]+Math.cos(alpha)*54;
-            ball_y=robot_y[robot_counter]+Math.sin(alpha)*54;
+            ball.x=robot[robot_counter].x+Math.cos(alpha)*54;
+            ball.y=robot[robot_counter].y+Math.sin(alpha)*54;
             if(robot_ball_angle(robot_counter,true)>345||robot_ball_angle(robot_counter,true)<15)
             {
                 if(robot_dribbler[robot_counter])
                 {
                     factor=0.5;
-                    ball_x=(99*(robot_x[robot_counter]+Math.cos(alpha)*(ROBOT_SIZE+5))+(robot_x[robot_counter]+(ROBOT_SIZE+5)))/100;
-                    ball_y=robot_y[robot_counter]+Math.sin(alpha)*ROBOT_SIZE;
+                    ball.x=(99*(robot[robot_counter].x+Math.cos(alpha)*(ROBOT_SIZE+5))+(robot[robot_counter].x+(ROBOT_SIZE+5)))/100;
+                    ball.y=robot[robot_counter].y+Math.sin(alpha)*ROBOT_SIZE;
                 }
                 if(robot_shoot[robot_counter])
                     factor+=SHOOT_POWER;
@@ -114,31 +96,32 @@ function physics()
 
     //Ball Rolling
 
-    ball_x+=ball_speed_x;
-    ball_y+=ball_speed_y;
+    ball.x+=ball_speed_x;
+    ball.y+=ball_speed_y;
     ball_speed_x*=0.98;
     ball_speed_y*=0.98;
 
     //Ball reflection
-    if((ball_x-14)<0)
+    if((ball.x-14)<0)
     {
-        ball_x=14;
+        ball.x=14;
         ball_speed_x*=-0.7;
     }
-    else if((ball_x+14)>ctx.canvas.width)
+    else if((ball.x+14)>ctx.canvas.width)
     {
-        ball_x=ctx.canvas.width-14;
+        ball.x=ctx.canvas.width-14;
         ball_speed_x*=-0.7;
     }
-    if((ball_y-14)<0)
+    if((ball.y-14)<0)
     {
         ball_speed_y*=-0.7;
-        ball_y=14;
+        ball.y=14;
     }
-    else if((ball_y+14)>ctx.canvas.height)
+    else if((ball.y+14)>ctx.canvas.height)
     {
         ball_speed_y*=-0.7;
-        ball_y=ctx.canvas.height-14;
+        ball.y=ctx.canvas.height-14;
     }
+
 }
 

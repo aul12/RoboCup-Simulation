@@ -11,6 +11,9 @@ feldImage.onload = function(){
 };
 
 
+
+
+
 function mouse_pos(evt)
 {
     if(!evt) evt = window.event;
@@ -31,8 +34,8 @@ function ball_click(evt)
 {
     if (!evt) evt = window.event;
     var p = mouse_pos(evt);
-    ball_x= p.left;
-    ball_y= p.top;
+    ball.x = p.left;
+    ball.y = p.top;
     ball_speed_x=0;
     ball_speed_y=0;
     clearInterval(lop_timer_pointer);
@@ -44,23 +47,29 @@ function ball_click(evt)
 //######################Main#########################################
 function interrupt()
 {
-    for(var robot_counter=1; robot_counter<=ROBOTS; robot_counter++)
+
+    for(var robot_counter=0; robot_counter<ROBOTS; robot_counter++)
     {
+
+
         if(robot_inside[robot_counter])
         {
-            if(robot_counter==1)
+            if(robot_counter==0)
                 robot_1_software();
-            else if(robot_counter==2)
+            else if(robot_counter==1) {
                 robot_2_software();
+            }
         }
         else
         {
+
             if(++robot_out_timer[robot_counter]>=200)
             {
                 robot_inside[robot_counter]=true;
-                robot_x[robot_counter]=(ctx.canvas.width/2);
-                robot_y[robot_counter] =(ctx.canvas.height/2);
+                robot[robot_counter].x = (ctx.canvas.width/2);
+                robot[robot_counter].y = (ctx.canvas.height/2);
                 robot_out_timer[robot_counter]=0;
+
             }
         }
     }
@@ -72,19 +81,15 @@ function interrupt()
 //######################Start Software#########################################
 function start()
 {
-    robot_x[1]=60+LEFT;
-    robot_y[1] =(ctx.canvas.height/2);
-    robot_x[2] =(ctx.canvas.width/2)-120;
-    robot_y[2] =(ctx.canvas.height/2);
-    robot_x[3]=RIGHT-60;
-    robot_y[3] =(ctx.canvas.height/2);
-    robot_x[4] =(ctx.canvas.width/2)+120;
-    robot_y[4] =(ctx.canvas.height/2);
-    ball_x = (ctx.canvas.width/2);
-    ball_y = (ctx.canvas.height/2);
+    robot[0] = new gameObject(60+LEFT, ctx.canvas.height/2, ROBOT_SIZE);
+    robot[1] = new gameObject((ctx.canvas.width/2)-120, (ctx.canvas.height/2), ROBOT_SIZE);
+    robot[2] = new gameObject(RIGHT-60, (ctx.canvas.height/2), ROBOT_SIZE);
+    robot[3] = new gameObject((ctx.canvas.width/2)+120, (ctx.canvas.height/2), ROBOT_SIZE);
+    ball.x = ctx.canvas.width /2;
+    ball.y = ctx.canvas.height /2;
     ball_speed_x=0;
     ball_speed_y=0;
-    for(var robot_counter =1 ; robot_counter<=ROBOTS; robot_counter++)
+    for(var robot_counter = 0 ; robot_counter<ROBOTS; robot_counter++)
     {
         robot_x_vect[robot_counter]=SPEED_SLOW;
         robot_y_vect[robot_counter]=SPEED_SLOW;
