@@ -21,22 +21,16 @@ function move_robot(angle, robotn, speed, degree)
         angle-=2*Math.PI;
     }
 
-    angle=(angle+robot_driving_angle[robotn]*19)/20;
-    speed=(speed+robot_driving_speed[robotn]*199)/200;
-    if(Math.abs((robot_driving_angle[robotn]+Math.PI)-(angle+Math.PI))>Math.PI*0.5)
-    {
-        robot[robotn].speed.x=SPEED_SLOW;
-        robot[robotn].speed.y=SPEED_SLOW;
-    }
-    else
-    {
-        robot[robotn].speed.x*=ACCELERATION;
-        robot[robotn].speed.y*=ACCELERATION;
-        if(robot[robotn].speed.x>1)
-            robot[robotn].speed.x=1;
-        if(robot[robotn].speed.y>1)
-            robot[robotn].speed.y=1;
-    }
+    angle=(angle+robot_driving_angle[robotn]*29)/30;
+    speed=(speed+robot_driving_speed[robotn]*299)/300;
+
+
+    robot[robotn].speed.x*=ACCELERATION;
+    robot[robotn].speed.y*=ACCELERATION;
+    if(robot[robotn].speed.x>1)
+        robot[robotn].speed.x=1;
+    if(robot[robotn].speed.y>1)
+        robot[robotn].speed.y=1;
     delta_x*=robot[robotn].speed.x;
     delta_y*=robot[robotn].speed.y;
     robot[robotn].x+=delta_x;
@@ -99,12 +93,6 @@ function shoot(robotn)
     robot_shoot[robotn]=true;
 }
 
-Distance = {
-    FRONT : 1,
-    RIGHT : 2,
-    BACK  : 3,
-    LEFT  : 4
-};
 
 function robot_distance(robotn, direction)
 {

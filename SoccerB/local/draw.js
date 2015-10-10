@@ -8,10 +8,10 @@ function draw_robot(x,y,color,visible)
         if (ctx)
         {
 
-            if(color==2)
-                ctx.fillStyle = "#0000FF";
-            else
+            if(color==1)
                 ctx.fillStyle = "#FFFF00";
+            else
+                ctx.fillStyle = "#0000FF";
             ctx.strokeStyle = "#000000";
             ctx.lineWidth = 1;
             ctx.beginPath();
