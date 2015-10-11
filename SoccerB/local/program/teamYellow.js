@@ -68,12 +68,7 @@ function strikerYellow()
                 }
             }
             else if(api.ballDistance()<30){
-                if(Math.abs(angle)>90)
-                    angle = 180 - (Math.atan(3/(api.ballDistance()))*180/Math.PI);
-                else if(Math.abs(angle)>60)
-                    angle*=2;
-                else
-                    angle*=3;
+                
             }
 
 
