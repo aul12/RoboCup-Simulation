@@ -55,19 +55,20 @@ function interrupt()
 
         if(robot_inside[robot_counter])
         {
+            api.robotn = robot_counter;
             switch(robot_counter)
             {
                 case 0:
-                    robot_1_software();
+                    goalieYellow();
                     break;
                 case 1:
-                    robot_2_software();
+                    strikerYellow();
                     break;
                 case 2:
-                    program_striker();
+                    goalieBlue();
                     break;
                 case 3:
-                    program_goaly();
+                    strikerBlue();
                     break;
             }
         }

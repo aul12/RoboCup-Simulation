@@ -25,3 +25,5 @@ var isr_started=false;
 var isr_pointer;
 var lop_timer_pointer;
 
+var api = new SoccerAPI(Angle.DEGREE);
+

@@ -23,9 +23,3 @@ const BALL_SIZE = 14;
 
 const NEUTRAL_POSITION = new Vector(140, 78);
 
-Distance = {
-    FRONT : 1,
-    RIGHT : 2,
-    BACK  : 3,
-    LEFT  : 4
-};
