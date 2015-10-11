@@ -82,7 +82,7 @@ function physics()
             ball.x=robot[robot_counter].x+Math.cos(alpha)*54;
             ball.y=robot[robot_counter].y+Math.sin(alpha)*54;
             api.robotn = robot_counter;
-            if(api.robot_ball_angle(true)>345||api.robot_ball_angle(true)<15)
+            if(api.ballAngle()>345||api.ballAngle(true)<15)
             {
                 if(robot_dribbler[robot_counter])
                 {

@@ -140,7 +140,7 @@ function SoccerAPI(angle){
 
 
         if (Math.sqrt(delta_x * delta_x + delta_y * delta_y) < ROBOT_SIZE + 14){
-            if(this.robot_ball_angle(true)>345||this.robot_ball_angle(true)<15)
+            if(this.ballAngle()>345||this.ballAngle()<15)
                 return true;
         }
         return false;
