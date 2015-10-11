@@ -39,7 +39,6 @@ function draw_ball(x,y,angle,visible)	                                          
         ctx.drawImage(ballImage, -BALL_SIZE, -BALL_SIZE, BALL_SIZE*2, BALL_SIZE*2);
         ctx.rotate(-angle);
         ctx.translate(-x, -y);
-        console.log(angle);
     }
 }
 

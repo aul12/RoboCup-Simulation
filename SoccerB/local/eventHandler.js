@@ -115,7 +115,7 @@ function isr_init()
     if(!isr_started)
     {
         isr_pointer = setInterval(interrupt,10);
-        lop_timer_pointer=setInterval(Lack_Of_Progress,3000);
+        //lop_timer_pointer=setInterval(Lack_Of_Progress,3000);
         isr_started=true;
     }
 }

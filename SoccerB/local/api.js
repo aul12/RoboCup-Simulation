@@ -15,7 +15,7 @@ function SoccerAPI(angle){
     };
 
 
-    this.move_robot = function(angle, speed) {
+    this.move = function(angle, speed) {
 
         if(this.degree)
             angle=angle/180*Math.PI;
@@ -54,7 +54,7 @@ function SoccerAPI(angle){
 
     };
 
-    this.robot_ball_angle = function() {
+    this.ballAngle = function() {
         var delta_x = ball.x-robot[this.robotn].x;
         var delta_y = ball.y-robot[this.robotn].y;
         var angle=Math.atan(delta_y/delta_x);
@@ -74,7 +74,7 @@ function SoccerAPI(angle){
         return angle;
     };
 
-    this.robot_ball_distance = function() {
+    this.ballDistance = function() {
         var delta_x = ball.x-robot[this.robotn].x;
         var delta_y = ball.y-robot[this.robotn].y;
         return (Math.sqrt(delta_x*delta_x+delta_y*delta_y)-ROBOT_SIZE-14)/4;
@@ -93,7 +93,7 @@ function SoccerAPI(angle){
             return -1;
     };
 
-    this.enable_dribbler = function(power) {
+    this.setDribbler = function(power) {
         robot_dribbler[this.robotn]=power;
     };
 
@@ -102,7 +102,7 @@ function SoccerAPI(angle){
     };
 
 
-    this.robot_distance = function(direction) {
+    this.distance = function(direction) {
         if(this.robotn<=2)
         {
             switch(direction)
@@ -134,7 +134,7 @@ function SoccerAPI(angle){
         return 0;
     };
 
-    this.robot_ball_in_dribbler = function() {
+    this.ballInDribbler = function() {
         var delta_x = ball.x - robot[this.robotn].x;
         var delta_y = ball.y - robot[this.robotn].y;
 
