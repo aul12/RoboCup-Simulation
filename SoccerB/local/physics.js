@@ -6,6 +6,7 @@ function physics()
 {
     var delta_x, delta_y, alpha, not_robot_counter, einfall;
     var touch_robot=false;
+    var ballinDribbler = false;
 
     for(var robot_counter= 0; robot_counter<ROBOTS; robot_counter++)
     {
@@ -88,6 +89,7 @@ function physics()
                     factor=0.5;
                     ball.x=(99*(robot[robot_counter].x+Math.cos(alpha)*(ROBOT_SIZE+5))+(robot[robot_counter].x+(ROBOT_SIZE+5)))/100;
                     ball.y=robot[robot_counter].y+Math.sin(alpha)*ROBOT_SIZE;
+                    ballinDribbler = true;
                 }
                 if(robot_shoot[robot_counter])
                     factor+=SHOOT_POWER;
@@ -105,6 +107,11 @@ function physics()
     ball.y+=ball.speed.y;
     ball.speed.x*=0.98;
     ball.speed.y*=0.98;
+
+    if(ballinDribbler)
+        ball.rotation += 14;
+    else
+        ball.rotation = (ball.x + ball.y)*Math.PI;
 
     //Ball reflection
     if((ball.x-14)<0)

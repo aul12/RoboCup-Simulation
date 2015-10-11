@@ -1,9 +1,3 @@
-/**
- * Created by paul on 11.03.15.
- */
-
-
-
 var robot = new Array(ROBOTS);
 
 var robot_inside = [true, true, true, true];

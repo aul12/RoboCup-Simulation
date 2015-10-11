@@ -1,6 +1,3 @@
-/**
- * Created by paul on 10.10.15.
- */
 var canvas = document.getElementById('canvasField');
 var ctx = canvas.getContext("2d");
 var feldImage = new Image();
@@ -11,7 +8,7 @@ const LEFT=100;
 const RIGHT=ctx.canvas.width-100;
 const TOP=100;
 const BOTTOM = ctx.canvas.height-100;
-const ROBOTS = 4;
+const ROBOTS = 2;
 const SPEED_SLOW=0.3;
 const ACCELERATION = 1.3;
 const SHOOT_POWER = 1.0;

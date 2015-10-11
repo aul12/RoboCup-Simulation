@@ -68,7 +68,10 @@ function strikerBlue()
                 }
             }
             else if(api.robot_ball_distance()<30){
-                
+                if(Math.abs(angle)>90)
+                    angle = 0.0005 * (angle - 130) ^ 3 + 0.6 * angle + 100;
+                else
+                    angle*=2;
             }
 
 

@@ -1,6 +1,6 @@
 
 
-function draw_robot(x,y,color,visible)
+function draw_robot(x,y,angle,color,visible)
 {
 
     if (canvas && canvas.getContext && visible)
@@ -30,10 +30,17 @@ function draw_robot(x,y,color,visible)
     }
 }
 
-function draw_ball(x,y,visible)	                                                                                //Ball zeichnen
+function draw_ball(x,y,angle,visible)	                                                                                //Ball zeichnen
 {
-    if (canvas && canvas.getContext && visible && ctx)
-        ctx.drawImage(ballImage, x-14,y-14, 28, 28);
+    if (canvas && canvas.getContext && visible && ctx) {
+        angle = angle * Math.PI / 180;
+        ctx.translate(x, y);
+        ctx.rotate(angle);
+        ctx.drawImage(ballImage, -BALL_SIZE, -BALL_SIZE, BALL_SIZE*2, BALL_SIZE*2);
+        ctx.rotate(-angle);
+        ctx.translate(-x, -y);
+        console.log(angle);
+    }
 }
 
 function draw_clear()	                                                                                        //Rasen neu Zeichen
@@ -45,14 +52,12 @@ function draw_clear()	                                                          
 function draw()	                                                                                                //Zeichnen
 {
     draw_clear();
-    draw_ball(ball.x,ball.y,true);
-    if(ROBOTS>=1)
-        draw_robot(robot[0].x,robot[0].y,1,robot_inside[0]);
-    if(ROBOTS>=2)
-        draw_robot(robot[1].x,robot[1].y,1,robot_inside[1]);
-    if(ROBOTS>=3)
-        draw_robot(robot[2].x,robot[2].y,2,robot_inside[2]);
-    if(ROBOTS>=4)
-        draw_robot(robot[3].x,robot[3].y,2,robot_inside[3]);
+    draw_ball(ball.x,ball.y,ball.rotation, true);
+    for(var robot_counter = 0; robot_counter<ROBOTS; robot_counter++)
+        draw_robot(robot[robot_counter].x,
+            robot[robot_counter].y,
+            robot[robot_counter].rotation,
+            Math.round((robot_counter+1)/2),
+            robot_inside[robot_counter])
 
 }

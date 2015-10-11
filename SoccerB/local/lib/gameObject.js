@@ -1,6 +1,7 @@
 function gameObject(x,y,radius) {
     this.x = x;
     this.y = y;
+    this.rotation = 0;
     this.radius = radius;
     this.speed = new Vector(0,0);
 
