@@ -10,6 +10,23 @@ function physics()
 
     for(var robot_counter= 0; robot_counter<ROBOTS; robot_counter++)
     {
+        //Move the robots
+        //F=m*a ; v'=a ; s'=v
+        robot[robot_counter].speed.x += robot[robot_counter].acceleration.x;
+        robot[robot_counter].speed.y += robot[robot_counter].acceleration.y;
+        robot[robot_counter].speed.x *= 0.6;
+        robot[robot_counter].speed.y *= 0.6;
+        robot[robot_counter].x += robot[robot_counter].speed.x;
+        robot[robot_counter].y += robot[robot_counter].speed.y;
+
+        if(robot[robot_counter].speed.x>1)
+            robot[robot_counter].speed.x=1;
+        else if(robot[robot_counter].speed.x<-1)
+            robot[robot_counter].speed.x=-1;
+        if(robot[robot_counter].speed.y>1)
+            robot[robot_counter].speed.y=1;
+        else if(robot[robot_counter].speed.y<-1)
+            robot[robot_counter].speed.y=-1;
         //Check if the robots are standing in the goal
         if(robot[robot_counter].y>(ctx.canvas.height/2)-(GOAL_WIDTH/2)&&robot[robot_counter].y<(ctx.canvas.height/2)+(GOAL_WIDTH/2)&&robot[robot_counter].x<LEFT+40)
         {
@@ -102,11 +119,10 @@ function physics()
     }
 
     //Ball Rolling
-
+    ball.speed.x *= 0.98;
+    ball.speed.y *= 0.98;
     ball.x+=ball.speed.x;
     ball.y+=ball.speed.y;
-    ball.speed.x*=0.98;
-    ball.speed.y*=0.98;
 
     if(ballinDribbler)
         ball.rotation += 14;

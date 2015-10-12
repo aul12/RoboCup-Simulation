@@ -4,6 +4,7 @@ function gameObject(x,y,radius) {
     this.rotation = 0;
     this.radius = radius;
     this.speed = new Vector(0,0);
+    this.acceleration = new Vector(0,0);
 
     this.distanceTo = function(object){
         var delta_x = this.x-object.x;

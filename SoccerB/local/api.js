@@ -23,16 +23,18 @@ function SoccerAPI(angle){
             angle += Math.PI;
             angle *= -1;
         }
-        if(angle>2*Math.PI)
-            angle-=2*Math.PI;
-        if(angle<0)
-            angle+=2*Math.PI;
-        var delta_x= Math.cos(angle)*speed;
-        var delta_y= Math.sin(angle)*speed;
-        if(angle>Math.PI)
+
+        robot[this.robotn].acceleration.x = (Math.cos(angle)*speed + robot[this.robotn].acceleration.x*49)/50;
+        robot[this.robotn].acceleration.y= (Math.sin(angle)*speed+ robot[this.robotn].acceleration.y*49)/50;
+
+
+
+        /*if(angle>Math.PI)
         {
             angle-=2*Math.PI;
         }
+        ;
+
 
         angle=(angle+robot_driving_angle[this.robotn]*29)/30;
         speed=(speed+robot_driving_speed[this.robotn]*299)/300;
@@ -50,7 +52,7 @@ function SoccerAPI(angle){
         robot[this.robotn].y+=delta_y;
 
         robot_driving_speed[this.robotn]=speed;
-        robot_driving_angle[this.robotn]=angle;
+        robot_driving_angle[this.robotn]=angle;*/
 
     };
 
@@ -65,10 +67,8 @@ function SoccerAPI(angle){
         }
         if((delta_x<0))
             angle-=Math.PI;
-        if(angle>2*Math.PI)
+        if(angle>Math.PI)
             angle-=2*Math.PI;
-        if(angle<0)
-            angle+=2*Math.PI;
         if(this.degree)
             angle=angle*180/Math.PI;
         return angle;

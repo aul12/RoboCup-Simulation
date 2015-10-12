@@ -20,16 +20,16 @@ function goalieYellow()
             break;
         default:
             var ballAngle=api.ballAngle();
-            if(api.distance(api.distance.BACK)>(60+LEFT))
-                ballAngle = 180;
-            else if(ballAngle>180||ballAngle<0)
-                ballAngle=270;
+
+            if(ballAngle<0)
+                api.move(270, SPEED);
             else
-                ballAngle=90;
+                api.move(90, SPEED);
+
 
             if(api.ballInDribbler())
                 api.shoot();
-            api.move(ballAngle, SPEED);
+
     }
 }
 
@@ -68,7 +68,12 @@ function strikerYellow()
                 }
             }
             else if(api.ballDistance()<30){
-                
+                if(Math.abs(angle)>90)
+                    angle = 180 - (Math.atan(3/(api.ballDistance()))*180/Math.PI);
+                else if(Math.abs(angle)>60)
+                    angle*=2;
+                else
+                    angle*=2;
             }
 
 

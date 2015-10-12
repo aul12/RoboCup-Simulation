@@ -103,8 +103,8 @@ function start()
     ball.speed.y = 0;
     for(var robot_counter = 0 ; robot_counter<ROBOTS; robot_counter++)
     {
-        robot[robot_counter].speed.x = SPEED_SLOW;
-        robot[robot_counter].speed.y = SPEED_SLOW;
+        robot[robot_counter].speed.x = 0;
+        robot[robot_counter].speed.y = 0;
         robot_driving_speed[robot_counter]=0;
     }
 }
@@ -114,8 +114,8 @@ function isr_init()
     start();
     if(!isr_started)
     {
-        isr_pointer = setInterval(interrupt,10);
-        //lop_timer_pointer=setInterval(Lack_Of_Progress,3000);
+        isr_pointer = setInterval(interrupt,5);
+        lop_timer_pointer=setInterval(Lack_Of_Progress,3000);
         isr_started=true;
     }
 }
