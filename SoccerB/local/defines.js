@@ -18,3 +18,9 @@ const BALL_SIZE = 14;
 
 const NEUTRAL_POSITION = new Vector(140, 78);
 
+const NEUTRAL_POINT= [new Vector(NEUTRAL_POSITION.x+120, NEUTRAL_POSITION.y+120),
+                                    new Vector(NEUTRAL_POSITION.x+120, ctx.canvas.height-NEUTRAL_POSITION.y-120),
+                                    new Vector(ctx.canvas.width-NEUTRAL_POSITION.x-120, NEUTRAL_POSITION.y+120),
+                                    new Vector(ctx.canvas.width-NEUTRAL_POSITION.x-120, ctx.canvas.height-NEUTRAL_POSITION.y-120)];
+
+

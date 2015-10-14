@@ -93,62 +93,19 @@ function Lack_Of_Progress()
 
         lop_timer=false;
 
-        var abstand = new Array(6);
-
-        var delta_x;
-        var delta_y;
-        delta_x=(robot[1].x-(NEUTRAL_POSITION.x+120))+(robot[2].x-(NEUTRAL_POSITION.x+120));
-        delta_y=(robot[1].y-(NEUTRAL_POSITION.y+120))+(robot[1].y-(NEUTRAL_POSITION.y+120));
-        abstand[1]=Math.sqrt(delta_x*delta_x+delta_y*delta_y);
-
-        delta_x=(robot[1].x-(NEUTRAL_POSITION.x+120))+(robot[1].x-(NEUTRAL_POSITION.x+120));
-        delta_y=(robot[1].y-(ctx.canvas.height-NEUTRAL_POSITION.y-120))+(robot[1].y-(ctx.canvas.height-NEUTRAL_POSITION.y-120));
-        abstand[2]=Math.sqrt(delta_x*delta_x+delta_y*delta_y);
-
-        delta_x=(robot[1].x-(ctx.canvas.width-NEUTRAL_POSITION.x-120))+(robot[1].x-(ctx.canvas.width-NEUTRAL_POSITION.x-120));
-        delta_y=(robot[1].y-(NEUTRAL_POSITION.y+120))+(robot[1].y-(NEUTRAL_POSITION.y+120));
-        abstand[3]=Math.sqrt(delta_x*delta_x+delta_y*delta_y);
-
-        delta_x=(robot[1].x-(ctx.canvas.width-NEUTRAL_POSITION.x-120))+(robot[1].x-(ctx.canvas.width-NEUTRAL_POSITION.x-120));
-        delta_y=(robot[1].y-(ctx.canvas.height-NEUTRAL_POSITION.y-120))+(robot[1].y-(ctx.canvas.height-NEUTRAL_POSITION.y-120));
-        abstand[4]=Math.sqrt(delta_x*delta_x+delta_y*delta_y);
-
-        delta_x=(robot[1].x-(ctx.canvas.width/2))+(robot[1].x-(ctx.canvas.width/2));
-        delta_y=(robot[1].y-(ctx.canvas.height/2))+(robot[1].y-(ctx.canvas.height/2));
-        abstand[5]=Math.sqrt(delta_x*delta_x+delta_y*delta_y);
-
-        var kl=1;
-        for(var zaehler=1; zaehler<abstand.length; zaehler++)
-        {
-            if(abstand[zaehler]>abstand[kl])
-                kl=zaehler;
+        var abstand = new Array(NEUTRAL_POINT.length +1);
+        var small=0;
+        for(var counter=0; counter<NEUTRAL_POINT.length; counter++){
+            abstand[counter] = 0;
+            for (var robot_counter=0; robot_counter<ROBOTS; robot_counter++)
+                abstand[counter] += robot[robot_counter].distanceTo(NEUTRAL_POINT[counter]);
+            
+            if(abstand[counter]<abstand[small])
+                small=counter;
         }
 
-        switch (kl)
-        {
-            case 1:
-                ball.x=NEUTRAL_POSITION.x+120;
-                ball.y=NEUTRAL_POSITION.y+120;
-                break;
-            case 2:
-                ball.x=NEUTRAL_POSITION.x+120;
-                ball.y=ctx.canvas.height-NEUTRAL_POSITION.y-120;
-                break;
-            case 3:
-                ball.x=ctx.canvas.width-NEUTRAL_POSITION.x-120;
-                ball.y=NEUTRAL_POSITION.y+120;
-                break;
-            case 4:
-                ball.x=ctx.canvas.width-NEUTRAL_POSITION.x-120;
-                ball.y=ctx.canvas.height-NEUTRAL_POSITION.y-120;
-                break;
-            case  5:
-                ball.x=ctx.canvas.width/2;
-                ball.y=ctx.canvas.height/2;
-                break ;
-            default:
-                break;
-        }
+        ball.x = NEUTRAL_POINT[small].x;
+        ball.y = NEUTRAL_POINT[small].y;
         ball.speed.x = 0;
         ball.speed.y = 0;
         console.log("Lack of Progress");
