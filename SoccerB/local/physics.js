@@ -87,31 +87,10 @@ function physics()
         if(robot[robot_counter].isTouching(ball))
         {
             alpha = ball.angleTo(robot[robot_counter]);
-
-            /*if(ball.speed.x!=0&&ball.speed.y!=0)
-            {
-                einfall=Math.atan(ball.speed.y/ball.speed.x);
-                if((ball.speed.x<0))
-                    einfall-=Math.PI;
-                if(einfall>2*Math.PI)
-                    einfall-=2*Math.PI;
-                if(einfall<0)
-                    einfall+=2*Math.PI;
-            }
-            else
-                einfall=alpha;
-            einfall=alpha-einfall;
-            if(alpha>2*Math.PI)
-                alpha-=2*Math.PI;
-            if(alpha<0)
-                alpha+=2*Math.PI;*/
             ball.moveOutOf(robot[robot_counter]);
-
 
             //Dribbler/Shoot
             var factor=1;
-            /*ball.x=robot[robot_counter].x+Math.cos(alpha)*54;
-            ball.y=robot[robot_counter].y+Math.sin(alpha)*54;*/
 
 
             api.robotn = robot_counter;

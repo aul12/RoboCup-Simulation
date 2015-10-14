@@ -1,6 +1,6 @@
 function checkRules(){
     checkPushing();
-    checkDoubleDefence();
+    //checkDoubleDefence();
     checkGoal();
     checkLine();
 
@@ -37,13 +37,35 @@ function checkGoal(){
 function checkPushing(){
     for(var robot_counter=0; robot_counter<ROBOTS; robot_counter++)
     {
-        if((robot[robot_counter].x<(120+STRAFRAUM_WIDTH)||robot[robot_counter].x>(ctx.canvas.width-120-STRAFRAUM_WIDTH))
-            &&((robot[robot_counter].y>(ctx.canvas.height-STRAFRAUM_HEIGHT/2))&&(robot[robot_counter].y<(ctx.canvas.height+STRAFRAUM_HEIGHT/2)))
-            &&pushing[robot_counter])
+        for(var not_robot_counter=0; not_robot_counter<ROBOTS ; not_robot_counter++)
         {
-            robot[robot_counter].x=ctx.canvas.width/2;
-            robot[robot_counter].y=ctx.canvas.height/2;
-            console.log("Pushing");
+            if(robot[robot_counter].isTouching(robot[not_robot_counter]) && robot_counter!=not_robot_counter)
+            {
+                if(robot[robot_counter].isInArea(LEFT, (canvas.height-STRAFRAUM_HEIGHT)/2, STRAFRAUM_WIDTH, STRAFRAUM_HEIGHT)||
+                    robot[not_robot_counter].isInArea(LEFT, (canvas.height+STRAFRAUM_HEIGHT)/2, STRAFRAUM_WIDTH, STRAFRAUM_HEIGHT)){
+                    if(robot_counter>=2){
+                        robot[robot_counter].x=ctx.canvas.width/2;
+                        robot[robot_counter].y=ctx.canvas.height/2;
+                    }
+                    else{
+                        robot[not_robot_counter].x=ctx.canvas.width/2;
+                        robot[not_robot_counter].y=ctx.canvas.height/2;
+                    }
+                    console.log("Pushing");
+                }
+                if(robot[robot_counter].isInArea(canvas.width-LEFT-STRAFRAUM_WIDTH, (canvas.height-STRAFRAUM_HEIGHT)/2, STRAFRAUM_WIDTH, STRAFRAUM_HEIGHT)||
+                    robot[not_robot_counter].isInArea(LEFT, (canvas.height+STRAFRAUM_HEIGHT)/2, STRAFRAUM_WIDTH, STRAFRAUM_HEIGHT)){
+                    if(robot_counter<2){
+                        robot[robot_counter].x=ctx.canvas.width/2;
+                        robot[robot_counter].y=ctx.canvas.height/2;
+                    }
+                    else{
+                        robot[not_robot_counter].x=ctx.canvas.width/2;
+                        robot[not_robot_counter].y=ctx.canvas.height/2;
+                    }
+                    console.log("Pushing");
+                }
+            }
         }
     }
 }
@@ -99,7 +121,7 @@ function Lack_Of_Progress()
             abstand[counter] = 0;
             for (var robot_counter=0; robot_counter<ROBOTS; robot_counter++)
                 abstand[counter] += robot[robot_counter].distanceTo(NEUTRAL_POINT[counter]);
-            
+
             if(abstand[counter]<abstand[small])
                 small=counter;
         }

@@ -40,6 +40,14 @@ function gameObject(x,y,radius) {
         this.x += Math.sin(alpha)*delta;
         this.y += Math.cos(alpha)*delta;
 
+    };
+
+    this.isInArea = function(x, y, width, height){
+        if(this.x > x && this.y > y){
+            if(this.x < width+x && this.y<height+y)
+                return true;
+        }
+        return false;
     }
 }
 

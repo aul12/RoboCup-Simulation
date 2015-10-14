@@ -58,4 +58,5 @@ function draw()	                                                                
             Math.round((robot_counter+1)/2),
             robot_inside[robot_counter])
     draw_ball(ball.x,ball.y,ball.rotation, true);
+
 }
