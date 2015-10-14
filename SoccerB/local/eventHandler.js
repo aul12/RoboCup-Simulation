@@ -105,6 +105,8 @@ function start()
     {
         robot[robot_counter].speed.x = 0;
         robot[robot_counter].speed.y = 0;
+        robot[robot_counter].acceleration.x = 0;
+        robot[robot_counter].acceleration.y = 0;
         robot_driving_speed[robot_counter]=0;
     }
 }

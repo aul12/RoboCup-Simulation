@@ -22,14 +22,24 @@ function gameObject(x,y,radius) {
         var delta_x=this.x-object.x;
         var delta_y=this.y-object.y;
         var alpha=Math.atan(delta_y/delta_x);
-        if((delta_x<0))
+        if(delta_x<0)
             alpha-=Math.PI;
-        if(alpha>2*Math.PI)
+        if(alpha>=2*Math.PI)
             alpha-=2*Math.PI;
-        if(alpha<0)
-            alpha+=2*Math.PI;
 
         return alpha;
+    };
+
+    this.moveOutOf = function(object){
+        var alpha = object.angleTo(this);
+
+        var delta = object.distanceTo(this) - (object.radius- this.radius);
+        if(delta<=0)
+            return;
+
+        this.x += Math.sin(alpha)*delta;
+        this.y += Math.cos(alpha)*delta;
+
     }
 }
 
