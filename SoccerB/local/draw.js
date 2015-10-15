@@ -1,6 +1,6 @@
 
 
-function draw_robot(x,y,angle,color,visible)
+function draw_robot(x,y,angle,color,visible, highlighted)
 {
 
     if (canvas && canvas.getContext && visible)
@@ -12,7 +12,10 @@ function draw_robot(x,y,angle,color,visible)
                 ctx.fillStyle = "#FFFF00";
             else
                 ctx.fillStyle = "#0000FF";
-            ctx.strokeStyle = "#000000";
+            if(!highlighted)
+                ctx.strokeStyle = "#000000";
+            else
+                ctx.strokeStyle = "#FF0000";
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.arc(x, y, ROBOT_SIZE, 0, Math.PI*2, false);
@@ -56,7 +59,7 @@ function draw()	                                                                
             robot[robot_counter].y,
             robot[robot_counter].rotation,
             Math.round((robot_counter+1)/2),
-            robot_inside[robot_counter])
+            robot_inside[robot_counter], robot[robot_counter].highlighted)
     draw_ball(ball.x,ball.y,ball.rotation, true);
 
 }

@@ -14,8 +14,8 @@ function physics()
         //F=m*a ; v'=a ; s'=v
         robot[robot_counter].speed.x += robot[robot_counter].acceleration.x;
         robot[robot_counter].speed.y += robot[robot_counter].acceleration.y;
-        robot[robot_counter].speed.x *= 0.6;
-        robot[robot_counter].speed.y *= 0.6;
+        robot[robot_counter].speed.x *= 0.4;
+        robot[robot_counter].speed.y *= 0.4;
         robot[robot_counter].x += robot[robot_counter].speed.x;
         robot[robot_counter].y += robot[robot_counter].speed.y;
 
@@ -86,6 +86,7 @@ function physics()
         //Check if the robot is touching the ball
         if(robot[robot_counter].isTouching(ball))
         {
+
             alpha = ball.angleTo(robot[robot_counter]);
             ball.moveOutOf(robot[robot_counter]);
 
@@ -101,6 +102,7 @@ function physics()
                     factor=0.5;
                     ball.x=(99*(robot[robot_counter].x+Math.cos(alpha)*(ROBOT_SIZE+5))+(robot[robot_counter].x+(ROBOT_SIZE+5)))/100;
                     ball.y=robot[robot_counter].y+Math.sin(alpha)*ROBOT_SIZE;
+
                     ballinDribbler = true;
                 }
                 if(robot_shoot[robot_counter])
@@ -110,7 +112,8 @@ function physics()
             robot_shoot[robot_counter]=false;
             ball.speed.x=Math.cos(alpha)*SPEED*factor*robot[robot_counter].speed.x;
             ball.speed.y=Math.sin(alpha)*SPEED*factor*robot[robot_counter].speed.y;
-            continue;
+
+            //continue;
         }
     }
 

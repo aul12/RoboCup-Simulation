@@ -51,6 +51,8 @@ function checkPushing(){
                         robot[not_robot_counter].x=ctx.canvas.width/2;
                         robot[not_robot_counter].y=ctx.canvas.height/2;
                     }
+                    robot[robot_counter].highlight();
+                    robot[not_robot_counter].highlight();
                     console.log("Pushing");
                 }
                 if(robot[robot_counter].isInArea(canvas.width-LEFT-STRAFRAUM_WIDTH, (canvas.height-STRAFRAUM_HEIGHT)/2, STRAFRAUM_WIDTH, STRAFRAUM_HEIGHT)||
@@ -63,6 +65,8 @@ function checkPushing(){
                         robot[not_robot_counter].x=ctx.canvas.width/2;
                         robot[not_robot_counter].y=ctx.canvas.height/2;
                     }
+                    robot[robot_counter].highlight();
+                    robot[not_robot_counter].highlight();
                     console.log("Pushing");
                 }
             }
