@@ -17,7 +17,7 @@ folder (logic for both teams are divided). Please don't use any loops in the fun
 event handler.
 
 ##API-Reference
-All methods listed below are part of the SoccerAPI class, which is predefined with the api object
+All methods listed below are part of the SoccerAPI class, which is predefined with the api object.
 ###Motors
 ```javascript
 api.move(angle,speed);
@@ -36,48 +36,48 @@ ___
 ```javascript
 api.shoot();
 ```  
-Shoot the ball if in the dribbler
+Shoot the ball if it is in the dribbler. If there is no ball nothing will happen.
 ###Sensors
 
 ```javascript
 api.ballAngle()
 ```  
-Get the angle of the robot to the ball
+Get the angle of the robot to the ball. Unit depends on configuration.
 
 ___
 
 ```javascript
 api.ballDistance()
 ```  
-Get the distance of the robot to the ball
+Get the distance in centimeters of the robot to the ball. Distance is from the border of the robot to the border of the ball. This means if the robot touches the ball the distance is zero.
 
 ___
 
 ```javascript
 api.ballInDribbler()
 ```  
-Returns a true if the ball is in the dribbler
+Returns a true if the ball is in the dribbler (doesn't require the dribbler to be enabled)
 
 ___
 
 ```javascript
 api.onLine()
 ```  
-Check if the robot is on the line
+Check if the robot is on the line, returns true or false.
 
 ___
 
 ```javascript
 api.lineAngle()
 ```  
-Returns the angle of the line under the robot
+Returns the angle of the line under the robot. If the robot is on the line on the front it will return 0.
 
 ___
 
 ```javascript
 api.distance(direction)
 ```  
-Returns the distance to the wall in the given direction Directions can be:   
+Returns the distance to the wall in the given direction Directions can be, robots aren't calculated at the moment:   
 ```javascript
 api.distance.FRONT
 ```  
@@ -94,7 +94,7 @@ api.distance.LEFT
 ```javascript
 api.degree
 ``` 
-Change the angle unit by setting api.degree to one of the following values:   
+Change the angle unit by setting api.degree to one of the following values (default is ```javascriptAngle.DEGREE```):   
 ```javascript
 Angle.DEGREE
 ```   
