@@ -48,7 +48,6 @@ function ball_click(evt)
 //######################Main#########################################
 function interrupt()
 {
-
     for(var robot_counter=0; robot_counter<ROBOTS; robot_counter++)
     {
 

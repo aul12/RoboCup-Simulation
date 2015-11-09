@@ -1,38 +1,35 @@
 var http = require("http");
 var fs = require('fs');
 var url = require("url");
-
-function handleFile(text){
-    console.log(text);
-}
-
-
-
+var rest = require("./restHandler.js");
 
 http.createServer(function (request, response) {
-        if(request.method == 'POST') {
-            var body = '';
-            request.on('data', function (data) {
-                body += data;
-            });
-            request.on('end', function () {
-                handleFile(body);
+    if(request.method == 'POST'){
+        rest.postHandle(request, function(){
+            console.log(rest._POST("abc"));
+        });
+    }
+    else {
+        var pathname = url.parse(request.url).pathname;
+        console.log(pathname);
+        var html;
+        if(pathname == "/favicon.ico")
+            html = "";
+        else{
+            pathname = "../local/"+pathname.substr(1);
+            fs.lstat(pathname, function(err, stats){
+                if(stats.isDirectory()){
+                    pathname += "index.html";
+                }
+                fs.readFile("../local/" + pathname, "utf-8", function(err, data){
+                    response.writeHead(200, {'Content-Type': 'text/html', 'Content-Length': data.length});
+                    response.end(data);
+                });
             });
 
-        } else {
-            var pathname = url.parse(request.url).pathname;
-            console.log(pathname);
-            var html;
-            if (pathname == "/")
-                html = fs.readFileSync("../local/index.html", "utf-8");
-            else if(pathname == "/favicon.ico")
-                html = "";
-            else
-                html = fs.readFileSync("../local/" + pathname.substr(1), "utf-8");
-
-            response.writeHead(200, {'Content-Type': 'text/html', 'Content-Length': html.length});
-            response.end(html);
         }
+
+    }
 
 }).listen(8081);
 // Console will print the message
