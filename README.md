@@ -17,7 +17,73 @@ folder (logic for both teams are divided). Please don't use any loops in the fun
 event handler.
 
 ##API-Reference
-**The complete API is WIP at the moment**
+All methods listed below are part of the SoccerAPI class, which is predefined with the api object
+###Motors
+```javascript
+api.move(angle,speed);
+```  
+Move the robot in a specified angle with a specified speed (robot will keep this speed until there is a new speed)
 
-The reference can be found in the wiki: 
-[https://github.com/aul12/RoboterSimulation/wiki/API-Reference](https://github.com/aul12/RoboterSimulation/wiki/API-Reference)
+```javascript
+api.setDribbler(power);
+```  
+Enable/Disable the dribbler (power is a boolean)
+
+
+```javascript
+api.shoot();
+```  
+Shoot the ball if in the dribbler
+###Sensors
+```javascript
+api.ballAngle()
+```  
+Get the angle of the robot to the ball
+
+```javascript
+api.ballDistance()
+```  
+Get the distance of the robot to the ball
+
+```javascript
+api.ballInDribbler()
+```  
+Returns a true if the ball is in the dribbler
+
+```javascript
+api.onLine()
+```  
+Check if the robot is on the line
+
+```javascript
+api.lineAngle()
+```  
+Returns the angle of the line under the robot
+
+```javascript
+api.distance(direction)
+```  
+Returns the distance to the wall in the given direction Directions can be:   
+```javascript
+api.distance.FRONT
+```  
+```javascript
+api.distance.RIGHT
+```  
+```javascript
+api.distance.BACK
+```  
+```javascript
+api.distance.LEFT
+```  
+###Configuration
+```javascript
+api.degree
+``` 
+Change the angle unit by setting api.degree to one of the following values:   
+```javascript
+Angle.DEGREE
+```   
+```javascript
+Angle.RADIAN
+``` 

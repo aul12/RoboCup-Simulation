@@ -43,30 +43,30 @@ function checkPushing(){
             {
                 if(robot[robot_counter].isInArea(LEFT, (canvas.height-STRAFRAUM_HEIGHT)/2, STRAFRAUM_WIDTH, STRAFRAUM_HEIGHT)||
                     robot[not_robot_counter].isInArea(LEFT, (canvas.height+STRAFRAUM_HEIGHT)/2, STRAFRAUM_WIDTH, STRAFRAUM_HEIGHT)){
-                    if(robot_counter>=2){
-                        robot[robot_counter].x=ctx.canvas.width/2;
-                        robot[robot_counter].y=ctx.canvas.height/2;
-                    }
-                    else{
+                    if(robot_counter>=2 && not_robot_counter<2){
                         robot[not_robot_counter].x=ctx.canvas.width/2;
                         robot[not_robot_counter].y=ctx.canvas.height/2;
+                        robot[not_robot_counter].highlight();
                     }
-                    robot[robot_counter].highlight();
-                    robot[not_robot_counter].highlight();
+                    else if(robot_counter<2 && not_robot_counter>=2){
+                        robot[robot_counter].x=ctx.canvas.width/2;
+                        robot[robot_counter].y=ctx.canvas.height/2;
+                        robot[robot_counter].highlight();
+                    }
                     console.log("Pushing");
                 }
                 if(robot[robot_counter].isInArea(canvas.width-LEFT-STRAFRAUM_WIDTH, (canvas.height-STRAFRAUM_HEIGHT)/2, STRAFRAUM_WIDTH, STRAFRAUM_HEIGHT)||
                     robot[not_robot_counter].isInArea(LEFT, (canvas.height+STRAFRAUM_HEIGHT)/2, STRAFRAUM_WIDTH, STRAFRAUM_HEIGHT)){
-                    if(robot_counter<2){
-                        robot[robot_counter].x=ctx.canvas.width/2;
-                        robot[robot_counter].y=ctx.canvas.height/2;
-                    }
-                    else{
+                    if(robot_counter>=2 && not_robot_counter<2){
                         robot[not_robot_counter].x=ctx.canvas.width/2;
                         robot[not_robot_counter].y=ctx.canvas.height/2;
+                        robot[not_robot_counter].highlight();
                     }
-                    robot[robot_counter].highlight();
-                    robot[not_robot_counter].highlight();
+                    else if(robot_counter<2 && not_robot_counter>=2){
+                        robot[robot_counter].x=ctx.canvas.width/2;
+                        robot[robot_counter].y=ctx.canvas.height/2;
+                        robot[robot_counter].highlight();
+                    }
                     console.log("Pushing");
                 }
             }

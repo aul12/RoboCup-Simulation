@@ -42,7 +42,7 @@ function strikerBlue() {
                 api.setDribbler(true);
             }
         }
-        else if (api.ballDistance() < 30) {
+        else{
             if (Math.abs(angle) > 90)
                 angle = 180 - (Math.atan(3 / (api.ballDistance())) * 180 / Math.PI);
             else if (Math.abs(angle) > 60)
