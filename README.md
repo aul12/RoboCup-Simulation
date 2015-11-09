@@ -24,41 +24,55 @@ api.move(angle,speed);
 ```  
 Move the robot in a specified angle with a specified speed (robot will keep this speed until there is a new speed)
 
+___
+
 ```javascript
 api.setDribbler(power);
 ```  
 Enable/Disable the dribbler (power is a boolean)
 
+___
 
 ```javascript
 api.shoot();
 ```  
 Shoot the ball if in the dribbler
 ###Sensors
+
 ```javascript
 api.ballAngle()
 ```  
 Get the angle of the robot to the ball
+
+___
 
 ```javascript
 api.ballDistance()
 ```  
 Get the distance of the robot to the ball
 
+___
+
 ```javascript
 api.ballInDribbler()
 ```  
 Returns a true if the ball is in the dribbler
+
+___
 
 ```javascript
 api.onLine()
 ```  
 Check if the robot is on the line
 
+___
+
 ```javascript
 api.lineAngle()
 ```  
 Returns the angle of the line under the robot
+
+___
 
 ```javascript
 api.distance(direction)
