@@ -63,7 +63,7 @@
         <script>
             $(function() {
                 var editorBlau = CodeMirror.fromTextArea(document.getElementById("txtAreaBlau"), {
-                    lineNumbers: true
+                    lineNumbers: true,
                 });
                 var editorGelb = CodeMirror.fromTextArea(document.getElementById("txtAreaGelb"), {
                     lineNumbers: true
@@ -79,6 +79,13 @@
                 });
                 $.get("../program/teamYellow.js", function(data){
                     editorGelb.setValue(data);
+                });
+
+                editorBlau.on("change", function(cm, change) {
+                    blauChanged(cm.getValue());
+                });
+                editorGelb.on("change", function(cm, change) {
+                    gelbChanged(cm.getValue());
                 });
 
             });

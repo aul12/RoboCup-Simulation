@@ -19,6 +19,8 @@ http.createServer(function (request, response) {
             pathname = "../local/"+pathname.substr(1);
             fs.lstat(pathname, function(err, stats){
                 if(stats.isDirectory()){
+                    if(pathname.charAt(pathname.length-1)!="/")
+                        pathname+="/";
                     pathname += "index.html";
                 }
                 fs.readFile("../local/" + pathname, "utf-8", function(err, data){

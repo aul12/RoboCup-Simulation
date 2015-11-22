@@ -121,4 +121,14 @@ function isr_init()
 
 function openCode(){
     var win = window.open("editor", "_blank", "height=560,width=940");
+    win.blauChanged = function(data){
+       /* $.post("../server/main.js", "abc="+data, function(data){
+            console.log("ABC");
+        });*/
+    };
+    win.gelbChanged = function(data){
+       /* $.post("../server/main.js", "abc="+data, function(data){
+            console.log(data);
+        });*/
+    };
 }
