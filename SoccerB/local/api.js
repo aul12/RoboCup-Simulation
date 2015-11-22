@@ -47,14 +47,23 @@ function SoccerAPI(angle){
         return angle;
     };
 
-    this.ballDistance = function() {
+
+
+    this.ballDistanceCM = function() {
         var delta_x = ball.x-robot[this.robotn].x;
         var delta_y = ball.y-robot[this.robotn].y;
         return (Math.sqrt(delta_x*delta_x+delta_y*delta_y)-ROBOT_SIZE-14)/4;
     };
 
+    this.ballIntensity = function(){
+        var ints = Math.log((this.ballDistanceCM()+10)/140) * -2000;
+        if(ints<0)
+            ints = 0;
+        return ints;
+    };
+
     this.lineAngle = function() {
-        if ((robot[this.robotn].x - ROBOT_SIZE) <= LEFT)																	//Linie
+        if ((robot[this.robotn].x - ROBOT_SIZE) <= LEFT)
             return this.robotn>=2?0:180;
         else if ((robot[this.robotn].x + ROBOT_SIZE) >= RIGHT)
             return this.robotn>=2?180:0;

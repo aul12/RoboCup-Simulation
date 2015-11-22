@@ -47,11 +47,18 @@ Get the angle of the robot to the ball. Unit depends on configuration.
 ___
 
 ```javascript
-api.ballDistance()
+api.ballIntensity()
+```  
+Get the intensity of the ball. Comparable to a real analog IR-Sensor (aka TSOP). Maximum value is about 5000, to a minimum of 0 at about 150 cm from the robot.
+
+___
+
+```javascript
+api.ballDistanceCM()
 ```  
 Get the distance in centimeters of the robot to the ball. Distance is from the border of the robot to the border of the ball. This means if the robot touches the ball the distance is zero.
 
-___
+___ 
 
 ```javascript
 api.ballInDribbler()

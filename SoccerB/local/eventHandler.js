@@ -50,8 +50,6 @@ function interrupt()
 {
     for(var robot_counter=0; robot_counter<ROBOTS; robot_counter++)
     {
-
-
         if(robot_inside[robot_counter])
         {
             api.robotn = robot_counter;
