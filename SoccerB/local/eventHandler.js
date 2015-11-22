@@ -118,3 +118,7 @@ function isr_init()
         isr_started=true;
     }
 }
+
+function openCode(){
+    var win = window.open("editor", "_blank", "height=560,width=940");
+}

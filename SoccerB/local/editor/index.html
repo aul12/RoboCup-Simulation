@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Editor</title>
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="codemirror-5.8/lib/codemirror.css">
+        <style>
+            .tabs{
+                position: absolute;
+                height: 100%;
+            }
+
+            .CodeMirror {
+                width: 100% !important;
+                height: 100% !important;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" data-toggle="tab">Editor</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#blau" data-toggle="tab">Team Blau</a></li>
+                        <li><a href="#gelb" data-toggle="tab">Team Gelb</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        <div class="tab-content tabs">
+            <div id="blau" class="tab-pane fade in active tabs">
+                <textarea id="txtAreaBlau"></textarea>
+            </div>
+            <div id="gelb" class="page tab-pane fade tabs">
+                <textarea id="txtAreaGelb"></textarea>
+            </div>
+        </div>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <script src="codemirror-5.8/lib/codemirror.js"></script>
+        <script src="codemirror-5.8/mode/javascript/javascript.js"></script>
+        <script>
+            $(function() {
+                var editorBlau = CodeMirror.fromTextArea(document.getElementById("txtAreaBlau"), {
+                    lineNumbers: true
+                });
+                var editorGelb = CodeMirror.fromTextArea(document.getElementById("txtAreaGelb"), {
+                    lineNumbers: true
+                });
+
+                setInterval(function () {
+                    editorBlau.refresh();
+                    editorGelb.refresh();
+                }, 100);
+
+                $.get("../program/teamBlue.js", function(data){
+                    editorBlau.setValue(data);
+                });
+                $.get("../program/teamYellow.js", function(data){
+                    editorGelb.setValue(data);
+                });
+
+            });
+
+
+        </script>
+    </body>
+</html>
