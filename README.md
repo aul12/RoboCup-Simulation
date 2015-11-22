@@ -101,7 +101,8 @@ api.distance.LEFT
 ```javascript
 api.degree
 ``` 
-Change the angle unit by setting api.degree to one of the following values (default is ```javascriptAngle.DEGREE```):   
+Change the angle unit by setting api.degree to one of the following values (default is ```javascript
+Angle.DEGREE```):   
 ```javascript
 Angle.DEGREE
 ```   
