@@ -3,7 +3,6 @@
 //Goalie Left
 function goalieYellow()
 {
-    console.log(api.ballIntensity());
     if(api.onLine()){
         api.move(api.lineAngle()+180 , SPEED);
     }
@@ -45,8 +44,9 @@ function strikerYellow()
             }
         }
         else{
-            if (Math.abs(angle) > 90)
-                angle = 180 - (Math.atan(5 / (api.ballDistanceCM())) * 180 / Math.PI);
+            if (Math.abs(angle) > 90){
+                angle = (12 * (Math.exp(api.ballIntensity()/5500)-1)) + 180;
+            }
             else if (Math.abs(angle) > 60)
                 angle *= 2;
             else
