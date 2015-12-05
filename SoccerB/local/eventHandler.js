@@ -3,8 +3,8 @@
  */
 //######################Init#########################################
 start();
-feldImage.src = 'http://pi.bbcrobotics.org/support/img/Feild2k.png';
-ballImage.src = 'https://shop-legoeducation-com.srv103.128secure.net/Resources/Files/product-images/hitechnic-sensors/hitechnic-ir-electronic-ball-ms1005.png';
+feldImage.src = 'res/field.png';
+ballImage.src = 'res/ball.png';
 feldImage.onload = function(){
     draw_clear();
     draw();
