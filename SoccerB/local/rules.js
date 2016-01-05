@@ -76,18 +76,24 @@ function checkPushing(){
 
 function checkDoubleDefence(){
     for(var robot_counter=0; robot_counter<ROBOTS; robot_counter++) {
-        for(var not_robot_counter=0; not_robot_counter<ROBOTS ; not_robot_counter++)
+        for(var not_robot_counter=robot_counter; not_robot_counter<ROBOTS ; not_robot_counter++)
         {
-
-            if((robot[robot_counter].x<(120+STRAFRAUM_WIDTH)||robot[robot_counter].x>(ctx.canvas.width-120-STRAFRAUM_WIDTH))
-                &&((robot[robot_counter].y>(ctx.canvas.height-STRAFRAUM_HEIGHT/2))&&(robot[robot_counter].y<(ctx.canvas.height+STRAFRAUM_HEIGHT/2)))
-                &&robot[not_robot_counter].x<(120+STRAFRAUM_WIDTH)||robot[not_robot_counter].x>(ctx.canvas.width-120-STRAFRAUM_WIDTH)
-                &&((robot[not_robot_counter].y>(ctx.canvas.height-STRAFRAUM_HEIGHT/2))&&(robot[not_robot_counter].y<(ctx.canvas.height+STRAFRAUM_HEIGHT/2)))
-                &&not_robot_counter!=robot_counter)
+            /*
+            @TODO only check Robots of same Team; check both areas
+             */
+            if(robot[robot_counter].isInArea(LEFT, (canvas.height-STRAFRAUM_HEIGHT)/2, STRAFRAUM_WIDTH, STRAFRAUM_HEIGHT) && robot[not_robot_counter].isInArea(LEFT, (canvas.height-STRAFRAUM_HEIGHT)/2, STRAFRAUM_WIDTH, STRAFRAUM_HEIGHT) && robot[robot_counter].isTouching(robot[not_robot_counter]))
             {
                 console.log("Double defence");
-                robot[robot_counter].x=ctx.canvas.width/2;
-                robot[robot_counter].y=ctx.canvas.height/2;
+                if(robot[robot_counter].distanceTo(ball) < robot[not_robot_counter].distanceTo(ball))
+                {
+                    robot[robot_counter].x=ctx.canvas.width/2;
+                    robot[robot_counter].y=ctx.canvas.height/2;
+                }
+                else
+                {
+                    robot[not_robot_counter].x=ctx.canvas.width/2;
+                    robot[not_robot_counter].y=ctx.canvas.height/2;
+                }
             }
         }
     }
