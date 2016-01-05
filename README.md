@@ -47,49 +47,49 @@ Rotate the robot with a certain speed. Positive speed values are clockwise, nega
 ###Sensors
 
 ```javascript
-api.ballAngle()
+api.ballAngle();
 ```  
 Get the angle of the robot to the ball. Unit depends on configuration.
 
 ___
 
 ```javascript
-api.ballIntensity()
+api.ballIntensity();
 ```  
 Get the intensity of the ball. Comparable to a real analog IR-Sensor (aka TSOP). Maximum value is about 5000, to a minimum of 0 at about 150 cm from the robot.
 
 ___
 
 ```javascript
-api.ballDistanceCM()
+api.ballDistanceCM();
 ```  
 Get the distance in centimeters of the robot to the ball. Distance is from the border of the robot to the border of the ball. This means if the robot touches the ball the distance is zero.
 
 ___ 
 
 ```javascript
-api.ballInDribbler()
+api.ballInDribbler();
 ```  
 Returns a true if the ball is in the dribbler (doesn't require the dribbler to be enabled)
 
 ___
 
 ```javascript
-api.onLine()
+api.onLine();
 ```  
 Check if the robot is on the line, returns true or false.
 
 ___
 
 ```javascript
-api.lineAngle()
+api.lineAngle();
 ```  
 Returns the angle of the line under the robot. If the robot is on the line on the front it will return 0.
 
 ___
 
 ```javascript
-api.distance(direction)
+api.distance(direction);
 ```  
 Returns the distance to the wall in the given direction Directions can be, robots aren't calculated at the moment:   
 ```javascript
@@ -108,7 +108,7 @@ api.distance.LEFT
 ___
 
 ```javascript
-api.currentRotation
+api.currentRotation();
 ```  
 Returns the orientation of the robot (unit depends on configuration). Clockwise means positive, negative counterclockwise values. This means that there is a jump at +/-180 degrees.
 
