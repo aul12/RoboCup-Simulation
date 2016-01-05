@@ -1,35 +1,17 @@
 
 
-function draw_robot(x,y,angle,color,visible, highlighted)
+function draw_robot(x,y,angle,visible)
 {
 
-    if (canvas && canvas.getContext && visible)
+    if (canvas && canvas.getContext && visible && ctx)
     {
-        if (ctx)
-        {
+        angle = angle * Math.PI / 180;
+        ctx.translate(x, y);
+        ctx.rotate(angle);
+        ctx.drawImage(robotImage, -ROBOT_SIZE, -ROBOT_SIZE, ROBOT_SIZE*2, ROBOT_SIZE*2);
+        ctx.rotate(-angle);
+        ctx.translate(-x, -y);
 
-            if(color==1)
-                ctx.fillStyle = "#FFFF00";
-            else
-                ctx.fillStyle = "#0000FF";
-            if(!highlighted)
-                ctx.strokeStyle = "#000000";
-            else
-                ctx.strokeStyle = "#FF0000";
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.arc(x, y, ROBOT_SIZE, 0, Math.PI*2, false);
-            ctx.fill();
-            ctx.stroke();
-
-            ctx.fillStyle = "#F8911A";
-
-            if(color==1)
-                ctx.fillRect(x+28,y-10,10, 20);
-            else
-                ctx.fillRect(x-28,y-10,-10, 20);
-
-        }
     }
 }
 
@@ -58,8 +40,7 @@ function draw()	                                                                
         draw_robot(robot[robot_counter].x,
             robot[robot_counter].y,
             robot[robot_counter].rotation,
-            Math.round((robot_counter+1)/2),
-            robot_inside[robot_counter], robot[robot_counter].highlighted)
+            robot_inside[robot_counter]);
     draw_ball(ball.x,ball.y,ball.rotation, true);
 
 }

@@ -2,6 +2,7 @@ var canvas = document.getElementById('canvasField');
 var ctx = canvas.getContext("2d");
 var feldImage = new Image();
 var ballImage = new Image();
+var robotImage = new Image();
 
 const SPEED=3;
 const LEFT=104;

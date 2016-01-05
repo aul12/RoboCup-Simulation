@@ -5,7 +5,6 @@ function gameObject(x,y,radius) {
     this.radius = radius;
     this.speed = new Vector(0,0);
     this.acceleration = new Vector(0,0);
-    this.highlighted = false;
 
     this.distanceTo = function(object){
         var delta_x = this.x-object.x;
@@ -48,13 +47,6 @@ function gameObject(x,y,radius) {
         }
         return false;
     };
-
-    this.highlight = function(){
-        this.highlighted = true;
-        setTimeout(function(){
-            this.parent.highlighed = false;
-        },200);
-    }
 }
 
 function Vector(x,y){

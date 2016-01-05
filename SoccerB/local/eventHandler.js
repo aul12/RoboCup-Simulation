@@ -5,11 +5,17 @@
 start();
 feldImage.src = 'res/field.png';
 ballImage.src = 'res/ball.png';
+robotImage.src = 'res/robot.png';
+
 feldImage.onload = function(){
     draw_clear();
     draw();
 };
 ballImage.onload = function(){
+    draw_clear();
+    draw();
+};
+robotImage.onload = function(){
     draw_clear();
     draw();
 };
