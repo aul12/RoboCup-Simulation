@@ -18,7 +18,7 @@ event handler.
 
 ##API-Reference
 All methods listed below are part of the SoccerAPI class, which is predefined with the api object.
-###Motors
+###Outputs
 ```javascript
 api.move(angle,speed);
 ```  
@@ -37,6 +37,13 @@ ___
 api.shoot();
 ```  
 Shoot the ball if it is in the dribbler. If there is no ball nothing will happen.
+
+___
+
+```javascript
+api.rotate(angle);
+```  
+Rotate the robot with a certain speed. Positive speed values are clockwise, negative counter clockwise rotation.
 ###Sensors
 
 ```javascript
@@ -97,6 +104,14 @@ api.distance.BACK
 ```javascript
 api.distance.LEFT
 ```  
+
+___
+
+```javascript
+api.currentRotation
+```  
+Returns the orientation of the robot (unit depends on configuration). Clockwise means positive, negative counterclockwise values. This means that there is a jump at +/-180 degrees.
+
 ###Configuration
 ```javascript
 api.degree

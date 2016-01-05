@@ -1,10 +1,16 @@
 function gameObject(x,y,radius) {
     this.x = x;
     this.y = y;
-    this.rotation = 0;
-    this.radius = radius;
+
     this.speed = new Vector(0,0);
     this.acceleration = new Vector(0,0);
+
+    this.rotation = 0;
+    this.rotationVelocity = 0;
+    this.rotationAcceleration = 0;
+
+    this.radius = radius;
+
 
     this.distanceTo = function(object){
         var delta_x = this.x-object.x;

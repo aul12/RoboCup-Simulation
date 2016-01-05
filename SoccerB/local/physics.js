@@ -4,12 +4,17 @@
 //######################Physic-Engine#########################################
 function physics()
 {
-    var delta_x, delta_y, alpha, not_robot_counter, einfall;
-    var touch_robot=false;
-    var ballinDribbler = false;
+    var delta_x, delta_y, alpha, not_robot_counter;
+    var robotsTouching=false;
+    var ballInDribbler = false;
 
     for(var robot_counter= 0; robot_counter<ROBOTS; robot_counter++)
     {
+        //Rotate the robots
+        robot[robot_counter].rotationVelocity += robot[robot_counter].rotationAcceleration;
+        robot[robot_counter].rotationVelocity *= 0.8;
+        robot[robot_counter].rotation += robot[robot_counter].rotationVelocity;
+
         //Move the robots
         //F=m*a ; v'=a ; s'=v
         robot[robot_counter].speed.x += robot[robot_counter].acceleration.x;
@@ -46,7 +51,7 @@ function physics()
             robot[robot_counter].acceleration.y = 0;
             continue;
         }
-        touch_robot=false;
+        robotsTouching=false;
 
         //Check if the robots are touching
         for(not_robot_counter=0; not_robot_counter<ROBOTS ; not_robot_counter++)
@@ -71,7 +76,7 @@ function physics()
                     robot[robot_counter].acceleration.y = 0;
                     robot[not_robot_counter].acceleration.x = 0;
                     robot[not_robot_counter].acceleration.y = 0;
-                    touch_robot=true;
+                    robotsTouching=true;
                     delta_x=ball.x-robot[robot_counter].x;
                     delta_y=ball.y-robot[robot_counter].y;
                     pushing[robot_counter] = Math.sqrt(delta_x * delta_x + delta_y * delta_y) < 14+ROBOT_SIZE;
@@ -103,7 +108,7 @@ function physics()
                     ball.x=(99*(robot[robot_counter].x+Math.cos(alpha)*(ROBOT_SIZE+5))+(robot[robot_counter].x+(ROBOT_SIZE+5)))/100;
                     ball.y=robot[robot_counter].y+Math.sin(alpha)*ROBOT_SIZE;
 
-                    ballinDribbler = true;
+                    ballInDribbler = true;
                 }
                 if(robot_shoot[robot_counter])
                     factor+=SHOOT_POWER;
@@ -124,7 +129,7 @@ function physics()
     ball.y+=ball.speed.y;
 
 
-    if(ballinDribbler)
+    if(ballInDribbler)
         ball.rotation += 14;
     else
         ball.rotation = (ball.x + ball.y)*Math.PI;
