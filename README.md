@@ -2,6 +2,12 @@
 
 A RoboCup Junior Soccer-B Simulation.
 
+[http://bodenseehaie.bplaced.de/](http://bodenseehaie.bplaced.de/)
+
+##Known issues
+* Sometimes there are bugs when the ball is touching multiple robots
+* Multiple defence and pushing are detected properly
+
 ##Usage
 The Simulation runs on a node.js based server. To start execute 
 
