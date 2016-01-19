@@ -29,18 +29,19 @@ function strikerLeft()
         api.move(api.lineAngle() + 180, SPEED);
     }
     else {
-
         var angle = api.ballAngle();
-        if (angle > 180)
-            angle -= 360;
+
         if (api.ballInDribbler()) {
             angle = 0;
             api.setDribbler(false);
             api.shoot();
         }
-        else{
-            if (Math.abs(angle) > 90){
-                angle = (12 * (Math.exp(api.ballIntensity()/5500)-1)) + 180;
+        else if(api.ballIntensity() > 2800){
+            if(Math.abs(angle) > 90){
+                if(angle < 0)
+                    angle -=90;
+                else
+                    angle +=90;
             }
             else if (Math.abs(angle) > 60)
                 angle *= 2;

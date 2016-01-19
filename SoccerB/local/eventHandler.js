@@ -68,7 +68,7 @@ function interrupt()
                     strikerLeft();
                     break;
                 case 2:
-                    goalieBlue();
+                    goalieRight();
                     break;
                 case 3:
                     strikerRight();

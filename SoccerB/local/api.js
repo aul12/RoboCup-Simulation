@@ -43,7 +43,7 @@ function SoccerAPI(angle){
 
         if(angle>Math.PI)
             angle-=2*Math.PI;
-        else if(angle<Math.PI)
+        else if(angle<-Math.PI)
             angle+=2*Math.PI;
         if(this.degree)
             angle=angle*180/Math.PI;
