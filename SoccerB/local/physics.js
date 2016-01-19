@@ -97,8 +97,8 @@ function physics()
             alpha = ball.angleTo(robot[robot_counter]);
 
             //Correct the Speed of the Ball
-            ball.speed.x = ball.speed.x + Math.cos(alpha);
-            ball.speed.y = ball.speed.y + Math.sin(alpha);
+            ball.speed.x = ball.speed.x + Math.cos(alpha) * robot[robot_counter].speed.abs();
+            ball.speed.y = ball.speed.y + Math.sin(alpha) * robot[robot_counter].speed.abs();
 
             api.robotn = robot_counter;
             var diff = Math.abs(robot[robot_counter].rotation - api.ballAngle()) % 360;

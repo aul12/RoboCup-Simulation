@@ -46,12 +46,10 @@ function checkPushing(){
                     if(robot_counter>=2 && not_robot_counter<2){
                         robot[not_robot_counter].x=ctx.canvas.width/2;
                         robot[not_robot_counter].y=ctx.canvas.height/2;
-                        robot[not_robot_counter].highlight();
                     }
                     else if(robot_counter<2 && not_robot_counter>=2){
                         robot[robot_counter].x=ctx.canvas.width/2;
                         robot[robot_counter].y=ctx.canvas.height/2;
-                        robot[robot_counter].highlight();
                     }
                     console.log("Pushing");
                 }
@@ -60,12 +58,10 @@ function checkPushing(){
                     if(robot_counter>=2 && not_robot_counter<2){
                         robot[not_robot_counter].x=ctx.canvas.width/2;
                         robot[not_robot_counter].y=ctx.canvas.height/2;
-                        robot[not_robot_counter].highlight();
                     }
                     else if(robot_counter<2 && not_robot_counter>=2){
                         robot[robot_counter].x=ctx.canvas.width/2;
                         robot[robot_counter].y=ctx.canvas.height/2;
-                        robot[robot_counter].highlight();
                     }
                     console.log("Pushing");
                 }

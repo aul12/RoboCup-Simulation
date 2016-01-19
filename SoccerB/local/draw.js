@@ -40,6 +40,6 @@ function draw()	                                                                
     for(var robot_counter = 0; robot_counter<ROBOTS; robot_counter++)
         draw_robot(robot[robot_counter].x,
             robot[robot_counter].y,
-            robot[robot_counter].rotation,
+            robot_counter>=2?robot[robot_counter].rotation+180:robot[robot_counter].rotation ,
             robot_inside[robot_counter]);
 }
