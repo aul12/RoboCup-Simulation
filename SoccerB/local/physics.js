@@ -24,14 +24,13 @@ function physics()
         robot[robot_counter].x += robot[robot_counter].speed.x;
         robot[robot_counter].y += robot[robot_counter].speed.y;
 
-        if(robot[robot_counter].speed.x>1)
-            robot[robot_counter].speed.x=1;
-        else if(robot[robot_counter].speed.x<-1)
-            robot[robot_counter].speed.x=-1;
-        if(robot[robot_counter].speed.y>1)
-            robot[robot_counter].speed.y=1;
-        else if(robot[robot_counter].speed.y<-1)
-            robot[robot_counter].speed.y=-1;
+        //Check Maximum Speed
+        if(robot[robot_counter].speed.abs() > 1)
+        {
+            robot[robot_counter].speed.x /= robot[robot_counter].speed.abs();
+            robot[robot_counter].speed.y /= robot[robot_counter].speed.abs();
+        }
+
         //Check if the robots are standing in the goal
         if(robot[robot_counter].y>(ctx.canvas.height/2)-(GOAL_WIDTH/2)&&robot[robot_counter].y<(ctx.canvas.height/2)+(GOAL_WIDTH/2)&&robot[robot_counter].x<LEFT+40)
         {
@@ -51,9 +50,10 @@ function physics()
             robot[robot_counter].acceleration.y = 0;
             continue;
         }
-        robotsTouching=false;
 
         //Check if the robots are touching
+        robotsTouching=false;
+
         for(not_robot_counter=0; not_robot_counter<ROBOTS ; not_robot_counter++)
         {
             if(robot_counter!=not_robot_counter)
@@ -65,6 +65,7 @@ function physics()
                     robot[not_robot_counter].x=robot[robot_counter].x+Math.cos(alpha)*ROBOT_SIZE*2;
                     robot[not_robot_counter].y=robot[robot_counter].y+Math.sin(alpha)*ROBOT_SIZE*2;
                     var speed = new Vector(0,0);
+
                     //Inelastic collision
                     speed.x = (robot[robot_counter].speed.x + robot[not_robot_counter].speed.x)/2;
                     speed.y = (robot[robot_counter].speed.y + robot[not_robot_counter].speed.y)/2;
@@ -83,42 +84,41 @@ function physics()
                     delta_x=ball.x-robot[not_robot_counter].x;
                     delta_y=ball.y-robot[not_robot_counter].y;
                     pushing[not_robot_counter] = Math.sqrt(delta_x * delta_x + delta_y * delta_y) < 14+ROBOT_SIZE;
-                    continue;
+                    //continue;
                 }
             }
         }
 
+
+
         //Check if the robot is touching the ball
         if(robot[robot_counter].isTouching(ball))
         {
-
             alpha = ball.angleTo(robot[robot_counter]);
-            ball.moveOutOf(robot[robot_counter]);
 
-            //Dribbler/Shoot
-            var factor=1;
-
+            //Correct the Speed of the Ball
+            ball.speed.x = ball.speed.x + Math.cos(alpha);
+            ball.speed.y = ball.speed.y + Math.sin(alpha);
 
             api.robotn = robot_counter;
-            if(api.ballAngle()>345||api.ballAngle(true)<15)
+            var diff = Math.abs(robot[robot_counter].rotation - api.ballAngle()) % 360;
+
+            //Ball in the Front
+            if(diff < 15)
             {
-                if(robot_dribbler[robot_counter])
-                {
-                    factor=0.5;
-                    ball.x=(99*(robot[robot_counter].x+Math.cos(alpha)*(ROBOT_SIZE+5))+(robot[robot_counter].x+(ROBOT_SIZE+5)))/100;
-                    ball.y=robot[robot_counter].y+Math.sin(alpha)*ROBOT_SIZE;
-
-                    ballInDribbler = true;
-                }
                 if(robot_shoot[robot_counter])
-                    factor+=SHOOT_POWER;
+                {
+                    ball.speed.x = ball.speed.x + robot[robot_counter].speed.x * SHOOT_POWER;
+                    ball.speed.y = ball.speed.y + robot[robot_counter].speed.y * SHOOT_POWER;
+
+                    robot_shoot[robot_counter]=false;
+                }
+                else if(robot_dribbler[robot_counter])
+                {
+                    ball.speed.x = ball.speed.x + (robot[robot_counter].x +30 - ball.x)*0.2;
+                    ball.speed.y = ball.speed.y + (robot[robot_counter].y - ball.y)*0.2;
+                }
             }
-
-            robot_shoot[robot_counter]=false;
-            ball.speed.x=Math.cos(alpha)*SPEED*factor*robot[robot_counter].speed.x;
-            ball.speed.y=Math.sin(alpha)*SPEED*factor*robot[robot_counter].speed.y;
-
-            //continue;
         }
     }
 

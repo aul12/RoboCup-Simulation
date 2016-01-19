@@ -58,4 +58,8 @@ function gameObject(x,y,radius) {
 function Vector(x,y){
     this.x = x;
     this.y = y;
+
+    this.abs = function(){
+        return Math.sqrt(x*x + y*y);
+    }
 }

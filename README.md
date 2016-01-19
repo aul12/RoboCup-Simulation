@@ -5,7 +5,6 @@ A RoboCup Junior Soccer-B Simulation.
 [http://bodenseehaie.bplaced.de/](http://bodenseehaie.bplaced.de/)
 
 ##Known issues
-* Sometimes there are bugs when the ball is touching multiple robots
 * Multiple defence and pushing aren't detected properly
 
 ##Usage

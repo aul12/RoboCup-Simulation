@@ -24,6 +24,8 @@ function SoccerAPI(angle){
             angle *= -1;
         }
 
+        angle += this.currentRotation();
+
         robot[this.robotn].acceleration.x = (Math.cos(angle)*speed + robot[this.robotn].acceleration.x*14)/15;
         robot[this.robotn].acceleration.y= (Math.sin(angle)*speed+ robot[this.robotn].acceleration.y*14)/15;
 
@@ -32,16 +34,17 @@ function SoccerAPI(angle){
     this.ballAngle = function() {
         var delta_x = ball.x-robot[this.robotn].x;
         var delta_y = ball.y-robot[this.robotn].y;
-        var angle=Math.atan(delta_y/delta_x);
+        var angle=Math.atan2(delta_y, delta_x);
         if(this.robotn>=2)
         {
             angle+=Math.PI;
             angle*=-1;
         }
-        if((delta_x<0))
-            angle-=Math.PI;
+
         if(angle>Math.PI)
             angle-=2*Math.PI;
+        else if(angle<Math.PI)
+            angle+=2*Math.PI;
         if(this.degree)
             angle=angle*180/Math.PI;
         return angle;
@@ -130,12 +133,11 @@ function SoccerAPI(angle){
     };
 
     this.ballInDribbler = function() {
-        var delta_x = ball.x - robot[this.robotn].x;
-        var delta_y = ball.y - robot[this.robotn].y;
+        if (this.ballDistanceCM() < 1){
+            var diff = Math.abs(robot[this.robotn].rotation - this.ballAngle()) % 360;
 
-
-        if (Math.sqrt(delta_x * delta_x + delta_y * delta_y) < ROBOT_SIZE + 14){
-            if(this.ballAngle()>345||this.ballAngle()<15)
+            //Ball in the Front
+            if(diff < 15)
                 return true;
         }
         return false;

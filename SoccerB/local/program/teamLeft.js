@@ -1,7 +1,7 @@
 //Program for Yellow Team
 
 //Goalie Left
-function goalieYellow()
+function goalieLeft()
 {
     if(api.onLine()){
         api.move(api.lineAngle()+180 , SPEED);
@@ -23,7 +23,7 @@ function goalieYellow()
 }
 
 //Striker Left
-function strikerYellow()
+function strikerLeft()
 {
     if (api.onLine()) {
         api.move(api.lineAngle() + 180, SPEED);
@@ -35,13 +35,8 @@ function strikerYellow()
             angle -= 360;
         if (api.ballInDribbler()) {
             angle = 0;
-            if (Math.abs(api.distance(api.distance.LEFT) - api.distance(api.distance.RIGHT)) < GOAL_WIDTH) {
-                api.setDribbler(false);
-                api.shoot();
-            }
-            else {
-                api.setDribbler(true);
-            }
+            api.setDribbler(false);
+            api.shoot();
         }
         else{
             if (Math.abs(angle) > 90){

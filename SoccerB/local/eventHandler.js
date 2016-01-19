@@ -62,16 +62,16 @@ function interrupt()
             switch(robot_counter)
             {
                 case 0:
-                    goalieYellow();
+                    goalieLeft();
                     break;
                 case 1:
-                    strikerYellow();
+                    strikerLeft();
                     break;
                 case 2:
                     goalieBlue();
                     break;
                 case 3:
-                    strikerBlue();
+                    strikerRight();
                     break;
             }
         }

@@ -1,7 +1,7 @@
 //Program for Blue Team
 
 //Goalie Right
-function goalieBlue()
+function goalieRight()
 {
     if(api.onLine()){
         api.move(api.lineAngle()+180 , SPEED);
@@ -23,7 +23,7 @@ function goalieBlue()
 }
 
 //Striker Right
-function strikerBlue() {
+function strikerRight() {
     if (api.onLine()) {
         api.move(api.lineAngle() + 180, SPEED);
     }

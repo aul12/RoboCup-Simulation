@@ -36,11 +36,10 @@ function draw_clear()	                                                          
 function draw()	                                                                                                //Zeichnen
 {
     draw_clear();
+    draw_ball(ball.x,ball.y,ball.rotation, true);
     for(var robot_counter = 0; robot_counter<ROBOTS; robot_counter++)
         draw_robot(robot[robot_counter].x,
             robot[robot_counter].y,
             robot[robot_counter].rotation,
             robot_inside[robot_counter]);
-    draw_ball(ball.x,ball.y,ball.rotation, true);
-
 }
