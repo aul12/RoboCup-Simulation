@@ -8,6 +8,8 @@ function physics()
     var robotsTouching=false;
     var ballInDribbler = false;
 
+    var speedBall = new Vector(0,0);
+
     for(var robot_counter= 0; robot_counter<ROBOTS; robot_counter++)
     {
         //Rotate the robots
@@ -84,12 +86,9 @@ function physics()
                     delta_x=ball.x-robot[not_robot_counter].x;
                     delta_y=ball.y-robot[not_robot_counter].y;
                     pushing[not_robot_counter] = Math.sqrt(delta_x * delta_x + delta_y * delta_y) < 14+ROBOT_SIZE;
-                    //continue;
                 }
             }
         }
-
-
 
         //Check if the robot is touching the ball
         if(robot[robot_counter].isTouching(ball))
@@ -97,8 +96,8 @@ function physics()
             alpha = ball.angleTo(robot[robot_counter]);
 
             //Correct the Speed of the Ball
-            ball.speed.x = ball.speed.x + Math.cos(alpha) * robot[robot_counter].speed.abs();
-            ball.speed.y = ball.speed.y + Math.sin(alpha) * robot[robot_counter].speed.abs();
+            ball.speed.x += Math.cos(alpha) * robot[robot_counter].speed.abs();
+            ball.speed.y += Math.sin(alpha) * robot[robot_counter].speed.abs();
 
             api.robotn = robot_counter;
             var diff = Math.abs(robot[robot_counter].rotation - api.ballAngle()) % 360;
@@ -108,17 +107,20 @@ function physics()
             {
                 if(robot_shoot[robot_counter])
                 {
-                    ball.speed.x = ball.speed.x + robot[robot_counter].speed.x * SHOOT_POWER;
-                    ball.speed.y = ball.speed.y + robot[robot_counter].speed.y * SHOOT_POWER;
+                    ball.speed.x += robot[robot_counter].speed.x * SHOOT_POWER;
+                    ball.speed.y += robot[robot_counter].speed.y * SHOOT_POWER;
 
                     robot_shoot[robot_counter]=false;
                 }
                 else if(robot_dribbler[robot_counter])
                 {
-                    ball.speed.x = ball.speed.x + (robot[robot_counter].x +30 - ball.x)*0.2;
-                    ball.speed.y = ball.speed.y + (robot[robot_counter].y - ball.y)*0.2;
+                    ball.speed.x += (robot[robot_counter].x +30 - ball.x)*0.2;
+                    ball.speed.y += (robot[robot_counter].y - ball.y)*0.2;
                 }
             }
+
+            //Move the ball out of the robot
+            ball.moveOutOf(robot[robot_counter]);
         }
     }
 
@@ -130,7 +132,7 @@ function physics()
 
 
     if(ballInDribbler)
-        ball.rotation += 14;
+        ball.rotation += 10;
     else
         ball.rotation = (ball.x + ball.y)*Math.PI;
 

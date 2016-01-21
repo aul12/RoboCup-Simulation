@@ -60,6 +60,6 @@ function Vector(x,y){
     this.y = y;
 
     this.abs = function(){
-        return Math.sqrt(x*x + y*y);
+        return Math.sqrt(this.x*this.x + this.y*this.y);
     }
 }
