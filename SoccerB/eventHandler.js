@@ -39,6 +39,7 @@ function mouse_pos(evt)
 
 function ball_click(evt)
 {
+    console.log(evt);
     if (!evt) evt = window.event;
     var p = mouse_pos(evt);
     ball.x = p.left;

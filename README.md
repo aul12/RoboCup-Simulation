@@ -7,6 +7,45 @@ A RoboCup Junior Soccer-B Simulation.
 ##Known issues
 * Multiple defence and pushing aren't detected properly
 
+##Dependencies
+* [http://electron.atom.io/](http://electron.atom.io/)
+* [https://www.npmjs.com/package/electron-packager](https://www.npmjs.com/package/electron-packager)
+
+##Installation (for building yourself)
+### Linux
+```
+sudo apt-get install nodejs
+
+sudo apt-get install npm
+
+sudo npm install electron-prebuilt -g
+
+sudo npm install electron-packager -g
+
+```
+
+### Windows
+Install node.js and npm using the [Installer](http://www.nodejs.org)
+```
+npm install electron-prebuilt -g
+npm install electron-packager -g
+```
+
+##Run it (without compiling):
+```
+electron .
+```
+
+##Compiling
+```
+electron-packager . RoboCup-Simulation --platform=[linux/win32/darwin] --arch=[ia32/x64] --version=0.34.1
+```
+to minify the program before compiling add 
+```
+--asar
+``` 
+
+
 ##Usage
 The Simulation runs on a node.js based server. To start execute 
 
