@@ -9,7 +9,7 @@ const ROBOTS = 2;
 const SPEED = 1;
 const SHOOT_POWER = 3;
 
-const SCALE = 3;
+const SCALE = 3.8;
 
 const WIDTH = 244;
 const HEIGHT = 182;

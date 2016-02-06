@@ -39,5 +39,5 @@ function draw()
         draw_robot(robot[robot_counter].x,
             robot[robot_counter].y,
             robot_counter>=2?robot[robot_counter].rotation+180:robot[robot_counter].rotation ,
-            robot_inside[robot_counter]);
+            robotInside[robot_counter]);
 }

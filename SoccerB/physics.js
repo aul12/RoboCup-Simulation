@@ -99,14 +99,14 @@ function physics()
             //Ball in the Front
             if(diff < 15)
             {
-                if(robot_shoot[robot_counter])
+                if(robotShoot[robot_counter])
                 {
                     ball.speed.x += robot[robot_counter].speed.x * SHOOT_POWER;
                     ball.speed.y += robot[robot_counter].speed.y * SHOOT_POWER;
 
-                    robot_shoot[robot_counter]=false;
+                    robotShoot[robot_counter]=false;
                 }
-                else if(robot_dribbler[robot_counter])
+                else if(robotDribblerEnabled[robot_counter])
                 {
                     ball.speed.x += (robot[robot_counter].x +ROBOT_SIZE - ball.x)*0.2;
                     ball.speed.y += (robot[robot_counter].y - ball.y)*0.2;

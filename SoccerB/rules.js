@@ -3,9 +3,7 @@ function checkRules(){
     //checkDoubleDefence();
     checkGoal();
     checkLine();
-
-    lack_of_progress = ball.speed.x < 0.00001 && ball.speed.y < 0.00001;
-
+    checkLackOfProgress();
 }
 
 function checkGoal(){
@@ -26,9 +24,8 @@ function checkGoal(){
 
         if(goal){
             document.getElementById("status").innerHTML = goals_team2+" : "+goals_team1;
-            clearInterval(isr_pointer);
-            clearInterval(lop_timer_pointer);
-            isr_started = false;
+            clearInterval(timerReference);
+            timerStarted = false;
         }
     }
 }
@@ -96,7 +93,7 @@ function checkDoubleDefence(){
 
 function checkLine(){
     for(var robot_counter=0; robot_counter<ROBOTS; robot_counter++) {
-        if (robot_inside[robot_counter]) {
+        if (robotInside[robot_counter]) {
             var out = false;
             if ((robot[robot_counter].x + ROBOT_SIZE) <= LEFT)																	//Linie
                 out = true;
@@ -115,44 +112,58 @@ function checkLine(){
     }
 }
 
-function Lack_Of_Progress()
+function checkLackOfProgress()
 {
-    if(lack_of_progress&&lop_timer)
+    //Check if ball is not moving
+    lackOfProgressCounter = (ball.speed.x < 0.00001 && ball.speed.y < 0.00001)?lackOfProgressCounter+1:0;
+
+    //No Movement in 5 seconds
+    if(lackOfProgressCounter > 1000)
     {
+        //Look for the Spot where the ball is in the middle of all robots
+        var minDistIndex = 0;
+        var dist = new Array(NEUTRAL_POINT.length);
 
-        lop_timer=false;
+        for(var c=0; c < NEUTRAL_POINT.length; c++)
+        {
+            switch(ROBOTS){
+                case 1:
+                    dist[c] = robot[0].distanceTo(NEUTRAL_POINT[c]);
+                    break;
+                case 2:
+                    dist[c] = robot[0].distanceTo(NEUTRAL_POINT[c]) + robot[1].distanceTo(NEUTRAL_POINT[c]);
+                    break;
+                case 3:
+                    dist[c] = Math.abs((robot[0].distanceTo(NEUTRAL_POINT[c]) + robot[1].distanceTo(NEUTRAL_POINT[c]))
+                        - (robot[2].distanceTo(NEUTRAL_POINT[c])*2));
+                    break;
+                case 4:
+                    dist[c] = Math.abs((robot[0].distanceTo(NEUTRAL_POINT[c]) + robot[1].distanceTo(NEUTRAL_POINT[c]))
+                        - (robot[2].distanceTo(NEUTRAL_POINT[c]) + robot[3].distanceTo(NEUTRAL_POINT[c])));
+                    break;
+            }
 
-        var abstand = new Array(NEUTRAL_POINT.length +1);
-        var small=0;
-        for(var counter=0; counter<NEUTRAL_POINT.length; counter++){
-            abstand[counter] = 0;
-            for (var robot_counter=0; robot_counter<ROBOTS; robot_counter++)
-                abstand[counter] += robot[robot_counter].distanceTo(NEUTRAL_POINT[counter]);
-
-            if(abstand[counter]<abstand[small])
-                small=counter;
+            if(dist[c] < dist[minDistIndex])
+                minDistIndex = c;
         }
 
-        ball.x = NEUTRAL_POINT[small].x;
-        ball.y = NEUTRAL_POINT[small].y;
+        ball.x = NEUTRAL_POINT[minDistIndex].x;
+        ball.y = NEUTRAL_POINT[minDistIndex].y;
+
         ball.speed.x = 0;
         ball.speed.y = 0;
-        console.log("Lack of Progress");
-        clearInterval(lop_timer_pointer);
-        lop_timer_pointer=setInterval(Lack_Of_Progress,3000);
-    }
+        ball.acceleration.x = 0;
+        ball.acceleration.y = 0;
 
-    if(lack_of_progress)
-        lop_timer=true;
+        lackOfProgressCounter = 0;
+    }
 }
 
 function reset_robot(robotn)
 {
-    robot_inside[robotn]=false;
-    if(!document.getElementById("check_mute").checked)
-        console.log("Der Roboter ist aus dem Feld gefahren");
-    robot[robotn].x=0;
-    robot[robotn].y =0;
+    robotInside[robotn] = false;
+    robot[robotn].x = WIDTH/2;
+    robot[robotn].y = HEIGHT/2;
     robot[robotn].speed.x = 0;
     robot[robotn].speed.y = 0;
     robot[robotn].acceleration.x = 0;

@@ -42,18 +42,18 @@ function ball_click(evt)
     ball.y = p.top / SCALE;
     ball.speed.x=0;
     ball.speed.y=0;
-    clearInterval(lop_timer_pointer);
-    lop_timer_pointer=setInterval(Lack_Of_Progress,3000);
+
+    lackOfProgressCounter = 0;
 }
 
 
 
 //######################Main#########################################
-function interrupt()
+function timerTick()
 {
     for(var robot_counter=0; robot_counter<ROBOTS; robot_counter++)
     {
-        if(robot_inside[robot_counter])
+        if(robotInside[robot_counter])
         {
             api.robotn = robot_counter;
             switch(robot_counter)
@@ -74,12 +74,12 @@ function interrupt()
         }
         else
         {
-            if(++robot_out_timer[robot_counter]>=200)
+            if(++robotOutTimer[robot_counter]>=200)
             {
-                robot_inside[robot_counter]=true;
+                robotInside[robot_counter]=true;
                 robot[robot_counter].x = (WIDTH/2);
                 robot[robot_counter].y = (HEIGHT/2);
-                robot_out_timer[robot_counter]=0;
+                robotOutTimer[robot_counter]=0;
 
             }
         }
@@ -108,15 +108,16 @@ function start()
         robot[robot_counter].acceleration.x = 0;
         robot[robot_counter].acceleration.y = 0;
     }
+
+    lackOfProgressCounter = 0;
 }
 
-function isr_init()
+function timerInit()
 {
     start();
-    if(!isr_started)
+    if(!timerStarted)
     {
-        isr_pointer = setInterval(interrupt,5);
-        lop_timer_pointer=setInterval(Lack_Of_Progress,3000);
-        isr_started=true;
+        timerReference = setInterval(timerTick,5);
+        timerStarted = true;
     }
 }

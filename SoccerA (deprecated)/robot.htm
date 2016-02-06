@@ -442,11 +442,11 @@ Todo:
 		function isr_init()
 		{
 			start();
-			if(isr_started==false)
+			if(timerStarted==false)
 			{
 				setInterval(interrupt,20);
                 setInterval(Lack_Of_Progress,2500);
-				isr_started=true;
+				timerStarted=true;
 			}
 		}
 		

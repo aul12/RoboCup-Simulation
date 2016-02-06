@@ -92,11 +92,11 @@ function SoccerAPI(angle){
     };
 
     this.setDribbler = function(power) {
-        robot_dribbler[this.robotn]=power;
+        robotDribblerEnabled[this.robotn]=power;
     };
 
     this.shoot = function() {
-        robot_shoot[this.robotn]=true;
+        robotShoot[this.robotn]=true;
     };
 
 
