@@ -34,7 +34,7 @@ function strikerRight() {
             angle -= 360;
         if (api.ballInDribbler()) {
             angle = 0;
-            if (Math.abs(api.distance(api.distance.LEFT) - api.distance(api.distance.RIGHT)) < GOAL_WIDTH) {
+            if (Math.abs(api.distance(api.distance.LEFT) - api.distance(api.distance.RIGHT)) < 60) {
                 api.setDribbler(false);
                 api.shoot();
             }

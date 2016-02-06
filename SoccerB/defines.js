@@ -1,27 +1,38 @@
 var canvas = document.getElementById('canvasField');
 var ctx = canvas.getContext("2d");
-var feldImage = new Image();
+var fieldImage = new Image();
 var ballImage = new Image();
 var robotImage = new Image();
 
-const SPEED=3;
-const LEFT=104;
-const RIGHT=ctx.canvas.width-100;
-const TOP=100;
-const BOTTOM = ctx.canvas.height-100;
 const ROBOTS = 2;
+
+const SPEED = 1;
 const SHOOT_POWER = 3;
-const STRAFRAUM_WIDTH = 72;
-const STRAFRAUM_HEIGHT  = 295;
-const GOAL_WIDTH = 180;
-const ROBOT_SIZE = 33;
-const BALL_SIZE = 14;
 
-const NEUTRAL_POSITION = new Vector(140, 78);
+const SCALE = 3;
 
-const NEUTRAL_POINT= [new Vector(NEUTRAL_POSITION.x+120, NEUTRAL_POSITION.y+120),
-                                    new Vector(NEUTRAL_POSITION.x+120, ctx.canvas.height-NEUTRAL_POSITION.y-120),
-                                    new Vector(ctx.canvas.width-NEUTRAL_POSITION.x-120, NEUTRAL_POSITION.y+120),
-                                    new Vector(ctx.canvas.width-NEUTRAL_POSITION.x-120, ctx.canvas.height-NEUTRAL_POSITION.y-120)];
+const WIDTH = 244;
+const HEIGHT = 182;
+
+const OUT_DISTANCE = 30;
+const LEFT = OUT_DISTANCE;
+const RIGHT = WIDTH - OUT_DISTANCE;
+const TOP = OUT_DISTANCE;
+const BOTTOM = HEIGHT - OUT_DISTANCE;
+
+const PENALTY_AREA_WIDTH = 30;
+const PENALTY_AREA_HEIGHT  = 90;
+const GOAL_TOP = 61;
+const GOAL_BOTTOM = HEIGHT - 61;
+
+
+const ROBOT_SIZE = 10;
+const BALL_SIZE = 7.4;
+
+const NEUTRAL_POINT= [  new Vector(45 + LEFT, 31 + TOP),
+                        new Vector(45 + LEFT, BOTTOM-31),
+                        new Vector(RIGHT - 45, 31 + TOP),
+                        new Vector(RIGHT - 45, BOTTOM-31),
+                        new Vector(WIDTH/2, HEIGHT/2)];
 
 

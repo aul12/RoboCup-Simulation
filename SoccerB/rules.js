@@ -1,5 +1,5 @@
 function checkRules(){
-    checkPushing();
+    //checkPushing();
     //checkDoubleDefence();
     checkGoal();
     checkLine();
@@ -10,19 +10,18 @@ function checkRules(){
 
 function checkGoal(){
     var goal = false;
-    if(ball.y>(ctx.canvas.height/2)-(GOAL_WIDTH/2)&&ball.y<(ctx.canvas.height/2)+(GOAL_WIDTH/2))    //Check Y
+
+    if((ball.y + BALL_SIZE/2) > GOAL_TOP && (ball.y - BALL_SIZE/2) < GOAL_BOTTOM)
     {
-        //Check X
-        if((ball.x-14)<(LEFT-20))
+        if(ball.x - BALL_SIZE/2 < LEFT && ball.speed.x < 0)
         {
             goals_team1++;
             goal = true;
         }
-        else if((ball.x+14)>(RIGHT+20))
+        else if(ball.x + BALL_SIZE/2 > RIGHT && ball.speed.x > 0)
         {
             goals_team2++;
             goal = true;
-
         }
 
         if(goal){
@@ -41,8 +40,8 @@ function checkPushing(){
         {
             if(robot[robot_counter].isTouching(robot[not_robot_counter]) && robot_counter!=not_robot_counter)
             {
-                if(robot[robot_counter].isInArea(LEFT, (canvas.height-STRAFRAUM_HEIGHT)/2, STRAFRAUM_WIDTH, STRAFRAUM_HEIGHT)||
-                    robot[not_robot_counter].isInArea(LEFT, (canvas.height+STRAFRAUM_HEIGHT)/2, STRAFRAUM_WIDTH, STRAFRAUM_HEIGHT)){
+                if(robot[robot_counter].isInArea(LEFT, (canvas.height-PENALTY_AREA_HEIGHT)/2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT)||
+                    robot[not_robot_counter].isInArea(LEFT, (canvas.height+PENALTY_AREA_HEIGHT)/2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT)){
                     if(robot_counter>=2 && not_robot_counter<2){
                         robot[not_robot_counter].x=ctx.canvas.width/2;
                         robot[not_robot_counter].y=ctx.canvas.height/2;
@@ -53,8 +52,8 @@ function checkPushing(){
                     }
                     console.log("Pushing");
                 }
-                if(robot[robot_counter].isInArea(canvas.width-LEFT-STRAFRAUM_WIDTH, (canvas.height-STRAFRAUM_HEIGHT)/2, STRAFRAUM_WIDTH, STRAFRAUM_HEIGHT)||
-                    robot[not_robot_counter].isInArea(LEFT, (canvas.height+STRAFRAUM_HEIGHT)/2, STRAFRAUM_WIDTH, STRAFRAUM_HEIGHT)){
+                if(robot[robot_counter].isInArea(canvas.width-LEFT-PENALTY_AREA_WIDTH, (canvas.height-PENALTY_AREA_HEIGHT)/2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT)||
+                    robot[not_robot_counter].isInArea(LEFT, (canvas.height+PENALTY_AREA_HEIGHT)/2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT)){
                     if(robot_counter>=2 && not_robot_counter<2){
                         robot[not_robot_counter].x=ctx.canvas.width/2;
                         robot[not_robot_counter].y=ctx.canvas.height/2;
@@ -77,7 +76,7 @@ function checkDoubleDefence(){
             /*
             @TODO only check Robots of same Team; check both areas
              */
-            if(robot[robot_counter].isInArea(LEFT, (canvas.height-STRAFRAUM_HEIGHT)/2, STRAFRAUM_WIDTH, STRAFRAUM_HEIGHT) && robot[not_robot_counter].isInArea(LEFT, (canvas.height-STRAFRAUM_HEIGHT)/2, STRAFRAUM_WIDTH, STRAFRAUM_HEIGHT) && robot[robot_counter].isTouching(robot[not_robot_counter]))
+            if(robot[robot_counter].isInArea(LEFT, (canvas.height-PENALTY_AREA_HEIGHT)/2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT) && robot[not_robot_counter].isInArea(LEFT, (canvas.height-PENALTY_AREA_HEIGHT)/2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT) && robot[robot_counter].isTouching(robot[not_robot_counter]))
             {
                 console.log("Double defence");
                 if(robot[robot_counter].distanceTo(ball) < robot[not_robot_counter].distanceTo(ball))
@@ -107,6 +106,8 @@ function checkLine(){
                 out = true;
             else if ((robot[robot_counter].y - ROBOT_SIZE) >= BOTTOM)
                 out = true;
+
+
             if (out) {
                 reset_robot(robot_counter);
             }

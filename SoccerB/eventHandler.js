@@ -1,13 +1,10 @@
-/**
- * Created by paul on 11.03.15.
- */
 //######################Init#########################################
 start();
-feldImage.src = 'res/field.png';
+fieldImage.src = 'res/field.png';
 ballImage.src = 'res/ball.png';
 robotImage.src = 'res/robot.png';
 
-feldImage.onload = function(){
+fieldImage.onload = function(){
     draw_clear();
     draw();
 };
@@ -39,11 +36,10 @@ function mouse_pos(evt)
 
 function ball_click(evt)
 {
-    console.log(evt);
     if (!evt) evt = window.event;
     var p = mouse_pos(evt);
-    ball.x = p.left;
-    ball.y = p.top;
+    ball.x = p.left / SCALE;
+    ball.y = p.top / SCALE;
     ball.speed.x=0;
     ball.speed.y=0;
     clearInterval(lop_timer_pointer);
@@ -78,31 +74,31 @@ function interrupt()
         }
         else
         {
-
             if(++robot_out_timer[robot_counter]>=200)
             {
                 robot_inside[robot_counter]=true;
-                robot[robot_counter].x = (ctx.canvas.width/2);
-                robot[robot_counter].y = (ctx.canvas.height/2);
+                robot[robot_counter].x = (WIDTH/2);
+                robot[robot_counter].y = (HEIGHT/2);
                 robot_out_timer[robot_counter]=0;
 
             }
         }
     }
     physics();
-    checkRules();
     draw();
+    checkRules();
+
 }
 
 //######################Start Software#########################################
 function start()
 {
-    robot[0] = new gameObject(60+LEFT, ctx.canvas.height/2, ROBOT_SIZE);
-    robot[1] = new gameObject((ctx.canvas.width/2)-120, (ctx.canvas.height/2), ROBOT_SIZE);
-    robot[2] = new gameObject(RIGHT-60, (ctx.canvas.height/2), ROBOT_SIZE);
-    robot[3] = new gameObject((ctx.canvas.width/2)+120, (ctx.canvas.height/2), ROBOT_SIZE);
-    ball.x = ctx.canvas.width /2;
-    ball.y = ctx.canvas.height /2;
+    robot[0] = new gameObject(20+LEFT, HEIGHT/2, ROBOT_SIZE);
+    robot[1] = new gameObject((WIDTH/2)-40, HEIGHT/2, ROBOT_SIZE);
+    robot[2] = new gameObject(RIGHT-20, HEIGHT/2, ROBOT_SIZE);
+    robot[3] = new gameObject((WIDTH/2)+40, HEIGHT/2, ROBOT_SIZE);
+    ball.x = WIDTH /2;
+    ball.y = HEIGHT /2;
     ball.speed.x = 0;
     ball.speed.y = 0;
     for(var robot_counter = 0 ; robot_counter<ROBOTS; robot_counter++)
@@ -111,7 +107,6 @@ function start()
         robot[robot_counter].speed.y = 0;
         robot[robot_counter].acceleration.x = 0;
         robot[robot_counter].acceleration.y = 0;
-        robot_driving_speed[robot_counter]=0;
     }
 }
 
@@ -124,18 +119,4 @@ function isr_init()
         lop_timer_pointer=setInterval(Lack_Of_Progress,3000);
         isr_started=true;
     }
-}
-
-function openCode(){
-    var win = window.open("editor", "_blank", "height=560,width=940");
-    win.blauChanged = function(data){
-       /* $.post("../server/main.js", "abc="+data, function(data){
-            console.log("ABC");
-        });*/
-    };
-    win.gelbChanged = function(data){
-       /* $.post("../server/main.js", "abc="+data, function(data){
-            console.log(data);
-        });*/
-    };
 }
