@@ -62,16 +62,9 @@ function physics()
                     var speed = new Vector(0,0);
 
                     //Inelastic collision
-                    speed.x = (robot[robot_counter].speed.x + robot[second_robot_counter].speed.x)/2;
-                    speed.y = (robot[robot_counter].speed.y + robot[second_robot_counter].speed.y)/2;
-                    robot[robot_counter].speed.x=speed.x;
-                    robot[robot_counter].speed.y=speed.y;
-                    robot[second_robot_counter].speed.x=speed.x;
-                    robot[second_robot_counter].speed.y=speed.y;
-                    robot[robot_counter].acceleration.x = 0;
-                    robot[robot_counter].acceleration.y = 0;
-                    robot[second_robot_counter].acceleration.x = 0;
-                    robot[second_robot_counter].acceleration.y = 0;
+                    robot[robot_counter].speed.y *= 0.5;
+                    robot[second_robot_counter].speed.x *= 0.5;
+                    robot[second_robot_counter].speed.y *= 0.5;
                     robotsTouching=true;
                     delta_x=ball.x-robot[robot_counter].x;
                     delta_y=ball.y-robot[robot_counter].y;

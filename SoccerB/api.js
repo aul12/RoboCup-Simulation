@@ -26,8 +26,8 @@ function SoccerAPI(angle){
 
         angle += this.currentRotation();
 
-        robot[this.robotn].acceleration.x = (Math.cos(angle)*speed + robot[this.robotn].acceleration.x*14)/15;
-        robot[this.robotn].acceleration.y= (Math.sin(angle)*speed+ robot[this.robotn].acceleration.y*14)/15;
+        robot[this.robotn].acceleration.x = (Math.cos(angle)*speed + robot[this.robotn].acceleration.x*39)/40;
+        robot[this.robotn].acceleration.y= (Math.sin(angle)*speed+ robot[this.robotn].acceleration.y*39)/40;
 
     };
 

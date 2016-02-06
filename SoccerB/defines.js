@@ -4,12 +4,12 @@ var fieldImage = new Image();
 var ballImage = new Image();
 var robotImage = new Image();
 
-const ROBOTS = 2;
+const ROBOTS = 4;
 
-const SPEED = 1;
-const SHOOT_POWER = 3;
+const SPEED = 1.3;
+const SHOOT_POWER = 2;
 
-const SCALE = 3.8;
+const SCALE = 3.5;
 
 const WIDTH = 244;
 const HEIGHT = 182;
