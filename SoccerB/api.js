@@ -32,15 +32,15 @@ function SoccerAPI(angle){
     };
 
     this.moveToXY = function(xPos, yPos) {
-        var xdiff = this.distanceToWall(this.distance.RIGHT)- xPos;
-        var ydiff = yPos - this.distanceToWall(this.distance.BACK);
+        var xdiff = this.realDistance(this.distance.RIGHT)- xPos;
+        var ydiff = yPos - this.realDistance(this.distance.BACK);
 
         if(Math.abs(xdiff) < 2 && Math.abs(ydiff) < 2){
             this.move(0, 0);
         }else{
             var angle = Math.atan2(xdiff, ydiff)*180/Math.PI;
 
-            var dist = Math.sqrt(xdiff*xdiff + ydiff*ydiff) / 160;
+            var dist = Math.sqrt(xdiff*xdiff + ydiff*ydiff) / 40;
 
             if(dist>1)
                 dist = 1;
@@ -118,18 +118,45 @@ function SoccerAPI(angle){
     };
 
 
+    this.realDistance = function(direction){
+        var dist = this.distanceToWall(direction);
+
+        switch(direction)
+        {
+            case this.distance.FRONT:
+            case this.distance.BACK:
+                if(this.distanceToWall(this.distance.LEFT) > 30 && this.distanceToWall(this.distance.RIGHT) > 30)
+                    dist -= 5;
+                break;
+            case this.distance.RIGHT:
+                if(this.distanceToWall(this.distance.BACK) < 50 || this.distanceToWall(this.distance.FRONT) < 50){
+                    if(this.distanceToWall(this.distance.RIGHT) > 80)
+                        dist -= 60;
+                }
+                break;
+            case this.distance.LEFT:
+                if(this.distanceToWall(this.distance.BACK) < 50 || this.distanceToWall(this.distance.FRONT) < 50){
+                    if(this.distanceToWall(this.distance.LEFT) > 80)
+                        dist -= 60;
+                }
+                break;
+        }
+
+        return dist + Math.random() * 8 - 4;
+    };
+
     this.distanceToWall = function(direction) {
         if(this.robotn<=2)
         {
             switch(direction)
             {
-                case 1:
+                case this.distance.FRONT:
                     return WIDTH-robot[this.robotn].x;
-                case 2:
+                case this.distance.RIGHT:
                     return HEIGHT-robot[this.robotn].y;
-                case 3:
+                case this.distance.BACK:
                     return robot[this.robotn].x;
-                case 4:
+                case this.distance.LEFT:
                     return robot[this.robotn].y;
             }
         }
@@ -137,13 +164,13 @@ function SoccerAPI(angle){
         {
             switch(direction)
             {
-                case 1:
+                case this.distance.FRONT:
                     return robot[this.robotn].x;
-                case 2:
+                case this.distance.RIGHT:
                     return robot[this.robotn].y;
-                case 3:
+                case this.distance.BACK:
                     return ctx.canvas.width-robot[this.robotn].x;
-                case 4:
+                case this.distance.LEFT:
                     return ctx.canvas.height-robot[this.robotn].y;
             }
         }

@@ -117,7 +117,7 @@ Move the robot in a specified angle with a specified speed (robot will keep this
 ___
 
 ```javascript
-api.moveToXY(xPos, yPos)
+api.moveToXY(xPos, yPos);
 ```  
 Let the robot drive to a specified position, speed is regulated by a proportional-controller.
 
@@ -188,7 +188,25 @@ ___
 ```javascript
 api.distanceToWall(direction);
 ```  
-Returns the distance to the wall (robots aren't calculated at the moment) in the given direction Directions can be:   
+Returns the distance to the wall in the given direction.
+
+___
+
+```javascript
+api.realDistance(direction);
+```  
+Returns the distance in the given direction with influences like the goal (other robots aren't calculated yet).
+
+___
+
+```javascript
+api.currentRotation();
+```  
+Returns the orientation of the robot (unit depends on configuration). Clockwise means positive, negative counterclockwise values. This means that there is a jump at +/-180 degrees.
+
+###Constants
+
+Directions (for ```distanceToWall``` and ```realDistance```) can be:   
 ```javascript
 api.distance.FRONT
 ```  
@@ -201,13 +219,6 @@ api.distance.BACK
 ```javascript
 api.distance.LEFT
 ```  
-
-___
-
-```javascript
-api.currentRotation();
-```  
-Returns the orientation of the robot (unit depends on configuration). Clockwise means positive, negative counterclockwise values. This means that there is a jump at +/-180 degrees.
 
 ###Configuration
 ```javascript
