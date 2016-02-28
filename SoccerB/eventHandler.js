@@ -78,17 +78,18 @@ function logicTimerTick()
                         break;
                     case 2:
                         try {
-                            goalieRight();
+                            strikerRight();
                         } catch (e) {
-                            alert("Error: \""+e+"\" in goalieRight");
+                            alert("Error: \""+e+"\" in strikerRight");
                             clearIntervals();
                         }
                         break;
                     case 3:
                         try {
-                            strikerRight();
+                            goalieRight();
+
                         } catch (e) {
-                            alert("Error: \""+e+"\" in strikerRight");
+                            alert("Error: \""+e+"\" in GoalieRight");
                             clearIntervals();
                         }
                         break;
@@ -116,6 +117,11 @@ function physicTimerTick(){
 }
 
 function drawTimerTick(){
+    ROBOT_ENABLE[0] = $('#enable0').is(':checked');
+    ROBOT_ENABLE[1] = $('#enable1').is(':checked');
+    ROBOT_ENABLE[2] = $('#enable2').is(':checked');
+    ROBOT_ENABLE[3] = $('#enable3').is(':checked');
+
     draw();
 }
 
@@ -124,8 +130,9 @@ function start()
 {
     robot[0] = new gameObject(20+LEFT, HEIGHT/2, ROBOT_SIZE);
     robot[1] = new gameObject((WIDTH/2)-40, HEIGHT/2, ROBOT_SIZE);
-    robot[2] = new gameObject(RIGHT-20, HEIGHT/2, ROBOT_SIZE);
-    robot[3] = new gameObject((WIDTH/2)+40, HEIGHT/2, ROBOT_SIZE);
+    robot[2] = new gameObject((WIDTH/2)+40, HEIGHT/2, ROBOT_SIZE);
+    robot[3] = new gameObject(RIGHT-20, HEIGHT/2, ROBOT_SIZE);
+
     ball.x = WIDTH /2;
     ball.y = HEIGHT /2;
     ball.speed.x = 0;

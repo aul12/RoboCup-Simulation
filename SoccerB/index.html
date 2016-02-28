@@ -5,17 +5,29 @@
         <link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css">
 	</head>
 	<body>
-        <table>
-            <tr>
-                <td>
-                    <canvas id="canvasField" width="900" height="650" onclick="ball_click()"></canvas>
-                </td>
-                <td style="padding: 20px; vertical-align: top">
-                    <button style="margin: 4px" class="btn btn-primary" type="button" onclick="timerInit()">Start</button><br>
-                    <strong id="status">0 : 0</strong>
-                </td>
-            </tr>
-        </table>
+        <div class="container">
+            <table>
+                <tr>
+                    <td>
+                        <canvas id="canvasField" width="900" height="650" onclick="ball_click()"></canvas>
+                    </td>
+                    <td style="padding: 20px; vertical-align: top">
+                        <input type="checkbox" id="enable0" checked> Robot 0 (Goalie Left)<br>
+                        <input type="checkbox" id="enable1" checked> Robot 1 (Striker Left)<br>
+                        <input type="checkbox" id="enable2" checked> Robot 2 (Striker Right)<br>
+                        <input type="checkbox" id="enable3" checked> Robot 3 (Goalie Right)
+                        <hr>
+                        <div style="text-align: center">
+                            <strong style="font-size: xx-large; margin-left:auto; margin-right:auto;" id="status">0 : 0</strong>
+                        </div>
+                        <hr>
+                        <button style="margin: 4px" class="btn btn-primary btn-block" type="button" onclick="timerInit()">Start</button>
+
+
+                    </td>
+                </tr>
+            </table>
+        </div>
 
 
         <script src="lib/gameObject.js"></script>
