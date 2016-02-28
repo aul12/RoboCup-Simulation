@@ -4,7 +4,7 @@ var fieldImage = new Image();
 var ballImage = new Image();
 var robotImage = new Image();
 
-const ROBOTS = 4;
+const ROBOTS = 1;
 
 const SPEED = 1.3;
 const SHOOT_POWER = 2;

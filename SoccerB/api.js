@@ -31,6 +31,24 @@ function SoccerAPI(angle){
 
     };
 
+    this.moveToXY = function(xPos, yPos) {
+        var xdiff = this.distanceToWall(this.distance.RIGHT)- xPos;
+        var ydiff = yPos - this.distanceToWall(this.distance.BACK);
+
+        if(Math.abs(xdiff) < 2 && Math.abs(ydiff) < 2){
+            this.move(0, 0);
+        }else{
+            var angle = Math.atan2(xdiff, ydiff)*180/Math.PI;
+
+            var dist = Math.sqrt(xdiff*xdiff + ydiff*ydiff) / 160;
+
+            if(dist>1)
+                dist = 1;
+
+            this.move(angle, SPEED*dist);
+        }
+    };
+
     this.ballAngle = function() {
         var delta_x = ball.x-robot[this.robotn].x;
         var delta_y = ball.y-robot[this.robotn].y;
@@ -100,15 +118,15 @@ function SoccerAPI(angle){
     };
 
 
-    this.distance = function(direction) {
+    this.distanceToWall = function(direction) {
         if(this.robotn<=2)
         {
             switch(direction)
             {
                 case 1:
-                    return ctx.canvas.width-robot[this.robotn].x;
+                    return WIDTH-robot[this.robotn].x;
                 case 2:
-                    return ctx.canvas.height-robot[this.robotn].y;
+                    return HEIGHT-robot[this.robotn].y;
                 case 3:
                     return robot[this.robotn].x;
                 case 4:

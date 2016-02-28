@@ -110,6 +110,7 @@ All methods listed below are part of the SoccerAPI class, which is predefined wi
 ###Outputs
 ```javascript
 api.move(angle,speed);
+```
 
 Move the robot in a specified angle with a specified speed (robot will keep this speed until there is a new speed)
 
@@ -178,9 +179,16 @@ Returns the angle of the line under the robot. If the robot is on the line on th
 ___
 
 ```javascript
-api.distance(direction);
+api.moveToXY(xPos, yPos)
 ```  
-Returns the distance to the wall in the given direction Directions can be, robots aren't calculated at the moment:   
+Let the robot drive to a specified position, speed is regulated by a proportional-controller.
+
+___
+
+```javascript
+api.distanceToWall(direction);
+```  
+Returns the distance to the wall (robots aren't calculated at the moment) in the given direction Directions can be:   
 ```javascript
 api.distance.FRONT
 ```  
