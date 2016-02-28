@@ -160,15 +160,32 @@ function clearIntervals(){
         clearInterval(drawTimerReference);
     } catch (e) {
     }
+
+    $("#startBtn").html("Start");
+    running = false;
 }
 
 function timerInit()
 {
-    start();
-    clearIntervals();
+    if(!running){
+        if(!pause){
+            start();
+        }
 
-    logicTimerReference = setInterval(logicTimerTick,5);
-    physicTimerReference = setInterval(physicTimerTick, 1);
-    drawTimerReference = setInterval(drawTimerTick, 30);
+        clearIntervals();
+
+        logicTimerReference = setInterval(logicTimerTick,5);
+        physicTimerReference = setInterval(physicTimerTick, 1);
+        drawTimerReference = setInterval(drawTimerTick, 30);
+
+        $("#startBtn").html("Pause");
+
+        running = true;
+        pause = false;
+    }else{
+        clearIntervals();
+        pause = true;
+    }
+
 
 }

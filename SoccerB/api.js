@@ -98,7 +98,7 @@ function SoccerAPI(angle){
     };
 
     this.onLine = function(){
-        if ((robot[this.robotn].x - ROBOT_SIZE) <= LEFT)																	//Linie
+        if ((robot[this.robotn].x - ROBOT_SIZE) <= LEFT)
             return true;
         else if ((robot[this.robotn].x + ROBOT_SIZE) >= RIGHT)
             return true;
