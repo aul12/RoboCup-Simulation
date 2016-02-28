@@ -46,26 +46,71 @@ to minify the program before compiling add
 ``` 
 
 
-##Usage
-The Simulation runs on a node.js based server. To start execute 
-
-```
-node main.js
-```
-
-in the SoccerB/server folder. It will tell you the IP and the port of the webserver.
-
 ##Writing your own logic for the robots
-All the robots can be programmed with your own logic. Do this by editing the right function in the /SoccerB/local/program
+You have to write your own logic for the robots. Do this by editing the right function in the /SoccerB/local/program
 folder (logic for both teams are divided). Please don't use any loops in the function, it is called regularly by the 
 event handler.
+
+###Template
+```javascript
+//Program of the goalie on the right side
+function goalieRight()
+{
+    if(api.onLine()){
+        api.move(api.lineAngle()+180 , SPEED);
+    }else{
+        api.setDribbler(false);
+        var ballAngle=api.ballAngle();
+        if(api.distance(api.distance.BACK)>(60+LEFT))
+            ballAngle = 180;
+        else if(ballAngle>180||ballAngle<0)
+            ballAngle=270;
+        else
+            ballAngle=90;
+        api.move(ballAngle, SPEED);
+
+        if(api.ballInDribbler())
+            api.shoot();
+    }
+}
+
+//Program for the Striker on the right side
+function strikerRight() {
+    if (api.onLine()) {
+        api.move(api.lineAngle() + 180, SPEED);
+    }else {
+        var angle = api.ballAngle();
+        if (angle > 180)
+            angle -= 360;
+        if (api.ballInDribbler()) {
+            angle = 0;
+            if (Math.abs(api.distance(api.distance.LEFT) - api.distance(api.distance.RIGHT)) < 60) {
+                api.setDribbler(false);
+                api.shoot();
+            }
+            else {
+                api.setDribbler(true);
+            }
+        }
+        else{
+            if (Math.abs(angle) > 90)
+                angle = 180 - (Math.atan(3 / (api.ballDistanceCM())) * 180 / Math.PI);
+            else if (Math.abs(angle) > 60)
+                angle *= 2;
+            else
+                angle *= 2;
+        }
+        api.move(angle, SPEED);
+    }
+}
+```  
 
 ##API-Reference
 All methods listed below are part of the SoccerAPI class, which is predefined with the api object.
 ###Outputs
 ```javascript
 api.move(angle,speed);
-```  
+
 Move the robot in a specified angle with a specified speed (robot will keep this speed until there is a new speed)
 
 ___

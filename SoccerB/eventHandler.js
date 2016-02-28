@@ -56,6 +56,7 @@ function timerTick()
         if(robotInside[robot_counter])
         {
             api.robotn = robot_counter;
+            setAlias();
             switch(robot_counter)
             {
                 case 0:
