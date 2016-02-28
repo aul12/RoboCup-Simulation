@@ -117,6 +117,13 @@ Move the robot in a specified angle with a specified speed (robot will keep this
 ___
 
 ```javascript
+api.moveToXY(xPos, yPos)
+```  
+Let the robot drive to a specified position, speed is regulated by a proportional-controller.
+
+___
+
+```javascript
 api.setDribbler(power);
 ```  
 Enable/Disable the dribbler (power is a boolean)
@@ -175,13 +182,6 @@ ___
 api.lineAngle();
 ```  
 Returns the angle of the line under the robot. If the robot is on the line on the front it will return 0.
-
-___
-
-```javascript
-api.moveToXY(xPos, yPos)
-```  
-Let the robot drive to a specified position, speed is regulated by a proportional-controller.
 
 ___
 
