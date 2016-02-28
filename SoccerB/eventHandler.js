@@ -51,69 +51,67 @@ function ball_click(evt)
 //######################Main#########################################
 function logicTimerTick()
 {
-    for(var robot_counter=0; robot_counter<4; robot_counter++)
-    {
-        if(ROBOT_ENABLE[robot_counter]){
-            if(robotInside[robot_counter])
+    forEveryRobot(function(robot_counter){
+        if(robotInside[robot_counter])
+        {
+            api.robotn = robot_counter;
+            setAlias();
+            switch(robot_counter)
             {
-                api.robotn = robot_counter;
-                setAlias();
-                switch(robot_counter)
-                {
-                    case 0:
-                        try {
-                            goalieLeft();
-                        } catch (e) {
-                            alert("Error: \""+e+"\" in goalieLeft");
-                            clearIntervals();
-                        }
-                        break;
-                    case 1:
-                        try {
-                            strikerLeft();
-                        } catch (e) {
-                            alert("Error: \""+e+"\" in strikerLeft");
-                            clearIntervals();
-                        }
-                        break;
-                    case 2:
-                        try {
-                            strikerRight();
-                        } catch (e) {
-                            alert("Error: \""+e+"\" in strikerRight");
-                            clearIntervals();
-                        }
-                        break;
-                    case 3:
-                        try {
-                            goalieRight();
+                case 0:
+                    try {
+                        goalieLeft();
+                    } catch (e) {
+                        alert("Error: \""+e+"\" in goalieLeft");
+                        clearIntervals();
+                    }
+                    break;
+                case 1:
+                    try {
+                        strikerLeft();
+                    } catch (e) {
+                        alert("Error: \""+e+"\" in strikerLeft");
+                        clearIntervals();
+                    }
+                    break;
+                case 2:
+                    try {
+                        strikerRight();
+                    } catch (e) {
+                        alert("Error: \""+e+"\" in strikerRight");
+                        clearIntervals();
+                    }
+                    break;
+                case 3:
+                    try {
+                        goalieRight();
 
-                        } catch (e) {
-                            alert("Error: \""+e+"\" in GoalieRight");
-                            clearIntervals();
-                        }
-                        break;
-                }
-            }
-            else
-            {
-                if(++robotOutTimer[robot_counter]>=200)
-                {
-                    robotInside[robot_counter]=true;
-                    robot[robot_counter].x = (WIDTH/2);
-                    robot[robot_counter].y = (HEIGHT/2);
-                    robotOutTimer[robot_counter]=0;
-
-                }
+                    } catch (e) {
+                        alert("Error: \""+e+"\" in GoalieRight");
+                        clearIntervals();
+                    }
+                    break;
             }
         }
-    }
+        else
+        {
+            if(++robotOutTimer[robot_counter]>=200)
+            {
+                robotInside[robot_counter]=true;
+                robot[robot_counter].x = (WIDTH/2);
+                robot[robot_counter].y = (HEIGHT/2);
+                robotOutTimer[robot_counter]=0;
+
+            }
+        }
+    });
 
     checkRules();
 }
 
 function physicTimerTick(){
     physics();
+
 }
 
 function drawTimerTick(){
@@ -137,15 +135,13 @@ function start()
     ball.y = HEIGHT /2;
     ball.speed.x = 0;
     ball.speed.y = 0;
-    for(var robot_counter = 0 ; robot_counter<4; robot_counter++)
-    {
-        if(ROBOT_ENABLE[robot_counter]) {
-            robot[robot_counter].speed.x = 0;
-            robot[robot_counter].speed.y = 0;
-            robot[robot_counter].acceleration.x = 0;
-            robot[robot_counter].acceleration.y = 0;
-        }
-    }
+
+    forEveryRobot(function(robot_counter){
+        robot[robot_counter].speed.x = 0;
+        robot[robot_counter].speed.y = 0;
+        robot[robot_counter].acceleration.x = 0;
+        robot[robot_counter].acceleration.y = 0;
+    });
 
     lackOfProgressCounter = 0;
 }

@@ -31,83 +31,73 @@ function checkGoal(){
 }
 
 function checkPushing(){
-    for(var robot_counter=0; robot_counter<4; robot_counter++)
-    {
-        if (ROBOT_ENABLE[robot_counter]) {
-            for (var not_robot_counter = 0; not_robot_counter < 4; not_robot_counter++) {
-                if (robot[robot_counter].isTouching(robot[not_robot_counter]) && robot_counter != not_robot_counter && ROBOT_ENABLE[not_robot_counter]) {
-                    if (robot[robot_counter].isInArea(LEFT, (canvas.height - PENALTY_AREA_HEIGHT) / 2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT) ||
-                        robot[not_robot_counter].isInArea(LEFT, (canvas.height + PENALTY_AREA_HEIGHT) / 2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT)) {
-                        if (robot_counter >= 2 && not_robot_counter < 2) {
-                            robot[not_robot_counter].x = ctx.canvas.width / 2;
-                            robot[not_robot_counter].y = ctx.canvas.height / 2;
-                        }
-                        else if (robot_counter < 2 && not_robot_counter >= 2) {
-                            robot[robot_counter].x = ctx.canvas.width / 2;
-                            robot[robot_counter].y = ctx.canvas.height / 2;
-                        }
-                        console.log("Pushing");
-                    }
-                    if (robot[robot_counter].isInArea(canvas.width - LEFT - PENALTY_AREA_WIDTH, (canvas.height - PENALTY_AREA_HEIGHT) / 2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT) ||
-                        robot[not_robot_counter].isInArea(LEFT, (canvas.height + PENALTY_AREA_HEIGHT) / 2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT)) {
-                        if (robot_counter >= 2 && not_robot_counter < 2) {
-                            robot[not_robot_counter].x = ctx.canvas.width / 2;
-                            robot[not_robot_counter].y = ctx.canvas.height / 2;
-                        }
-                        else if (robot_counter < 2 && not_robot_counter >= 2) {
-                            robot[robot_counter].x = ctx.canvas.width / 2;
-                            robot[robot_counter].y = ctx.canvas.height / 2;
-                        }
-                        console.log("Pushing");
-                    }
+    forEveryCombination(function(robot_counter, not_robot_counter) {
+        if (robot[robot_counter].isTouching(robot[not_robot_counter]) && robot_counter != not_robot_counter && ROBOT_ENABLE[not_robot_counter]) {
+            if (robot[robot_counter].isInArea(LEFT, (canvas.height - PENALTY_AREA_HEIGHT) / 2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT) ||
+                robot[not_robot_counter].isInArea(LEFT, (canvas.height + PENALTY_AREA_HEIGHT) / 2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT)) {
+                if (robot_counter >= 2 && not_robot_counter < 2) {
+                    robot[not_robot_counter].x = ctx.canvas.width / 2;
+                    robot[not_robot_counter].y = ctx.canvas.height / 2;
                 }
+                else if (robot_counter < 2 && not_robot_counter >= 2) {
+                    robot[robot_counter].x = ctx.canvas.width / 2;
+                    robot[robot_counter].y = ctx.canvas.height / 2;
+                }
+                console.log("Pushing");
+            }
+            if (robot[robot_counter].isInArea(canvas.width - LEFT - PENALTY_AREA_WIDTH, (canvas.height - PENALTY_AREA_HEIGHT) / 2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT) ||
+                robot[not_robot_counter].isInArea(LEFT, (canvas.height + PENALTY_AREA_HEIGHT) / 2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT)) {
+                if (robot_counter >= 2 && not_robot_counter < 2) {
+                    robot[not_robot_counter].x = ctx.canvas.width / 2;
+                    robot[not_robot_counter].y = ctx.canvas.height / 2;
+                }
+                else if (robot_counter < 2 && not_robot_counter >= 2) {
+                    robot[robot_counter].x = ctx.canvas.width / 2;
+                    robot[robot_counter].y = ctx.canvas.height / 2;
+                }
+                console.log("Pushing");
             }
         }
-    }
+    });
+
 }
 
 function checkDoubleDefence(){
-    for(var robot_counter=0; robot_counter<4; robot_counter++) {
-        if (ROBOT_ENABLE[robot_counter]) {
-            for (var not_robot_counter = robot_counter; not_robot_counter < 4; not_robot_counter++) {
-                if (ROBOT_ENABLE[not_robot_counter]) {
-                    /*
-                     @TODO only check Robots of same Team; check both areas
-                     */
-                    if(robot[ robot_counter].isInArea(LEFT, ( canvas .height- PENALTY_AREA_HEIGHT)/2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT) && robot[ not_robot_counter].isInArea(LEFT, (canvas . height- PENALTY_AREA_HEIGHT)/2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT) && robot[
-                                                robot_counter].isTouching(robot[
-                                                not_robot_counter]))
-                        {
-                            console.log("Double defence");
-                            if(
-                                robot[ robot_counter] .distanceTo(ball ) < robot[
-                                    not_robot_counter]
-                                    .
-                                    distanceTo(
-                                        ball ) )
-                            {
-                                robot[
-                                    robot_counter]. x=ctx
-                                        . canvas.
-                                        width/2;
-                                robot[ robot_counter ].y
-                                    =ctx. canvas. height/2;
-                            }
-                        else
-                        {
-                            robot[not_robot_counter ] .x=ctx.canvas. width/2;
-                            robot[not_robot_counter] . y=ctx.canvas. height/2;
-                        }
-                    }
-                }
+    forEveryCombination(function(robot_counter, not_robot_counter){
+        /*
+         @TODO only check Robots of same Team; check both areas
+         */
+        if(robot[ robot_counter].isInArea(LEFT, ( canvas .height- PENALTY_AREA_HEIGHT)/2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT) && robot[ not_robot_counter].isInArea(LEFT, (canvas . height- PENALTY_AREA_HEIGHT)/2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT) && robot[
+                robot_counter].isTouching(robot[
+                not_robot_counter]))
+        {
+            console.log("Double defence");
+            if(
+                robot[ robot_counter] .distanceTo(ball ) < robot[
+                    not_robot_counter]
+                    .
+                    distanceTo(
+                        ball ) )
+            {
+                robot[
+                    robot_counter]. x=ctx
+                        . canvas.
+                        width/2;
+                robot[ robot_counter ].y
+                    =ctx. canvas. height/2;
+            }
+            else
+            {
+                robot[not_robot_counter ] .x=ctx.canvas. width/2;
+                robot[not_robot_counter] . y=ctx.canvas. height/2;
             }
         }
-    }
+    });
 }
 
 function checkLine(){
-    for(var robot_counter=0; robot_counter<4; robot_counter++) {
-        if (robotInside[robot_counter] && ROBOT_ENABLE[robot_counter]) {
+    forEveryRobot(function(robot_counter){
+        if (robotInside[robot_counter]) {
             var out = false;
             if ((robot[robot_counter].x + ROBOT_SIZE) <= LEFT)																	//Linie
                 out = true;
@@ -123,7 +113,7 @@ function checkLine(){
                 reset_robot(robot_counter);
             }
         }
-    }
+    });
 }
 
 function checkLackOfProgress()
@@ -131,8 +121,8 @@ function checkLackOfProgress()
     //Check if ball is not moving
     lackOfProgressCounter = (ball.speed.x < 0.00001 && ball.speed.y < 0.00001)?lackOfProgressCounter+1:0;
 
-    //No Movement in 5 seconds
-    if(lackOfProgressCounter > 1000)
+    //No Movement in 3 seconds
+    if(lackOfProgressCounter > 600)
     {
         //Look for the Spot where the ball is in the middle of all robots
         var minDistIndex = 0;
@@ -162,22 +152,6 @@ function checkLackOfProgress()
                 distRight = 0;
 
             dist[c] = Math.abs(distLeft - distRight);
-           /* switch(ROBOTS){
-                case 1:
-                    dist[c] = robot[0].distanceTo(NEUTRAL_POINT[c]);
-                    break;
-                case 2:
-                    dist[c] = robot[0].distanceTo(NEUTRAL_POINT[c]) + robot[1].distanceTo(NEUTRAL_POINT[c]);
-                    break;
-                case 3:
-                    dist[c] = Math.abs((robot[0].distanceTo(NEUTRAL_POINT[c]) + robot[1].distanceTo(NEUTRAL_POINT[c]))
-                        - (robot[2].distanceTo(NEUTRAL_POINT[c])*2));
-                    break;
-                case 4:
-                    dist[c] = Math.abs((robot[0].distanceTo(NEUTRAL_POINT[c]) + robot[1].distanceTo(NEUTRAL_POINT[c]))
-                        - (robot[2].distanceTo(NEUTRAL_POINT[c]) + robot[3].distanceTo(NEUTRAL_POINT[c])));
-                    break;
-            }*/
 
             if(dist[c] < dist[minDistIndex])
                 minDistIndex = c;

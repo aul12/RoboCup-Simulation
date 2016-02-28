@@ -35,13 +35,11 @@ function draw()
 {
     draw_clear();
     draw_ball(ball.x,ball.y,ball.rotation, true);
-    for(var robot_counter = 0; robot_counter<4; robot_counter++){
-        if(ROBOT_ENABLE[robot_counter]) {
-            draw_robot(robot[robot_counter].x,
-                robot[robot_counter].y,
-                robot_counter >= 2 ? robot[robot_counter].rotation + 180 : robot[robot_counter].rotation,
-                robotInside[robot_counter]);
-        }
-    }
+    forEveryRobot(function(robot_counter){
+        draw_robot(robot[robot_counter].x,
+            robot[robot_counter].y,
+            robot_counter >= 2 ? robot[robot_counter].rotation + 180 : robot[robot_counter].rotation,
+            robotInside[robot_counter]);
+    });
 
 }
