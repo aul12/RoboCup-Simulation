@@ -60,16 +60,36 @@ function timerTick()
             switch(robot_counter)
             {
                 case 0:
-                    goalieLeft();
+                    try {
+                        goalieLeft();
+                    } catch (e) {
+                        alert("Error: \""+e+"\" in goalieLeft");
+                        clearInterval(timerReference);
+                    }
                     break;
                 case 1:
-                    strikerLeft();
+                    try {
+                        strikerLeft();
+                    } catch (e) {
+                        alert("Error: \""+e+"\" in strikerLeft");
+                        clearInterval(timerReference);
+                    }
                     break;
                 case 2:
-                    goalieRight();
+                    try {
+                        goalieRight();
+                    } catch (e) {
+                        alert("Error: \""+e+"\" in goalieRight");
+                        clearInterval(timerReference);
+                    }
                     break;
                 case 3:
-                    strikerRight();
+                    try {
+                        strikerRight();
+                    } catch (e) {
+                        alert("Error: \""+e+"\" in strikerRight");
+                        clearInterval(timerReference);
+                    }
                     break;
             }
         }
