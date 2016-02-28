@@ -65,6 +65,7 @@ function SoccerAPI(angle){
             angle+=2*Math.PI;
         if(this.degree)
             angle=angle*180/Math.PI;
+
         return angle;
     };
 
@@ -146,7 +147,7 @@ function SoccerAPI(angle){
     };
 
     this.distanceToWall = function(direction) {
-        if(this.robotn<=2)
+        if(this.robotn<2)
         {
             switch(direction)
             {
@@ -166,12 +167,12 @@ function SoccerAPI(angle){
             {
                 case this.distance.FRONT:
                     return robot[this.robotn].x;
-                case this.distance.RIGHT:
+                case this.distance.LEFT:
                     return robot[this.robotn].y;
                 case this.distance.BACK:
-                    return ctx.canvas.width-robot[this.robotn].x;
-                case this.distance.LEFT:
-                    return ctx.canvas.height-robot[this.robotn].y;
+                    return WIDTH-robot[this.robotn].x;
+                case this.distance.RIGHT:
+                    return HEIGHT-robot[this.robotn].y;
             }
         }
         return 0;

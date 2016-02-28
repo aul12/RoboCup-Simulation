@@ -49,66 +49,74 @@ function ball_click(evt)
 
 
 //######################Main#########################################
-function timerTick()
+function logicTimerTick()
 {
-    for(var robot_counter=0; robot_counter<ROBOTS; robot_counter++)
+    for(var robot_counter=0; robot_counter<4; robot_counter++)
     {
-        if(robotInside[robot_counter])
-        {
-            api.robotn = robot_counter;
-            setAlias();
-            switch(robot_counter)
+        if(ROBOT_ENABLE[robot_counter]){
+            if(robotInside[robot_counter])
             {
-                case 0:
-                    try {
-                        goalieLeft();
-                    } catch (e) {
-                        alert("Error: \""+e+"\" in goalieLeft");
-                        clearInterval(timerReference);
-                    }
-                    break;
-                case 1:
-                    try {
-                        strikerLeft();
-                    } catch (e) {
-                        alert("Error: \""+e+"\" in strikerLeft");
-                        clearInterval(timerReference);
-                    }
-                    break;
-                case 2:
-                    try {
-                        goalieRight();
-                    } catch (e) {
-                        alert("Error: \""+e+"\" in goalieRight");
-                        clearInterval(timerReference);
-                    }
-                    break;
-                case 3:
-                    try {
-                        strikerRight();
-                    } catch (e) {
-                        alert("Error: \""+e+"\" in strikerRight");
-                        clearInterval(timerReference);
-                    }
-                    break;
+                api.robotn = robot_counter;
+                setAlias();
+                switch(robot_counter)
+                {
+                    case 0:
+                        try {
+                            goalieLeft();
+                        } catch (e) {
+                            alert("Error: \""+e+"\" in goalieLeft");
+                            clearIntervals();
+                        }
+                        break;
+                    case 1:
+                        try {
+                            strikerLeft();
+                        } catch (e) {
+                            alert("Error: \""+e+"\" in strikerLeft");
+                            clearIntervals();
+                        }
+                        break;
+                    case 2:
+                        try {
+                            goalieRight();
+                        } catch (e) {
+                            alert("Error: \""+e+"\" in goalieRight");
+                            clearIntervals();
+                        }
+                        break;
+                    case 3:
+                        try {
+                            strikerRight();
+                        } catch (e) {
+                            alert("Error: \""+e+"\" in strikerRight");
+                            clearIntervals();
+                        }
+                        break;
+                }
             }
-        }
-        else
-        {
-            if(++robotOutTimer[robot_counter]>=200)
+            else
             {
-                robotInside[robot_counter]=true;
-                robot[robot_counter].x = (WIDTH/2);
-                robot[robot_counter].y = (HEIGHT/2);
-                robotOutTimer[robot_counter]=0;
+                if(++robotOutTimer[robot_counter]>=200)
+                {
+                    robotInside[robot_counter]=true;
+                    robot[robot_counter].x = (WIDTH/2);
+                    robot[robot_counter].y = (HEIGHT/2);
+                    robotOutTimer[robot_counter]=0;
 
+                }
             }
         }
     }
-    physics();
-    draw();
-    checkRules();
 
+    checkRules();
+}
+
+function physicTimerTick(){
+    physics();
+}
+
+function drawTimerTick(){
+    draw();
 }
 
 //######################Start Software#########################################
@@ -122,23 +130,42 @@ function start()
     ball.y = HEIGHT /2;
     ball.speed.x = 0;
     ball.speed.y = 0;
-    for(var robot_counter = 0 ; robot_counter<ROBOTS; robot_counter++)
+    for(var robot_counter = 0 ; robot_counter<4; robot_counter++)
     {
-        robot[robot_counter].speed.x = 0;
-        robot[robot_counter].speed.y = 0;
-        robot[robot_counter].acceleration.x = 0;
-        robot[robot_counter].acceleration.y = 0;
+        if(ROBOT_ENABLE[robot_counter]) {
+            robot[robot_counter].speed.x = 0;
+            robot[robot_counter].speed.y = 0;
+            robot[robot_counter].acceleration.x = 0;
+            robot[robot_counter].acceleration.y = 0;
+        }
     }
 
     lackOfProgressCounter = 0;
 }
 
+function clearIntervals(){
+    try {
+        clearInterval(logicTimerReference);
+    } catch (e) {}
+
+    try {
+        clearInterval(physicTimerReference);
+    } catch (e) {
+    }
+
+    try {
+        clearInterval(drawTimerReference);
+    } catch (e) {
+    }
+}
+
 function timerInit()
 {
     start();
-    if(!timerStarted)
-    {
-        timerReference = setInterval(timerTick,5);
-        timerStarted = true;
-    }
+    clearIntervals();
+
+    logicTimerReference = setInterval(logicTimerTick,5);
+    physicTimerReference = setInterval(physicTimerTick, 1);
+    drawTimerReference = setInterval(drawTimerTick, 30);
+
 }
