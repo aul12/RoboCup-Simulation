@@ -26,6 +26,11 @@ function SoccerAPI(angle){
 
         angle += this.currentRotation();
 
+        if(speed > SPEED)
+            speed = SPEED;
+        else if(speed < -SPEED)
+            speed = -SPEED;
+
         robot[this.robotn].acceleration.x = (Math.cos(angle)*speed + robot[this.robotn].acceleration.x*39)/40;
         robot[this.robotn].acceleration.y= (Math.sin(angle)*speed+ robot[this.robotn].acceleration.y*39)/40;
 
@@ -75,7 +80,11 @@ function SoccerAPI(angle){
         var delta_x = ball.x-robot[this.robotn].x;
         var delta_y = ball.y-robot[this.robotn].y;
 
-        return Math.sqrt(delta_x*delta_x+delta_y*delta_y)-ROBOT_SIZE-BALL_SIZE;
+        var dist = Math.sqrt(delta_x*delta_x+delta_y*delta_y)-ROBOT_SIZE;
+
+        if(dist < 1)
+            dist = 1;
+        return dist-ROBOT_SIZE;
     };
 
     this.ballIntensity = function(){

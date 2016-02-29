@@ -6,6 +6,17 @@ function physics()
     var ballInDribbler = false;
 
     forEveryRobot(function(robot_counter){
+        //Check for wrong values and set them zero
+        robot[robot_counter].rotationAcceleration = checkNaN(robot[robot_counter].rotationAcceleration);
+        robot[robot_counter].rotationVelocity = checkNaN(robot[robot_counter].rotationVelocity);
+        robot[robot_counter].rotation = checkNaN(robot[robot_counter].rotation);
+        robot[robot_counter].acceleration.x = checkNaN(robot[robot_counter].acceleration.x);
+        robot[robot_counter].acceleration.y = checkNaN(robot[robot_counter].acceleration.y);
+        robot[robot_counter].speed.x = checkNaN(robot[robot_counter].speed.x);
+        robot[robot_counter].speed.y = checkNaN(robot[robot_counter].speed.y);
+        robot[robot_counter].x = checkNaN(robot[robot_counter].x);
+        robot[robot_counter].y = checkNaN(robot[robot_counter].y);
+
         //Rotate the robots
         robot[robot_counter].rotationVelocity += robot[robot_counter].rotationAcceleration;
         robot[robot_counter].rotationVelocity *= 0.8;
@@ -98,6 +109,12 @@ function physics()
             ball.moveOutOf(robot[robot_counter]);
         }
     });
+
+    //Check for wrong values and set them zero
+    ball.speed.x = checkNaN(ball.speed.x);
+    ball.speed.y = checkNaN(ball.speed.y);
+    ball.x = checkNaN(ball.x);
+    ball.y = checkNaN(ball.y);
 
     //Ball Rolling
     ball.speed.x *= 0.98;
