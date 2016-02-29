@@ -28,6 +28,7 @@ sudo npm install electron-packager -g
 Install node.js and npm using the [Installer](http://www.nodejs.org)
 ```
 npm install electron-prebuilt -g
+
 npm install electron-packager -g
 ```
 
@@ -47,11 +48,11 @@ to minify the program before compiling add
 
 
 ##Writing your own logic for the robots
-You have to write your own logic for the robots. Do this by editing the right function in the /SoccerB/local/program
-folder (logic for both teams are divided). Please don't use any loops in the function, it is called regularly by the 
+You have to write your own logic for the robots. Do this by editing the right function in the ```program```
+folder (logic for both teams are divided in ```teamLeft.js``` and ```teamRight.js```). Please don't use any loops in the function, it is called regularly by the 
 event handler.
 
-###Template
+####Template
 ```javascript
 //Program of the goalie on the right side
 function goalieRight()
@@ -104,6 +105,38 @@ function strikerRight() {
     }
 }
 ```  
+
+###Alias file
+To get the full compatibility with your real robot program there is the ```program/alias.js``` file. It is used to populate all global variables and provide a layer between the Soccer-API and your API.
+
+There are to main procedures which you can (and should) use. The first is ```setAlias``` which is called everytime before your logic is beeing executed and can be used to to set the values of your variables to the appropriate values of the API.
+The second procedure is ```getAlias``` which is used to give the values of your logic back to the Soccer-API.
+
+####Example
+```javascript
+//Some global variables which you need in your logic
+var ballAngle;
+var dribblerPower;
+
+const SPEED_BALL = 80;
+
+//This function is called before your logic
+function setAlias(){
+	ballAngle = api.ballAngle();
+}
+
+//This function is called after your logic
+function  getAlias(){
+    api.setDribbler(dribblerPower);
+}
+
+//A wrapper for an Soccer-Api function
+function driveRobot(angle, speed){
+	speed = speed/255 * SPEED;
+	api.move(angle, speed);
+}
+
+```
 
 ##API-Reference
 All methods listed below are part of the SoccerAPI class, which is predefined with the api object.

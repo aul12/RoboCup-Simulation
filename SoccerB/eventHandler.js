@@ -92,6 +92,7 @@ function logicTimerTick()
                     }
                     break;
             }
+            getAlias();
         }
         else
         {
