@@ -7,9 +7,9 @@ var robotImage = new Image();
 var ROBOT_ENABLE = [true, true, true, true];
 
 const SPEED = 1;
-const SHOOT_POWER = 2;
+const SHOOT_POWER = 1.5;
 
-const SCALE = 3.5;
+const SCALE = 3.69;
 
 const WIDTH = 244;
 const HEIGHT = 182;

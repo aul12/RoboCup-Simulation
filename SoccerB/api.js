@@ -74,13 +74,15 @@ function SoccerAPI(angle){
     this.ballDistanceCM = function() {
         var delta_x = ball.x-robot[this.robotn].x;
         var delta_y = ball.y-robot[this.robotn].y;
-        return (Math.sqrt(delta_x*delta_x+delta_y*delta_y)-ROBOT_SIZE-14)/4;
+
+        return Math.sqrt(delta_x*delta_x+delta_y*delta_y)-ROBOT_SIZE-BALL_SIZE;
     };
 
     this.ballIntensity = function(){
-        var ints = Math.log((this.ballDistanceCM()+10)/140) * -2000;
+        var ints = Math.log((this.ballDistanceCM()+10)/150) * -2000;
         if(ints<0)
             ints = 0;
+
         return ints;
     };
 

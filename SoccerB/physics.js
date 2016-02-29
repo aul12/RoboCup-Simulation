@@ -32,11 +32,13 @@ function physics()
                 robot[robot_counter].x = LEFT + ROBOT_SIZE;
                 robot[robot_counter].speed.x = 0;
                 robot[robot_counter].acceleration.x = 0;
+                robot[robot_counter].speed.y /= 2;
             }
             else if (robot[robot_counter].x + ROBOT_SIZE > RIGHT) {
                 robot[robot_counter].x = RIGHT - ROBOT_SIZE;
                 robot[robot_counter].speed.x = 0;
                 robot[robot_counter].acceleration.x = 0;
+                robot[robot_counter].speed.y /= 2;
             }
         }
 
@@ -50,7 +52,6 @@ function physics()
 
                 robot[second_robot_counter].x = robot[robot_counter].x + Math.cos(alpha) * ROBOT_SIZE * 2;
                 robot[second_robot_counter].y = robot[robot_counter].y + Math.sin(alpha) * ROBOT_SIZE * 2;
-                var speed = new Vector(0, 0);
 
                 //Inelastic collision
                 robot[robot_counter].speed.y *= 0.5;
