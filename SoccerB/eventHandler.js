@@ -5,14 +5,26 @@ ballImage.src = 'res/ball.png';
 robotImage.src = 'res/robot.png';
 
 fieldImage.onload = function(){
+    ROBOT_ENABLE[0] = $('#enable0').is(':checked');
+    ROBOT_ENABLE[1] = $('#enable1').is(':checked');
+    ROBOT_ENABLE[2] = $('#enable2').is(':checked');
+    ROBOT_ENABLE[3] = $('#enable3').is(':checked');
     draw_clear();
     draw();
 };
 ballImage.onload = function(){
+    ROBOT_ENABLE[0] = $('#enable0').is(':checked');
+    ROBOT_ENABLE[1] = $('#enable1').is(':checked');
+    ROBOT_ENABLE[2] = $('#enable2').is(':checked');
+    ROBOT_ENABLE[3] = $('#enable3').is(':checked');
     draw_clear();
     draw();
 };
 robotImage.onload = function(){
+    ROBOT_ENABLE[0] = $('#enable0').is(':checked');
+    ROBOT_ENABLE[1] = $('#enable1').is(':checked');
+    ROBOT_ENABLE[2] = $('#enable2').is(':checked');
+    ROBOT_ENABLE[3] = $('#enable3').is(':checked');
     draw_clear();
     draw();
 };
@@ -164,6 +176,13 @@ function clearIntervals(){
 
     $("#startBtn").html("Start");
     running = false;
+}
+
+function resetButton(){
+    start();
+    draw();
+    goals_team1 = goals_team2= 0;
+    $("#status").html(goals_team2+" : "+goals_team1);
 }
 
 function timerInit()

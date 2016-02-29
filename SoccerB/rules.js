@@ -9,14 +9,14 @@ function checkRules(){
 function checkGoal(){
     var goal = false;
 
-    if((ball.y + BALL_SIZE/2) > GOAL_TOP && (ball.y - BALL_SIZE/2) < GOAL_BOTTOM)
+    if((ball.y + BALL_SIZE) > GOAL_TOP && (ball.y - BALL_SIZE) < GOAL_BOTTOM)
     {
-        if(ball.x - BALL_SIZE/2 < LEFT && ball.speed.x < 0)
+        if(ball.x - BALL_SIZE < LEFT && ball.speed.x < 0)
         {
             goals_team1++;
             goal = true;
         }
-        else if(ball.x + BALL_SIZE/2 > RIGHT && ball.speed.x > 0)
+        else if(ball.x + BALL_SIZE > RIGHT && ball.speed.x > 0)
         {
             goals_team2++;
             goal = true;
