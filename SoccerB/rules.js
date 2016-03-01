@@ -119,7 +119,12 @@ function checkLine(){
 function checkLackOfProgress()
 {
     //Check if ball is not moving
-    lackOfProgressCounter = (ball.speed.x < 0.00001 && ball.speed.y < 0.00001)?lackOfProgressCounter+1:0;
+    if(ball.speed.x < 0.00001 && ball.speed.y < 0.00001){
+        lackOfProgressCounter++;
+    }else{
+        lackOfProgressCounter = 0;
+        lastLOP = -1;
+    }
 
     //No Movement in 3 seconds
     if(lackOfProgressCounter > 600)
@@ -153,9 +158,11 @@ function checkLackOfProgress()
 
             dist[c] = Math.abs(distLeft - distRight);
 
-            if(dist[c] < dist[minDistIndex])
+            if(dist[c] < dist[minDistIndex] && c != lastLOP)
                 minDistIndex = c;
         }
+
+        lastLOP = minDistIndex;
 
         ball.x = NEUTRAL_POINT[minDistIndex].x;
         ball.y = NEUTRAL_POINT[minDistIndex].y;

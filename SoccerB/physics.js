@@ -1,9 +1,10 @@
 //######################Physic-Engine#########################################
 function physics()
 {
-    var delta_x, delta_y, alpha, second_robot_counter;
-    var robotsTouching=false;
+    var alpha;
     var ballInDribbler = false;
+
+    var ballTouchCounter = 0;
 
     forEveryRobot(function(robot_counter){
         //Check for wrong values and set them zero
@@ -55,8 +56,6 @@ function physics()
 
 
         //Check if the robots are touching
-        robotsTouching = false;
-
         forEveryOtherRobot(robot_counter, function(second_robot_counter){
             if (robot[robot_counter].isTouching(robot[second_robot_counter])) {
                 alpha = robot[second_robot_counter].angleTo(robot[robot_counter]);
@@ -68,13 +67,6 @@ function physics()
                 robot[robot_counter].speed.y *= 0.5;
                 robot[second_robot_counter].speed.x *= 0.5;
                 robot[second_robot_counter].speed.y *= 0.5;
-                robotsTouching = true;
-                delta_x = ball.x - robot[robot_counter].x;
-                delta_y = ball.y - robot[robot_counter].y;
-                pushing[robot_counter] = Math.sqrt(delta_x * delta_x + delta_y * delta_y) < 14 + ROBOT_SIZE;
-                delta_x = ball.x - robot[second_robot_counter].x;
-                delta_y = ball.y - robot[second_robot_counter].y;
-                pushing[second_robot_counter] = Math.sqrt(delta_x * delta_x + delta_y * delta_y) < 14 + ROBOT_SIZE;
             }
         });
 
@@ -84,19 +76,18 @@ function physics()
             alpha = ball.angleTo(robot[robot_counter]);
 
             //Correct the Speed of the Ball
-            ball.speed.x += Math.cos(alpha) * robot[robot_counter].speed.abs();
-            ball.speed.y += Math.sin(alpha) * robot[robot_counter].speed.abs();
+            ball.speed.x += Math.cos(alpha) * robot[robot_counter].speed.abs() * 0.1;
+            ball.speed.y += Math.sin(alpha) * robot[robot_counter].speed.abs() * 0.1;
 
             //Calculate the angle of the ball to the robot
             api.robotn = robot_counter;
-            var diff = Math.abs(robot[robot_counter].rotation - api.ballAngle()) % 360;
+            var diff = api.ballAngle() % 360;
 
             //Ball in the Front
             if (diff < 15) {
                 if (robotShoot[robot_counter]) {
                     ball.speed.x += robot[robot_counter].speed.x * SHOOT_POWER;
                     ball.speed.y += robot[robot_counter].speed.y * SHOOT_POWER;
-
                     robotShoot[robot_counter] = false;
                 }
                 else if (robotDribblerEnabled[robot_counter]) {
@@ -105,16 +96,32 @@ function physics()
                 }
             }
 
-            //Move the ball out of the robot
-            ball.moveOutOf(robot[robot_counter]);
+            ballTouchCounter++;
         }
     });
+
+    if(ballTouchCounter >= 2){
+        forEveryRobot(function(robot_counter){
+            if(robot[robot_counter].isTouching(ball)){
+                var alpha = ball.angleTo(robot[robot_counter]);
+                var delta = ball.distanceTo(robot[robot_counter]) - (BALL_SIZE/2 + ROBOT_SIZE);
+                robot[robot_counter].x += Math.cos(alpha)*delta;
+                robot[robot_counter].y += Math.sin(alpha)*delta;
+            }
+        });
+    }
 
     //Check for wrong values and set them zero
     ball.speed.x = checkNaN(ball.speed.x);
     ball.speed.y = checkNaN(ball.speed.y);
     ball.x = checkNaN(ball.x);
     ball.y = checkNaN(ball.y);
+
+    //Check Maximum Speed
+    if(ball.speed.abs() > 4){
+        ball.speed.x /= ball.speed.abs()/4;
+        ball.speed.y /= ball.speed.abs()/4;
+    }
 
     //Ball Rolling
     ball.speed.x *= 0.98;

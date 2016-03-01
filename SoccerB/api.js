@@ -80,7 +80,7 @@ function SoccerAPI(angle){
         var delta_x = ball.x-robot[this.robotn].x;
         var delta_y = ball.y-robot[this.robotn].y;
 
-        var dist = Math.sqrt(delta_x*delta_x+delta_y*delta_y)-ROBOT_SIZE;
+        var dist = Math.sqrt(delta_x*delta_x+delta_y*delta_y)-ROBOT_SIZE+BALL_SIZE;
 
         if(dist < 1)
             dist = 1;
@@ -190,7 +190,7 @@ function SoccerAPI(angle){
     };
 
     this.ballInDribbler = function() {
-        if (this.ballDistanceCM() < 1){
+        if (this.ballDistanceCM() < 0){
             var diff = Math.abs(robot[this.robotn].rotation - this.ballAngle()) % 360;
 
             //Ball in the Front

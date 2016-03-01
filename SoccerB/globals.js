@@ -6,7 +6,7 @@ var robotDribblerEnabled = new Array(4);
 var robotShoot= new Array(4);
 var pushing= new Array(4);
 
-var ball = new gameObject(ctx.canvas.width/2, ctx.canvas.height/2, BALL_SIZE);
+var ball = new gameObject(ctx.canvas.width/2, ctx.canvas.height/2, BALL_SIZE/2);
 
 var goals_team1=0;
 var goals_team2=0;
@@ -22,4 +22,6 @@ var physicTimerReference;
 var drawTimerReference;
 
 var api = new SoccerAPI(Angle.DEGREE);
+
+var lastLOP = -1;
 
