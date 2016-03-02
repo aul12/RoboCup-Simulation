@@ -25,6 +25,8 @@ const PENALTY_AREA_HEIGHT  = 90;
 const GOAL_TOP = 61;
 const GOAL_BOTTOM = HEIGHT - 61;
 
+const RECEPTION_ANGLE = 20;
+
 
 const ROBOT_SIZE = 10;
 const BALL_SIZE = 7.4;

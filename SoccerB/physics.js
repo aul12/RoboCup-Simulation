@@ -75,25 +75,34 @@ function physics()
         if (robot[robot_counter].isTouching(ball)) {
             alpha = ball.angleTo(robot[robot_counter]);
 
-            //Correct the Speed of the Ball
-            ball.speed.x += Math.cos(alpha) * robot[robot_counter].speed.abs() * 0.1;
-            ball.speed.y += Math.sin(alpha) * robot[robot_counter].speed.abs() * 0.1;
+
 
             //Calculate the angle of the ball to the robot
             api.robotn = robot_counter;
             var diff = api.ballAngle() % 360;
 
             //Ball in the Front
-            if (diff < 15) {
+            if (diff < RECEPTION_ANGLE) {
+                if(robot[robot_counter].distanceTo(ball) < ROBOT_SIZE){
+                    //Correct the Speed of the Ball
+                    ball.speed.x += Math.cos(alpha) * robot[robot_counter].speed.abs() * 0.8;
+                    ball.speed.y += Math.sin(alpha) * robot[robot_counter].speed.abs() * 0.8;
+                }
+
                 if (robotShoot[robot_counter]) {
                     ball.speed.x += robot[robot_counter].speed.x * SHOOT_POWER;
-                    ball.speed.y += robot[robot_counter].speed.y * SHOOT_POWER;
                     robotShoot[robot_counter] = false;
                 }
                 else if (robotDribblerEnabled[robot_counter]) {
-                    ball.speed.x += (robot[robot_counter].x + ROBOT_SIZE - ball.x) * 0.2;
-                    ball.speed.y += (robot[robot_counter].y - ball.y) * 0.2;
+                    ball.speed.x += Math.cos(alpha) * robot[robot_counter].speed.abs() * -0.4;
+                    ball.speed.y = robot[robot_counter].speed.y * -0.1;
+
+                    ballInDribbler = true;
                 }
+            }else{
+                //Correct the Speed of the Ball
+                ball.speed.x += Math.cos(alpha) * robot[robot_counter].speed.abs() * 0.8;
+                ball.speed.y += Math.sin(alpha) * robot[robot_counter].speed.abs() * 0.8;
             }
 
             ballTouchCounter++;
@@ -105,6 +114,8 @@ function physics()
             if(robot[robot_counter].isTouching(ball)){
                 var alpha = ball.angleTo(robot[robot_counter]);
                 var delta = ball.distanceTo(robot[robot_counter]) - (BALL_SIZE/2 + ROBOT_SIZE);
+                if(Math.abs(robot[robot_counter].angleTo(ball)) < RECEPTION_ANGLE)
+                    delta += 0.2;
                 robot[robot_counter].x += Math.cos(alpha)*delta;
                 robot[robot_counter].y += Math.sin(alpha)*delta;
             }

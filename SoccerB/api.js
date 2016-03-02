@@ -194,7 +194,7 @@ function SoccerAPI(angle){
             var diff = Math.abs(robot[this.robotn].rotation - this.ballAngle()) % 360;
 
             //Ball in the Front
-            if(diff < 15)
+            if(diff < RECEPTION_ANGLE)
                 return true;
         }
         return false;
