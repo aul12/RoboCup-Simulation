@@ -23,7 +23,7 @@ function checkGoal(){
         }
 
         if(goal){
-            clearIntervals();
+            clearTimers();
             draw();
             $("#status").html(goals_team2+" : "+goals_team1);
         }

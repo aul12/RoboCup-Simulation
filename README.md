@@ -46,6 +46,20 @@ to minify the program before compiling add
 --asar
 ``` 
 
+## Keyboard Shortcuts
+<kbd>0</kbd> Toggle Robot 0
+
+<kbd>1</kbd> Toggle Robot 1
+
+<kbd>2</kbd> Toggle Robot 2
+
+<kbd>3</kbd> Toggle Robot 3
+
+<kbd>s</kbd> Start the game
+
+<kbd>p</kbd> Pause the game
+
+<kbd>r</kbd> Reset the game
 
 ##Writing your own logic for the robots
 You have to write your own logic for the robots. Do this by editing the right function in the ```program```

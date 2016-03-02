@@ -29,8 +29,55 @@ robotImage.onload = function(){
     draw();
 };
 
+$(document).ready(function(){
+    $(document).keypress(function( event ) {
+        if ( event.which == 13 ) {
+            event.preventDefault();
+        }
 
-function mouse_pos(evt)
+        switch(event.keyCode){
+            case 48:
+                ROBOT_ENABLE[0] = !ROBOT_ENABLE[0];
+                $('#enable0').prop('checked', ROBOT_ENABLE[0]);
+                draw();
+                break;
+            case 49:
+                ROBOT_ENABLE[1] = !ROBOT_ENABLE[1];
+                $('#enable1').prop('checked', ROBOT_ENABLE[1]);
+                draw();
+                break;
+            case 50:
+                ROBOT_ENABLE[2] = !ROBOT_ENABLE[2];
+                $('#enable2').prop('checked', ROBOT_ENABLE[2]);
+                draw();
+                break;
+            case 51:
+                ROBOT_ENABLE[3] = !ROBOT_ENABLE[3];
+                $('#enable3').prop('checked', ROBOT_ENABLE[3]);
+                draw();
+                break;
+            case 115:   //s
+            case 112:   //p
+                timerInit();
+                break;
+            case 114:   //r
+                resetButton();
+                break;
+        }
+    });
+
+    $('input:checkbox').change(function(){
+        ROBOT_ENABLE[0] = $('#enable0').is(':checked');
+        ROBOT_ENABLE[1] = $('#enable1').is(':checked');
+        ROBOT_ENABLE[2] = $('#enable2').is(':checked');
+        ROBOT_ENABLE[3] = $('#enable3').is(':checked');
+
+        draw();
+    });
+});
+
+
+function mousePosition(evt)
 {
     if(!evt) evt = window.event;
     var pos = { left: evt.clientX, top:evt.clientY };
@@ -46,10 +93,10 @@ function mouse_pos(evt)
     return pos;
 }
 
-function ball_click(evt)
+function canvasClick(evt)
 {
     if (!evt) evt = window.event;
-    var p = mouse_pos(evt);
+    var p = mousePosition(evt);
     ball.x = p.left / SCALE;
     ball.y = p.top / SCALE;
     ball.speed.x=0;
@@ -58,85 +105,6 @@ function ball_click(evt)
     lackOfProgressCounter = 0;
 }
 
-
-
-//######################Main#########################################
-function logicTimerTick()
-{
-    forEveryRobot(function(robot_counter){
-        if(robotInside[robot_counter])
-        {
-            api.robotn = robot_counter;
-            setAlias();
-            switch(robot_counter)
-            {
-                case 0:
-                    try {
-                        goalieLeft();
-                    } catch (e) {
-                        alert("Error: \""+e+"\" in goalieLeft");
-                        clearIntervals();
-                    }
-                    break;
-                case 1:
-                    try {
-                        strikerLeft();
-                    } catch (e) {
-                        alert("Error: \""+e+"\" in strikerLeft");
-                        clearIntervals();
-                    }
-                    break;
-                case 2:
-                    try {
-                        strikerRight();
-                    } catch (e) {
-                        alert("Error: \""+e+"\" in strikerRight");
-                        clearIntervals();
-                    }
-                    break;
-                case 3:
-                    try {
-                        goalieRight();
-
-                    } catch (e) {
-                        alert("Error: \""+e+"\" in GoalieRight");
-                        clearIntervals();
-                    }
-                    break;
-            }
-            getAlias();
-        }
-        else
-        {
-            if(++robotOutTimer[robot_counter]>=200)
-            {
-                robotInside[robot_counter]=true;
-                robot[robot_counter].x = (WIDTH/2);
-                robot[robot_counter].y = (HEIGHT/2);
-                robotOutTimer[robot_counter]=0;
-
-            }
-        }
-    });
-
-    checkRules();
-}
-
-function physicTimerTick(){
-    physics();
-
-}
-
-function drawTimerTick(){
-    ROBOT_ENABLE[0] = $('#enable0').is(':checked');
-    ROBOT_ENABLE[1] = $('#enable1').is(':checked');
-    ROBOT_ENABLE[2] = $('#enable2').is(':checked');
-    ROBOT_ENABLE[3] = $('#enable3').is(':checked');
-
-    draw();
-}
-
-//######################Start Software#########################################
 function start()
 {
     robot[0] = new gameObject(20+LEFT, HEIGHT/2, ROBOT_SIZE);
@@ -159,53 +127,9 @@ function start()
     lackOfProgressCounter = 0;
 }
 
-function clearIntervals(){
-    try {
-        clearInterval(logicTimerReference);
-    } catch (e) {}
-
-    try {
-        clearInterval(physicTimerReference);
-    } catch (e) {
-    }
-
-    try {
-        clearInterval(drawTimerReference);
-    } catch (e) {
-    }
-
-    $("#startBtn").html("Start");
-    running = false;
-}
-
 function resetButton(){
     start();
     draw();
     goals_team1 = goals_team2= 0;
     $("#status").html(goals_team2+" : "+goals_team1);
-}
-
-function timerInit()
-{
-    if(!running){
-        if(!pause){
-            start();
-        }
-
-        clearIntervals();
-
-        logicTimerReference = setInterval(logicTimerTick,5);
-        physicTimerReference = setInterval(physicTimerTick, 1);
-        drawTimerReference = setInterval(drawTimerTick, 30);
-
-        $("#startBtn").html("Pause");
-
-        running = true;
-        pause = false;
-    }else{
-        clearIntervals();
-        pause = true;
-    }
-
-
 }

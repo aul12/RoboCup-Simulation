@@ -8,7 +8,7 @@
         <table>
             <tr>
                 <td>
-                    <canvas id="canvasField" width="900" height="672" onclick="ball_click()"></canvas>
+                    <canvas id="canvasField" width="900" height="672" onclick="canvasClick()"></canvas>
                 </td>
                 <td style="padding: 20px; vertical-align: top">
                     <input type="checkbox" id="enable0" checked> Robot 0 (Goalie Left)<br>
@@ -28,6 +28,9 @@
             </tr>
         </table>
 
+        <!-- jQuery and Bootstrap -->
+        <script>window.$ = window.jQuery = require('./lib/jquery/jquery.min.js');</script>
+        <script src="lib/bootstrap/bootstrap.min.js"></script>
 
         <script src="lib/gameObject.js"></script>
         <script src="lib/robotLoops.js"></script>
@@ -35,6 +38,7 @@
 
         <script src="api.js"></script>
 
+        <script src="timer.js"></script>
         <script src="draw.js"></script>
         <script src="defines.js"></script>
         <script src="globals.js"></script>
@@ -47,11 +51,6 @@
         <script src="program/alias.js"></script>
         <script src="program/teamLeft.js"></script>
         <script src="program/teamRight.js"></script>
-
-        <!-- Latest compiled and minified JavaScript -->
-        <script>window.$ = window.jQuery = require('./lib/jquery/jquery.min.js');</script>
-        <script src="lib/bootstrap/bootstrap.min.js"></script>
-
 
 
 	</body>
