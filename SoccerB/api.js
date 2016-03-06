@@ -24,8 +24,6 @@ function SoccerAPI(angle){
             angle *= -1;
         }
 
-        angle += this.currentRotation();
-
         if(speed > SPEED)
             speed = SPEED;
         else if(speed < -SPEED)
@@ -70,6 +68,8 @@ function SoccerAPI(angle){
             angle+=2*Math.PI;
         if(this.degree)
             angle=angle*180/Math.PI;
+
+        angle += this.currentRotation();
 
         return angle;
     };
@@ -191,7 +191,10 @@ function SoccerAPI(angle){
 
     this.ballInDribbler = function() {
         if (this.ballDistanceCM() < 0){
-            var diff = Math.abs(robot[this.robotn].rotation - this.ballAngle()) % 360;
+            var diff = this.ballAngle() % 360;
+
+            if(diff > 180)
+                diff -= 360;
 
             //Ball in the Front
             if(diff < RECEPTION_ANGLE)
@@ -201,14 +204,18 @@ function SoccerAPI(angle){
     };
 
     this.rotate = function(speed) {
-        robot[this.robotn].rotationAcceleration = speed;
+        robot[this.robotn].rotationAcceleration = -speed;
     };
 
     this.currentRotation = function() {
         var angle = robot[this.robotn].rotation % 360;
         if(angle > 180)
             angle -= 360;
-        return this.degree==Angle.DEGREE?(angle):(angle/180*Math.PI);
+        return this.degree==Angle.DEGREE?(-angle):(-angle/180*Math.PI);
     };
+
+    this.rotationVelocity = function() {
+        return -robot[this.robotn].rotationVelocity;
+    }
 
 }

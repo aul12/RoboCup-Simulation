@@ -251,6 +251,13 @@ api.currentRotation();
 ```  
 Returns the orientation of the robot (unit depends on configuration). Clockwise means positive, negative counterclockwise values. This means that there is a jump at +/-180 degrees.
 
+___
+
+```javascript
+api.rotationVelocity();
+```  
+Returns the current angular velocity of the robot (rotation around the z-Axis). Comparable to a gyro sensor.
+
 ###Constants
 
 Directions (for ```distanceToWall``` and ```realDistance```) can be:   

@@ -91,7 +91,8 @@ function physics()
                 }
 
                 if (robotShoot[robot_counter]) {
-                    ball.speed.x += robot[robot_counter].speed.x * SHOOT_POWER;
+                    ball.speed.x += SHOOT_POWER * Math.cos(-api.currentRotation() * Math.PI / 180);
+                    ball.speed.y += SHOOT_POWER * Math.sin(-api.currentRotation() * Math.PI / 180);
                     robotShoot[robot_counter] = false;
                 }
                 else if (robotDribblerEnabled[robot_counter]) {
