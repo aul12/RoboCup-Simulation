@@ -75,11 +75,12 @@ function physics()
         if (robot[robot_counter].isTouching(ball)) {
             alpha = ball.angleTo(robot[robot_counter]);
 
-
-
             //Calculate the angle of the ball to the robot
             api.robotn = robot_counter;
             var diff = api.ballAngle() % 360;
+
+            if(diff > 180)
+                diff -= 360;
 
             //Ball in the Front
             if (diff < RECEPTION_ANGLE) {
@@ -105,6 +106,9 @@ function physics()
                 ball.speed.y += Math.sin(alpha) * robot[robot_counter].speed.abs() * 0.8;
             }
 
+            robot[robot_counter].speed.x *= 0.9;
+            robot[robot_counter].speed.y *= 0.9;
+
             ballTouchCounter++;
         }
     });
@@ -113,9 +117,27 @@ function physics()
         forEveryRobot(function(robot_counter){
             if(robot[robot_counter].isTouching(ball)){
                 var alpha = ball.angleTo(robot[robot_counter]);
-                var delta = ball.distanceTo(robot[robot_counter]) - (BALL_SIZE/2 + ROBOT_SIZE);
-                if(Math.abs(robot[robot_counter].angleTo(ball)) < RECEPTION_ANGLE)
-                    delta += 0.2;
+
+
+                api.robotn = robot_counter;
+                var diff = api.ballAngle() % 360;
+
+                if(diff > 180)
+                    diff -= 360;
+
+                var delta = 0;
+
+                //Ball in the Front
+              /*  if (diff < RECEPTION_ANGLE){
+                    if(ball.distanceTo(robot[robot_counter]) < (BALL_SIZE/2 + ROBOT_SIZE - 3.0)) {
+                        delta = ball.distanceTo(robot[robot_counter]) - (BALL_SIZE / 2 + ROBOT_SIZE - 3.0);
+                    }
+                    else
+                        delta = 0;
+                }else{
+                    delta = ball.distanceTo(robot[robot_counter]) - (BALL_SIZE/2 + ROBOT_SIZE);
+                }*/
+
                 robot[robot_counter].x += Math.cos(alpha)*delta;
                 robot[robot_counter].y += Math.sin(alpha)*delta;
             }
