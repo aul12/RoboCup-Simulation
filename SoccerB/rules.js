@@ -9,7 +9,7 @@ function checkRules(){
 function checkGoal(){
     var goal = false;
 
-    if((ball.y - BALL_SIZE/2) > GOAL_TOP && (ball.y + BALL_SIZE/2) < GOAL_BOTTOM)
+    if(ball.y > GOAL_TOP && ball.y < GOAL_BOTTOM)
     {
         if(ball.x + BALL_SIZE/2 < LEFT && ball.speed.x < 0)
         {

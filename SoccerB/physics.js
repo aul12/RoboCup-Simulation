@@ -91,8 +91,13 @@ function physics()
                 }
 
                 if (robotShoot[robot_counter]) {
-                    ball.speed.x += SHOOT_POWER * Math.cos(-api.currentRotation() * Math.PI / 180);
-                    ball.speed.y += SHOOT_POWER * Math.sin(-api.currentRotation() * Math.PI / 180);
+                    var rot = -api.currentRotation();
+
+                    if(robot_counter>=2)
+                        rot += 180;
+
+                    ball.speed.x += SHOOT_POWER * Math.cos(rot * Math.PI / 180);
+                    ball.speed.y += SHOOT_POWER * Math.sin(rot * Math.PI / 180);
                     robotShoot[robot_counter] = false;
                 }
                 else if (robotDribblerEnabled[robot_counter]) {
@@ -129,15 +134,15 @@ function physics()
                 var delta = 0;
 
                 //Ball in the Front
-              /*  if (diff < RECEPTION_ANGLE){
+               /*if (diff < RECEPTION_ANGLE){
                     if(ball.distanceTo(robot[robot_counter]) < (BALL_SIZE/2 + ROBOT_SIZE - 3.0)) {
                         delta = ball.distanceTo(robot[robot_counter]) - (BALL_SIZE / 2 + ROBOT_SIZE - 3.0);
                     }
                     else
                         delta = 0;
-                }else{
+                }else{*/
                     delta = ball.distanceTo(robot[robot_counter]) - (BALL_SIZE/2 + ROBOT_SIZE);
-                }*/
+                //}
 
                 robot[robot_counter].x += Math.cos(alpha)*delta;
                 robot[robot_counter].y += Math.sin(alpha)*delta;

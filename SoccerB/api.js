@@ -209,8 +209,12 @@ function SoccerAPI(angle){
 
     this.currentRotation = function() {
         var angle = robot[this.robotn].rotation % 360;
+
+
         if(angle > 180)
             angle -= 360;
+
+
         return this.degree==Angle.DEGREE?(-angle):(-angle/180*Math.PI);
     };
 
