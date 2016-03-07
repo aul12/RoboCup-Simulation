@@ -5,7 +5,7 @@
         <link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css">
 	</head>
 	<body>
-        <table>
+         <table>
             <tr>
                 <td>
                     <canvas id="canvasField" width="900" height="672" onclick="canvasClick()"></canvas>
@@ -32,16 +32,20 @@
         <script>window.$ = window.jQuery = require('./lib/jquery/jquery.min.js');</script>
         <script src="lib/bootstrap/bootstrap.min.js"></script>
 
+        <script src="http://threejs.org/build/three.min.js"></script>
+         <script src="http://threejs.org/examples/js/controls/OrbitControls.js"></script>
+
         <script src="lib/gameObject.js"></script>
         <script src="lib/robotLoops.js"></script>
         <script src="lib/checkNaN.js"></script>
 
         <script src="api.js"></script>
 
-        <script src="timer.js"></script>
-        <script src="draw.js"></script>
         <script src="defines.js"></script>
         <script src="globals.js"></script>
+        <script src="timer.js"></script>
+        <!--<script src="drawCanvas.js"></script>-->
+        <script src="drawWebGL.js"></script>
         <script src="eventHandler.js"></script>
         <script src="physics.js"></script>
         <script src="rules.js"></script>

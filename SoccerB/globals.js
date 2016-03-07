@@ -4,9 +4,8 @@ var robotInside = [true, true, true, true];
 var robotOutTimer = [0,0,0,0];
 var robotDribblerEnabled = new Array(4);
 var robotShoot= new Array(4);
-var pushing= new Array(4);
 
-var ball = new gameObject(ctx.canvas.width/2, ctx.canvas.height/2, BALL_SIZE/2);
+var ball = new gameObject(WIDTH/2, HEIGHT/2, BALL_SIZE/2);
 
 var goals_team1=0;
 var goals_team2=0;

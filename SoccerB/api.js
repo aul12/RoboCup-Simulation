@@ -220,6 +220,10 @@ function SoccerAPI(angle){
 
     this.rotationVelocity = function() {
         return -robot[this.robotn].rotationVelocity;
+    };
+
+    this.goalAngle = function() {
+
     }
 
 }

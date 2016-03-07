@@ -1,3 +1,6 @@
+var canvas = document.getElementById('canvasField');
+var ctx = canvas.getContext("2d");
+
 function draw_robot(x,y,angle,visible)
 {
 
@@ -41,5 +44,10 @@ function draw()
             robot_counter >= 2 ? robot[robot_counter].rotation + 180 : robot[robot_counter].rotation,
             robotInside[robot_counter]);
     });
+
+}
+
+//Compatibility to WebGL
+function initDraw(){
 
 }

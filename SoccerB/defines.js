@@ -1,5 +1,3 @@
-var canvas = document.getElementById('canvasField');
-var ctx = canvas.getContext("2d");
 var fieldImage = new Image();
 var ballImage = new Image();
 var robotImage = new Image();

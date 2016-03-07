@@ -9,7 +9,6 @@ fieldImage.onload = function(){
     ROBOT_ENABLE[1] = $('#enable1').is(':checked');
     ROBOT_ENABLE[2] = $('#enable2').is(':checked');
     ROBOT_ENABLE[3] = $('#enable3').is(':checked');
-    draw_clear();
     draw();
 };
 ballImage.onload = function(){
@@ -17,7 +16,6 @@ ballImage.onload = function(){
     ROBOT_ENABLE[1] = $('#enable1').is(':checked');
     ROBOT_ENABLE[2] = $('#enable2').is(':checked');
     ROBOT_ENABLE[3] = $('#enable3').is(':checked');
-    draw_clear();
     draw();
 };
 robotImage.onload = function(){
@@ -25,11 +23,12 @@ robotImage.onload = function(){
     ROBOT_ENABLE[1] = $('#enable1').is(':checked');
     ROBOT_ENABLE[2] = $('#enable2').is(':checked');
     ROBOT_ENABLE[3] = $('#enable3').is(':checked');
-    draw_clear();
     draw();
 };
 
 $(document).ready(function(){
+    initDraw();
+
     $(document).keypress(function( event ) {
         if ( event.which == 13 ) {
             event.preventDefault();
