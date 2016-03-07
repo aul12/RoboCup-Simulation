@@ -96,8 +96,12 @@ function canvasClick(evt)
 {
     if (!evt) evt = window.event;
     var p = mousePosition(evt);
+
+
     ball.x = p.left / SCALE;
-    ball.y = p.top / SCALE;
+    ball.y = HEIGHT - (p.top / SCALE);
+
+
     ball.speed.x=0;
     ball.speed.y=0;
 

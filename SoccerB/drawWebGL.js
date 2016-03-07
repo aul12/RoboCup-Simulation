@@ -7,8 +7,8 @@ renderer.setSize(WIDTH*SCALE, HEIGHT*SCALE);
 
 
 camera.position.x = 0;
-camera.position.y = -180;
-camera.position.z = 100;
+camera.position.y = -150;
+camera.position.z = 150;
 
 var controls = new THREE.OrbitControls( camera, renderer.domElement );
 controls.enableDamping = true;
@@ -60,27 +60,26 @@ for(var c=0; c<4; c++){
     scene.add(robotMesh[c]);
 }
 
-
 function render() {
     requestAnimationFrame( render );
+
+    for(var c=0; c<4; c++) {
+        if(ROBOT_ENABLE[c]){
+            robotMesh[c].visible = true;
+            robotMesh[c].position.x = robot[c].x - WIDTH / 2;
+            robotMesh[c].position.y = robot[c].y - HEIGHT / 2;
+            robotMesh[c].rotation.y = robot[c].rotation / 180 * Math.PI;
+        }else{
+            robotMesh[c].visible = false;
+        }
+
+    }
 
     if(running){
         ballMesh.position.x = ball.x - WIDTH/2;
         ballMesh.position.y = ball.y - HEIGHT/2;
         ballMesh.rotation.x += ball.speed.x;
         ballMesh.rotation.y += ball.speed.y;
-
-
-        for(var c=0; c<4; c++) {
-            if(ROBOT_ENABLE[c]){
-                robotMesh[c].visible = true;
-                robotMesh[c].position.x = robot[c].x - WIDTH / 2;
-                robotMesh[c].position.y = robot[c].y - HEIGHT / 2;
-            }else{
-                robotMesh[c].visible = false;
-            }
-
-        }
     }
     renderer.render( scene, camera );
 }
