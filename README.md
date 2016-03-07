@@ -32,19 +32,43 @@ npm install electron-prebuilt -g
 npm install electron-packager -g
 ```
 
-##Run it (without compiling):
-```
-electron .
+## Run it (without compiling)
+In the root directory of the repository run:
+```bash
+electron SoccerB
 ```
 
-##Compiling
-```
-electron-packager . RoboCup-Simulation --platform=[linux/win32/darwin] --arch=[ia32/x64] --version=0.34.1
+## Compiling
+In the root directory of the repository run:
+```bash
+electron-packager SoccerB RoboCup-Simulation --platform=[linux/win32/darwin] --arch=[ia32/x64] --version=0.34.1
 ```
 to minify the program before compiling add 
-```
+```bash
 --asar
 ``` 
+
+## Rendering Engine
+You have the choice between two rendering engines:
+### Canvas
+The canvas renderer is a normal 2D canvas based algorithm. It should work without flaws, but doesn't support features like zooming and panning.
+### WebGL
+The WebGL renderer is still experimental, not all features are working (for example ball placement by mouse). But it is fully 3D and the angle and position of the camera can be changed with the mouse.
+
+### Changing the rendering engine
+The rendering engines are fully compatible you can choose which one to use by including the appropriate file at the end of ```index.html```
+
+To use WebGL:
+```html
+<!--<script src="drawCanvas.js"></script>-->
+<script src="drawWebGL.js"></script>
+```
+
+to use Canvas
+```html
+<script src="drawCanvas.js"></script>
+<!--<script src="drawWebGL.js"></script>-->
+```
 
 ## Keyboard Shortcuts
 <kbd>0</kbd> Toggle Robot 0
