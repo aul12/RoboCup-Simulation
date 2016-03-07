@@ -5,6 +5,8 @@ var renderer = new THREE.WebGLRenderer({ canvas: canvas });
 
 renderer.setSize(WIDTH*SCALE, HEIGHT*SCALE);
 
+renderer.setClearColor( 0xffffff, 1);
+
 
 camera.position.x = 0;
 camera.position.y = -150;
@@ -19,14 +21,14 @@ var pointLight = new THREE.PointLight(0xFFFFFF);
 pointLight.position.set(100, 100, 250);
 scene.add(pointLight);
 
-var ballTexture = THREE.ImageUtils.loadTexture('res/ball.png');
+var ballTexture = THREE.ImageUtils.loadTexture('res/textureBall.png');
 var ballMaterial = new THREE.MeshPhongMaterial({map: ballTexture});
 var ballGeometry = new THREE.SphereGeometry(3.7);
 var ballMesh = new THREE.Mesh(ballGeometry, ballMaterial);
 ballMesh.position.z = 3.7;
 scene.add(ballMesh);
 
-var fieldTexture = THREE.ImageUtils.loadTexture('res/field.png');
+var fieldTexture = THREE.ImageUtils.loadTexture('res/textureField.png');
 var fieldGeometry = new THREE.BoxGeometry(WIDTH, HEIGHT, 0);
 var fieldMaterial = new THREE.MeshBasicMaterial({map: fieldTexture});
 var fieldMesh = new THREE.Mesh(fieldGeometry, fieldMaterial);
@@ -46,13 +48,15 @@ var goalBlueMesh = new THREE.Mesh(goalBlueGeometry, goalBlueMaterial);
 goalBlueMesh.position.set(WIDTH-25 - WIDTH/2, 90.5 - HEIGHT/2, 5);
 scene.add(goalBlueMesh);
 
+var robotTextureTop = new THREE.ImageUtils.loadTexture('res/textureRobotTop.png');
 var robotGeometry = new THREE.CylinderGeometry(ROBOT_SIZE, ROBOT_SIZE, 16, 16);
-var robotMaterial = new THREE.MeshPhongMaterial({color: 0x000000});
+var robotMaterial = new THREE.MeshPhongMaterial({map: robotTextureTop});
 
 var robotMesh = [new THREE.Mesh(robotGeometry, robotMaterial),
                     new THREE.Mesh(robotGeometry, robotMaterial),
                     new THREE.Mesh(robotGeometry, robotMaterial),
                     new THREE.Mesh(robotGeometry, robotMaterial)];
+
 
 for(var c=0; c<4; c++){
     robotMesh[c].rotation.x = Math.PI/2;

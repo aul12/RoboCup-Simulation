@@ -1,8 +1,8 @@
 //######################Init#########################################
 start();
-fieldImage.src = 'res/field.png';
-ballImage.src = 'res/ball.png';
-robotImage.src = 'res/robot.png';
+fieldImage.src = 'res/textureField.png';
+ballImage.src = 'res/textureBall.png';
+robotImage.src = 'res/textureRobotTop.png';
 
 fieldImage.onload = function(){
     ROBOT_ENABLE[0] = $('#enable0').is(':checked');
