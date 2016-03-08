@@ -34,6 +34,12 @@ var fieldMaterial = new THREE.MeshBasicMaterial({map: fieldTexture});
 var fieldMesh = new THREE.Mesh(fieldGeometry, fieldMaterial);
 scene.add(fieldMesh);
 
+var groundGeometry = new THREE.BoxGeometry(WIDTH, HEIGHT, -10);
+var groundMaterial = new THREE.MeshBasicMaterial({color: 0x000000});
+var groundMesh = new THREE.Mesh(groundGeometry, groundMaterial);
+groundMesh.position.z = -5;
+scene.add(groundMesh);
+
 var goalYellowTexture = THREE.ImageUtils.loadTexture('res/textureGoalYellow.png');
 var goalYellowGeometry = new THREE.BoxGeometry(10, 60, 10);
 var goalYellowMaterial = new THREE.MeshPhongMaterial({map: goalYellowTexture});
@@ -47,20 +53,6 @@ var goalBlueMaterial = new THREE.MeshPhongMaterial({map: goalBlueTexture});
 var goalBlueMesh = new THREE.Mesh(goalBlueGeometry, goalBlueMaterial);
 goalBlueMesh.position.set(WIDTH-25 - WIDTH/2, 90.5 - HEIGHT/2, 5);
 scene.add(goalBlueMesh);
-
-/*var robotTextureTop = new THREE.ImageUtils.loadTexture('res/textureRobotTop.png');
-var robotGeometry = new THREE.CylinderGeometry(ROBOT_SIZE, ROBOT_SIZE, 15, 16);
-var robotMaterial = new THREE.MeshPhongMaterial({map: robotTextureTop});
-
-var robotMesh = [new THREE.Mesh(robotGeometry, robotMaterial),
-                    new THREE.Mesh(robotGeometry, robotMaterial),
-                    new THREE.Mesh(robotGeometry, robotMaterial),
-                    new THREE.Mesh(robotGeometry, robotMaterial)];*/
-
-
-
-
-
 
 
 var loader = new THREE.ColladaLoader();
@@ -117,8 +109,8 @@ function render() {
     if(running){
         ballMesh.position.x = ball.x - WIDTH/2;
         ballMesh.position.y = ball.y - HEIGHT/2;
-        ballMesh.rotation.x += ball.speed.x;
-        ballMesh.rotation.y += ball.speed.y;
+        ballMesh.rotation.x = ball.rotation;
+        ballMesh.rotation.y = ball.rotation;
     }
     renderer.render( scene, camera );
 }
