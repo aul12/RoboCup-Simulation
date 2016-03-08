@@ -48,21 +48,54 @@ var goalBlueMesh = new THREE.Mesh(goalBlueGeometry, goalBlueMaterial);
 goalBlueMesh.position.set(WIDTH-25 - WIDTH/2, 90.5 - HEIGHT/2, 5);
 scene.add(goalBlueMesh);
 
-var robotTextureTop = new THREE.ImageUtils.loadTexture('res/textureRobotTop.png');
-var robotGeometry = new THREE.CylinderGeometry(ROBOT_SIZE, ROBOT_SIZE, 16, 16);
+/*var robotTextureTop = new THREE.ImageUtils.loadTexture('res/textureRobotTop.png');
+var robotGeometry = new THREE.CylinderGeometry(ROBOT_SIZE, ROBOT_SIZE, 15, 16);
 var robotMaterial = new THREE.MeshPhongMaterial({map: robotTextureTop});
 
 var robotMesh = [new THREE.Mesh(robotGeometry, robotMaterial),
                     new THREE.Mesh(robotGeometry, robotMaterial),
                     new THREE.Mesh(robotGeometry, robotMaterial),
-                    new THREE.Mesh(robotGeometry, robotMaterial)];
+                    new THREE.Mesh(robotGeometry, robotMaterial)];*/
 
 
-for(var c=0; c<4; c++){
-    robotMesh[c].rotation.x = Math.PI/2;
-    robotMesh[c].position.z = 8;
-    scene.add(robotMesh[c]);
-}
+
+
+
+
+
+var loader = new THREE.ColladaLoader();
+var robotMesh = [0,0,0,0];
+loader.load('res/Robot.dae', function (result) {
+    robotMesh[0] = result.scene;
+    robotMesh[0].scale.set(2, 2, 2);
+    robotMesh[0].position.set(0,0,5);
+    robotMesh[0].visible = true;
+    scene.add(robotMesh[0]);
+});
+loader.load('res/Robot.dae', function (result) {
+    robotMesh[1] = result.scene;
+    robotMesh[1].scale.set(2, 2, 2);
+    robotMesh[1].position.set(0,0,5);
+    robotMesh[1].visible = true;
+    scene.add(robotMesh[1]);
+});
+loader.load('res/Robot.dae', function (result) {
+    robotMesh[2] = result.scene;
+    robotMesh[2].scale.set(2, 2, 2);
+    robotMesh[2].position.set(0,0,5);
+    robotMesh[2].visible = true;
+    scene.add(robotMesh[2]);
+});
+loader.load('res/Robot.dae', function (result) {
+    robotMesh[3] = result.scene;
+    robotMesh[3].scale.set(2, 2, 2);
+    robotMesh[3].position.set(0,0,5);
+    robotMesh[3].visible = true;
+    scene.add(robotMesh[3]);
+});
+
+
+render();
 
 function render() {
     requestAnimationFrame( render );
@@ -72,11 +105,13 @@ function render() {
             robotMesh[c].visible = true;
             robotMesh[c].position.x = robot[c].x - WIDTH / 2;
             robotMesh[c].position.y = robot[c].y - HEIGHT / 2;
-            robotMesh[c].rotation.y = robot[c].rotation / 180 * Math.PI;
+            if(c<2)
+                robotMesh[c].rotation.z = robot[c].rotation / 180 * Math.PI;
+            else
+                robotMesh[c].rotation.z = (robot[c].rotation / 180 * Math.PI) + Math.PI;
         }else{
             robotMesh[c].visible = false;
         }
-
     }
 
     if(running){
@@ -95,5 +130,5 @@ function draw(){
 function initDraw(){
 
 
-    render();
+
 }
