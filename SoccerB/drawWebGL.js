@@ -67,28 +67,28 @@ var loader = new THREE.ColladaLoader();
 var robotMesh = [0,0,0,0];
 loader.load('res/Robot.dae', function (result) {
     robotMesh[0] = result.scene;
-    robotMesh[0].scale.set(2, 2, 2);
+    robotMesh[0].scale.set(2.54, 2.54, 2.54);
     robotMesh[0].position.set(0,0,5);
     robotMesh[0].visible = true;
     scene.add(robotMesh[0]);
 });
 loader.load('res/Robot.dae', function (result) {
     robotMesh[1] = result.scene;
-    robotMesh[1].scale.set(2, 2, 2);
+    robotMesh[1].scale.set(2.54, 2.54, 2.54);
     robotMesh[1].position.set(0,0,5);
     robotMesh[1].visible = true;
     scene.add(robotMesh[1]);
 });
 loader.load('res/Robot.dae', function (result) {
     robotMesh[2] = result.scene;
-    robotMesh[2].scale.set(2, 2, 2);
+    robotMesh[2].scale.set(2.54, 2.54, 2.54);
     robotMesh[2].position.set(0,0,5);
     robotMesh[2].visible = true;
     scene.add(robotMesh[2]);
 });
 loader.load('res/Robot.dae', function (result) {
     robotMesh[3] = result.scene;
-    robotMesh[3].scale.set(2, 2, 2);
+    robotMesh[3].scale.set(2.54, 2.54, 2.54);
     robotMesh[3].position.set(0,0,5);
     robotMesh[3].visible = true;
     scene.add(robotMesh[3]);
