@@ -106,11 +106,13 @@ function render() {
         }
     }
 
+    ballMesh.position.x = ball.x - WIDTH/2;
+    ballMesh.position.y = ball.y - HEIGHT/2;
+
     if(running){
-        ballMesh.position.x = ball.x - WIDTH/2;
-        ballMesh.position.y = ball.y - HEIGHT/2;
-        ballMesh.rotation.x = ball.rotation;
-        ballMesh.rotation.y = ball.rotation;
+
+        ballMesh.rotation.y = ball.x / 6 + ball.rotation;
+        ballMesh.rotation.z = ball.y / 6 + ball.rotation;
     }
     renderer.render( scene, camera );
 }

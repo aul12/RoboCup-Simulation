@@ -170,9 +170,9 @@ function physics()
 
 
     if(ballInDribbler)
-        ball.rotation += 10;
+        ball.rotation = 20;
     else
-        ball.rotation = (ball.x + ball.y)*Math.PI;
+        ball.rotation = 0;
 
     //Ball reflection
     if((ball.x-BALL_SIZE/2)<0)
