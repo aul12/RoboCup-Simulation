@@ -10,8 +10,8 @@ renderer.setClearColor( 0xffffff, 1);
 
 
 camera.position.x = 0;
-camera.position.y = -150;
-camera.position.z = 150;
+camera.position.y = -100;
+camera.position.z = 100;
 
 var controls = new THREE.OrbitControls( camera, renderer.domElement );
 controls.enableDamping = true;
@@ -19,7 +19,7 @@ controls.dampingFactor = 0.25;
 controls.enableZoom = false;
 
 var pointLight = new THREE.PointLight(0xFFFFFF);
-pointLight.position.set(100, 100, 250);
+pointLight.position.set(0, -100, 250);
 scene.add(pointLight);
 
 var ballTexture = THREE.ImageUtils.loadTexture('res/textureBall.png');
