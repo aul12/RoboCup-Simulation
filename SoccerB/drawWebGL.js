@@ -2,6 +2,7 @@ var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( 75, WIDTH / HEIGHT, 0.1, 1000 );
 var canvas = document.getElementById("canvasField");
 var renderer = new THREE.WebGLRenderer({ canvas: canvas });
+var loader = new THREE.ColladaLoader();
 
 renderer.setSize(WIDTH*SCALE, HEIGHT*SCALE);
 
@@ -40,22 +41,25 @@ var groundMesh = new THREE.Mesh(groundGeometry, groundMaterial);
 groundMesh.position.z = -5;
 scene.add(groundMesh);
 
-var goalYellowTexture = THREE.ImageUtils.loadTexture('res/textureGoalYellow.png');
-var goalYellowGeometry = new THREE.BoxGeometry(10, 60, 10);
-var goalYellowMaterial = new THREE.MeshPhongMaterial({map: goalYellowTexture});
-var goalYellowMesh = new THREE.Mesh(goalYellowGeometry, goalYellowMaterial);
-goalYellowMesh.position.set(25 - WIDTH/2, 90.5 - HEIGHT/2, 5);
-scene.add(goalYellowMesh);
 
-var goalBlueTexture = THREE.ImageUtils.loadTexture('res/textureGoalBlue.png');
-var goalBlueGeometry = new THREE.BoxGeometry(10, 60, 10);
-var goalBlueMaterial = new THREE.MeshPhongMaterial({map: goalBlueTexture});
-var goalBlueMesh = new THREE.Mesh(goalBlueGeometry, goalBlueMaterial);
-goalBlueMesh.position.set(WIDTH-25 - WIDTH/2, 90.5 - HEIGHT/2, 5);
-scene.add(goalBlueMesh);
+var goalYellowMesh, goalBlueMesh;
+loader.load('res/GoalYellow.dae', function (result) {
+    goalYellowMesh = result.scene;
+    goalYellowMesh.position.set(30 - WIDTH/2, 60.5 - HEIGHT/2, 0);
+    goalYellowMesh.scale.set(2.54, 2.54, 2.54);
+    goalYellowMesh.rotation.z = Math.PI * 0.5;
+    goalYellowMesh.visible = true;
+    scene.add(goalYellowMesh);
+});
+loader.load('res/GoalBlue.dae', function (result) {
+    goalBlueMesh = result.scene;
+    goalBlueMesh.position.set(WIDTH-30 - WIDTH/2, 120.5 - HEIGHT/2, 0);
+    goalBlueMesh.scale.set(2.54, 2.54, 2.54);
+    goalBlueMesh.rotation.z = Math.PI * 1.5;
+    goalBlueMesh.visible = true;
+    scene.add(goalBlueMesh);
+});
 
-
-var loader = new THREE.ColladaLoader();
 var robotMesh = [0,0,0,0];
 loader.load('res/Robot.dae', function (result) {
     robotMesh[0] = result.scene;
