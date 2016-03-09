@@ -4,8 +4,8 @@
         <contributor>
             <authoring_tool>SketchUp 16.1.1449</authoring_tool>
         </contributor>
-        <created>2016-03-09T15:31:14Z</created>
-        <modified>2016-03-09T15:31:14Z</modified>
+        <created>2016-03-09T15:44:35Z</created>
+        <modified>2016-03-09T15:44:35Z</modified>
         <unit meter="0.0254" name="inch" />
         <up_axis>Z_UP</up_axis>
     </asset>
@@ -45,7 +45,7 @@
                     </bind_material>
                 </instance_geometry>
                 <node name="skp_camera_Last_Saved_SketchUp_View">
-                    <matrix>0.9984905 0.0169364 -0.05224798 12.50273 -0.05492443 0.3078928 -0.9498344 -62.87101 0 0.9512703 0.3083583 30.00579 0 0 0 1</matrix>
+                    <matrix>0.952441 0.08276135 -0.293269 -7.903266 -0.3047231 0.2586784 -0.9166402 -50.71217 0 0.9624116 0.2715952 22.37709 0 0 0 1</matrix>
                     <instance_camera url="#ID1" />
                 </node>
             </node>
@@ -121,7 +121,7 @@
         <material id="ID4" name="_0136_Charcoal">
             <instance_effect url="#ID5" />
         </material>
-        <material id="ID12" name="_0104_MediumBlue">
+        <material id="ID12" name="_0098_DodgerBlue">
             <instance_effect url="#ID13" />
         </material>
     </library_materials>
@@ -142,7 +142,7 @@
                 <technique sid="COMMON">
                     <lambert>
                         <diffuse>
-                            <color>0 0 0.8039216 1</color>
+                            <color>0.1176471 0.5647059 1 1</color>
                         </diffuse>
                     </lambert>
                 </technique>
