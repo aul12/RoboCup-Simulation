@@ -1,13 +1,12 @@
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( 75, WIDTH / HEIGHT, 0.1, 1000 );
 var canvas = document.getElementById("canvasField");
-var renderer = new THREE.WebGLRenderer({ canvas: canvas });
+var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
 var loader = new THREE.ColladaLoader();
 
 renderer.setSize(WIDTH*SCALE, HEIGHT*SCALE);
 
 renderer.setClearColor( 0xffffff, 1);
-
 
 camera.position.x = 0;
 camera.position.y = -100;
@@ -19,7 +18,7 @@ controls.dampingFactor = 0.25;
 controls.enableZoom = true;
 
 
-var light = new THREE.AmbientLight( 0xA8A8A8 );
+var light = new THREE.AmbientLight(0xA4A4A4);
 scene.add( light );
 
 var ballTexture = THREE.ImageUtils.loadTexture('res/textureBall.png');

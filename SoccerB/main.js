@@ -24,7 +24,12 @@ app.on('window-all-closed', function() {
 // initialization and is ready to create browser windows.
 app.on('ready', function() {
   // Create the browser window.
-  mainWindow = new BrowserWindow();
+  mainWindow = new BrowserWindow({
+      'web-preferences': {
+        'web-security': false,
+        "webgl": true
+      }
+  });
 
   mainWindow.maximize();
 
