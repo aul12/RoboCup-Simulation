@@ -18,9 +18,9 @@ controls.enableDamping = true;
 controls.dampingFactor = 0.25;
 controls.enableZoom = true;
 
-var pointLight = new THREE.PointLight(0xFFFFFF);
-pointLight.position.set(0, 0, 100);
-scene.add(pointLight);
+
+var light = new THREE.AmbientLight( 0xA8A8A8 );
+scene.add( light );
 
 var ballTexture = THREE.ImageUtils.loadTexture('res/textureBall.png');
 var ballMaterial = new THREE.MeshPhongMaterial({map: ballTexture});
