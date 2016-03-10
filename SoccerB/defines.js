@@ -4,6 +4,9 @@ var robotImage = new Image();
 
 var ROBOT_ENABLE = [true, true, true, true];
 
+const POV = false;
+const POVRobot = 1;
+
 const SPEED = 1;
 const SHOOT_POWER = 1.5;
 

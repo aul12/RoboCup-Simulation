@@ -16,10 +16,10 @@ camera.position.z = 100;
 var controls = new THREE.OrbitControls( camera, renderer.domElement );
 controls.enableDamping = true;
 controls.dampingFactor = 0.25;
-controls.enableZoom = false;
+controls.enableZoom = true;
 
 var pointLight = new THREE.PointLight(0xFFFFFF);
-pointLight.position.set(0, -100, 250);
+pointLight.position.set(0, 0, 100);
 scene.add(pointLight);
 
 var ballTexture = THREE.ImageUtils.loadTexture('res/textureBall.png');
@@ -96,6 +96,8 @@ render();
 function render() {
     requestAnimationFrame( render );
 
+
+
     for(var c=0; c<4; c++) {
         if(ROBOT_ENABLE[c]){
             robotMesh[c].visible = true;
@@ -118,6 +120,19 @@ function render() {
         ballMesh.rotation.y = ball.x / 6 + ball.rotation;
         ballMesh.rotation.z = ball.y / 6 + ball.rotation;
     }
+
+    if(POV){
+         camera.position.x = robotMesh[POVRobot].position.x + (robotN>=2?-4:4);
+         camera.position.y = robotMesh[POVRobot].position.y;
+         camera.position.z = 20;
+
+
+         camera.rotation.x = Math.PI/2;
+         camera.rotation.y = -Math.PI/2 + robotMesh[POVRobot].rotation.z;
+         camera.rotation.z = 0;
+    }
+
+
     renderer.render( scene, camera );
 }
 
