@@ -4,8 +4,10 @@ var robotImage = new Image();
 
 var ROBOT_ENABLE = [true, true, true, true];
 
+var TIMER_DIFF = 1;
+
 const POV = false;
-const POVRobot = 1;
+const POVRobot = 0;
 
 const SPEED = 1;
 const SHOOT_POWER = 1.0;

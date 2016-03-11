@@ -47,7 +47,35 @@ function draw()
 
 }
 
-//Compatibility to WebGL
-function initDraw(){
 
+function mousePosition(evt)
+{
+    if(!evt) evt = window.event;
+    var pos = { left: evt.clientX, top:evt.clientY };
+
+    var b = (window.document.compatMode && window.document.compatMode == "CSS1Compat") ?
+        window.document.documentElement : window.document.body || null;
+
+    if (b)
+    {
+        pos.left += b.scrollLeft;
+        pos.top +=  b.scrollTop;
+    }
+    return pos;
 }
+
+
+$("#canvasField").click(function(evt){
+    if (!evt) evt = window.event;
+    var p = mousePosition(evt);
+
+
+    ball.x = p.left / SCALE;
+    ball.y = HEIGHT - (p.top / SCALE);
+
+
+    ball.speed.x=0;
+    ball.speed.y=0;
+
+    lackOfProgressCounter = 0;
+});

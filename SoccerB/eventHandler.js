@@ -27,8 +27,6 @@ robotImage.onload = function(){
 };
 
 $(document).ready(function(){
-    initDraw();
-
     $(document).keypress(function( event ) {
         if ( event.which == 13 ) {
             event.preventDefault();
@@ -78,37 +76,7 @@ $(document).ready(function(){
 });
 
 
-function mousePosition(evt)
-{
-    if(!evt) evt = window.event;
-    var pos = { left: evt.clientX, top:evt.clientY };
 
-    var b = (window.document.compatMode && window.document.compatMode == "CSS1Compat") ?
-        window.document.documentElement : window.document.body || null;
-
-    if (b)
-    {
-        pos.left += b.scrollLeft;
-        pos.top +=  b.scrollTop;
-    }
-    return pos;
-}
-
-function canvasClick(evt)
-{
-    if (!evt) evt = window.event;
-    var p = mousePosition(evt);
-
-
-    ball.x = p.left / SCALE;
-    ball.y = HEIGHT - (p.top / SCALE);
-
-
-    ball.speed.x=0;
-    ball.speed.y=0;
-
-    lackOfProgressCounter = 0;
-}
 
 function start()
 {

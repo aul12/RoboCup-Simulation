@@ -1,67 +1,71 @@
 //######################Main#########################################
 function logicTimerTick()
 {
-    forEveryRobot(function(robot_counter){
-        if(robotInside[robot_counter])
-        {
-            api.robotn = robot_counter;
-            setAlias();
-            switch(robot_counter)
+    for(var c=0; c<TIMER_DIFF; c++){
+        forEveryRobot(function(robot_counter){
+            if(robotInside[robot_counter])
             {
-                case 0:
-                    try {
-                        goalieLeft();
-                    } catch (e) {
-                        alert("Error: \""+e+"\" in goalieLeft");
-                        clearTimers();
-                    }
-                    break;
-                case 1:
-                    try {
-                        strikerLeft();
-                    } catch (e) {
-                        alert("Error: \""+e+"\" in strikerLeft");
-                        clearTimers();
-                    }
-                    break;
-                case 2:
-                    try {
-                        strikerRight();
-                    } catch (e) {
-                        alert("Error: \""+e+"\" in strikerRight");
-                        clearTimers();
-                    }
-                    break;
-                case 3:
-                    try {
-                        goalieRight();
+                api.robotn = robot_counter;
+                setAlias();
+                switch(robot_counter)
+                {
+                    case 0:
+                        try {
+                            goalieLeft();
+                        } catch (e) {
+                            alert("Error: \""+e+"\" in goalieLeft");
+                            clearTimers();
+                        }
+                        break;
+                    case 1:
+                        try {
+                            strikerLeft();
+                        } catch (e) {
+                            alert("Error: \""+e+"\" in strikerLeft");
+                            clearTimers();
+                        }
+                        break;
+                    case 2:
+                        try {
+                            strikerRight();
+                        } catch (e) {
+                            alert("Error: \""+e+"\" in strikerRight");
+                            clearTimers();
+                        }
+                        break;
+                    case 3:
+                        try {
+                            goalieRight();
 
-                    } catch (e) {
-                        alert("Error: \""+e+"\" in GoalieRight");
-                        clearTimers();
-                    }
-                    break;
+                        } catch (e) {
+                            alert("Error: \""+e+"\" in GoalieRight");
+                            clearTimers();
+                        }
+                        break;
+                }
+                getAlias();
             }
-            getAlias();
-        }
-        else
-        {
-            if(++robotOutTimer[robot_counter]>=200)
+            else
             {
-                robotInside[robot_counter]=true;
-                robot[robot_counter].x = (WIDTH/2);
-                robot[robot_counter].y = (HEIGHT/2);
-                robotOutTimer[robot_counter]=0;
+                if(++robotOutTimer[robot_counter]>=200)
+                {
+                    robotInside[robot_counter]=true;
+                    robot[robot_counter].x = (WIDTH/2);
+                    robot[robot_counter].y = (HEIGHT/2);
+                    robotOutTimer[robot_counter]=0;
 
+                }
             }
-        }
-    });
+        });
 
-    checkRules();
+        checkRules();
+    }
+
 }
 
 function physicTimerTick(){
-    physics();
+    for(var c=0; c<TIMER_DIFF; c++)
+        physics();
 }
 
 function drawTimerTick(){
@@ -97,7 +101,7 @@ function timerInit()
         clearTimers();
 
         logicTimerReference = setInterval(logicTimerTick,5);
-        physicTimerReference = setInterval(physicTimerTick, 1);
+        physicTimerReference = setInterval(physicTimerTick, 4);
         drawTimerReference = setInterval(drawTimerTick, 30);
 
         $("#startBtn").html("Pause");

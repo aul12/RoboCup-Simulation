@@ -1,8 +1,22 @@
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera( 75, WIDTH / HEIGHT, 0.1, 1000 );
+var camera = new THREE.PerspectiveCamera(75, WIDTH / HEIGHT, 0.1, 1000 );
 var canvas = document.getElementById("canvasField");
 var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
 var loader = new THREE.ColladaLoader();
+
+$("#canvasField").click(function(event){
+    var planeZ = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+
+    var raycaster = new THREE.Raycaster();
+    var mouse = new THREE.Vector2();
+    mouse.x = ( event.clientX / (WIDTH*SCALE) ) * 2 - 1;
+    mouse.y = - ( event.clientY / (HEIGHT*SCALE) ) * 2 + 1;
+    raycaster.setFromCamera(mouse, camera);
+    var pos = raycaster.ray.intersectPlane(planeZ);
+
+    ball.x = pos.x + WIDTH/2;
+    ball.y = pos.y + HEIGHT/2;
+});
 
 renderer.setSize(WIDTH*SCALE, HEIGHT*SCALE);
 
@@ -121,7 +135,7 @@ function render() {
     }
 
     if(POV){
-         camera.position.x = robotMesh[POVRobot].position.x + (robotN>=2?-4:4);
+         camera.position.x = robotMesh[POVRobot].position.x + (POVRobot>=2?-4:4);
          camera.position.y = robotMesh[POVRobot].position.y;
          camera.position.z = 20;
 
@@ -136,11 +150,5 @@ function render() {
 }
 
 function draw(){
-
-}
-
-function initDraw(){
-
-
 
 }
