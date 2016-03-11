@@ -101,7 +101,7 @@ function timerInit()
         clearTimers();
 
         logicTimerReference = setInterval(logicTimerTick,5);
-        physicTimerReference = setInterval(physicTimerTick, 4);
+        physicTimerReference = setInterval(physicTimerTick, 1);
         drawTimerReference = setInterval(drawTimerTick, 30);
 
         $("#startBtn").html("Pause");

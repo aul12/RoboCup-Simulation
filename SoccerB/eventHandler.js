@@ -60,6 +60,39 @@ $(document).ready(function(){
             case 114:   //r
                 resetButton();
                 break;
+            case 99: //c
+                ball.x = NEUTRAL_POINT[0].x;
+                ball.y = NEUTRAL_POINT[0].y;
+                ball.speed.x = 0;
+                ball.speed.y = 0;
+                break;
+            case 118: //v
+                ball.x = NEUTRAL_POINT[1].x;
+                ball.y = NEUTRAL_POINT[1].y;
+                ball.speed.x = 0;
+                ball.speed.y = 0;
+                break;
+            case 98: //b
+                ball.x = NEUTRAL_POINT[2].x;
+                ball.y = NEUTRAL_POINT[2].y;
+                ball.speed.x = 0;
+                ball.speed.y = 0;
+                break;
+            case 110: //n
+                ball.x = NEUTRAL_POINT[3].x;
+                ball.y = NEUTRAL_POINT[3].y;
+                ball.speed.x = 0;
+                ball.speed.y = 0;
+                break;
+            case 109: //m
+                ball.x = NEUTRAL_POINT[4].x;
+                ball.y = NEUTRAL_POINT[4].y;
+                ball.speed.x = 0;
+                ball.speed.y = 0;
+                break;
+            default:
+                console.log(event.keyCode);
+                break;
         }
     });
 

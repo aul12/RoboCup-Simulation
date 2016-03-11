@@ -24,6 +24,8 @@ function SoccerAPI(angle){
             angle *= -1;
         }
 
+        angle += robot[this.robotn].rotation /180 * Math.PI;
+
         if(speed > SPEED)
             speed = SPEED;
         else if(speed < -SPEED)
@@ -223,7 +225,28 @@ function SoccerAPI(angle){
     };
 
     this.goalAngle = function() {
+        var goal = new Vector();
 
+        goal.y = HEIGHT/2;
+
+        if(this.robotn >= 2){
+            goal.x = LEFT;
+        }else{
+            goal.x = RIGHT;
+        }
+
+        var delta_x = goal.x-robot[this.robotn].x;
+        var delta_y = goal.y-robot[this.robotn].y;
+        var angle=Math.atan2(delta_y, delta_x);
+
+        if(this.robotn>=2)
+        {
+            angle+=Math.PI;
+            angle*=-1;
+        }
+
+
+        return this.degree==Angle.DEGREE?(-angle*180/Math.PI):(-angle);
     }
 
 }

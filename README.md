@@ -85,6 +85,8 @@ to use Canvas
 
 <kbd>r</kbd> Reset the game
 
+<kbd>c</kbd>, <kbd>v</kbd>, <kbd>b</kbd>, <kbd>n</kbd>, <kbd>m</kbd> Set the ball to one of the neutral points
+
 ##Writing your own logic for the robots
 You have to write your own logic for the robots. Do this by editing the right function in the ```program```
 folder (logic for both teams are divided in ```teamLeft.js``` and ```teamRight.js```). Please don't use any loops in the function, it is called regularly by the 
@@ -267,6 +269,13 @@ ___
 api.realDistance(direction);
 ```  
 Returns the distance in the given direction with influences like the goal (other robots aren't calculated yet).
+
+___
+
+```javascript
+api.goalAngle();
+```  
+Get the angle to the middle of the opponents goal (absolute value).
 
 ___
 
