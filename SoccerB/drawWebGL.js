@@ -113,7 +113,6 @@ function render() {
     requestAnimationFrame( render );
 
 
-
     for(var c=0; c<4; c++) {
         if(ROBOT_ENABLE[c]){
             robotMesh[c].visible = true;
