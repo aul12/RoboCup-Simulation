@@ -53,7 +53,7 @@ You have the choice between two rendering engines:
 ### Canvas
 The canvas renderer is a normal 2D canvas based algorithm. It should work without flaws, but doesn't support features like zooming and panning.
 ### WebGL
-The WebGL renderer is still experimental, not all features are working (for example ball placement by mouse). But it is fully 3D and the angle and position of the camera can be changed with the mouse.
+The WebGL renderer is still experimental, not all features are working. But it is fully 3D and the angle and position of the camera can be changed with the mouse.
 
 ### Changing the rendering engine
 The rendering engines are fully compatible you can choose which one to use by including the appropriate file at the end of ```index.html```

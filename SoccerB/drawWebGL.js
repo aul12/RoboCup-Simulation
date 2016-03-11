@@ -16,6 +16,9 @@ $("#canvasField").click(function(event){
 
     ball.x = pos.x + WIDTH/2;
     ball.y = pos.y + HEIGHT/2;
+
+    ball.speed.x = 0;
+    ball.speed.y = 0;
 });
 
 renderer.setSize(WIDTH*SCALE, HEIGHT*SCALE);
