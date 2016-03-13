@@ -6,6 +6,11 @@ function checkRules(){
     checkLackOfProgress();
 }
 
+
+/*
+ A goal is scored when the ball strikes or touches the back wall of the goal. Goals scored either by an attacking
+ or defending robot have the same end result: they give one goal to the team on the opposite side
+ */
 function checkGoal(){
     var goal = false;
 
@@ -30,6 +35,12 @@ function checkGoal(){
     }
 }
 
+/*
+ Within the penalty area, the goalie has priority. Attacking robots are not supposed to push the goalie in any way.
+ If the attacker and the goalie touch each other and at least one of them has physical contact with the ball, the ball
+ will be moved to the nearest unoccupied neutral spot immediately.
+ If a goal is scored as a result of this pushed-situation, it will not be granted
+ */
 function checkPushing(){
     forEveryCombination(function(robot_counter, not_robot_counter) {
         if (robot[robot_counter].isTouching(robot[not_robot_counter]) && robot_counter != not_robot_counter && ROBOT_ENABLE[not_robot_counter]) {
@@ -62,6 +73,11 @@ function checkPushing(){
 
 }
 
+/*
+ Multiple defense occurs if more than one robot from the defending team enters its penalty area with some part
+ and substantially affects the game. The robot farther from the ball will be moved to the nearest neutral spot. The
+ referee could take this action at any time when both robots linger in their penalty area.
+ */
 function checkDoubleDefence(){
     forEveryCombination(function(robot_counter, not_robot_counter){
         /*
@@ -95,6 +111,11 @@ function checkDoubleDefence(){
     });
 }
 
+/*
+ If a robot’s entire body moves out beyond the white line of the field completely, it will be called for being out of
+ bounds. When this situation arises, the robot is given a one-minute penalty, and the team is asked to remove the
+ robot from the field
+ */
 function checkLine(){
     forEveryRobot(function(robot_counter){
         if (robotInside[robot_counter]) {
@@ -116,6 +137,15 @@ function checkLine(){
     });
 }
 
+/*
+ Lack of progress occurs if there is no progress in the gameplay for a reasonable period of time and the situation
+ is not likely to change. Typical lack of progress situations are when the ball is stuck between robots, when there
+ is no change in ball and robot’s positions, or when the ball is beyond detection or reach capability of all robots
+ on the field. After a visible and loud count, (usually a count of five, the length of the count could be decided by
+ the OC before a competition as long as it’s the same length within a sub-league) a referee will call “lack of
+ progress” and will move the ball to the nearest unoccupied neutral spot. If this does not solve the lack of
+ progress, the referee can move the ball to different neutral spots.
+ */
 function checkLackOfProgress()
 {
     //Check if ball is not moving

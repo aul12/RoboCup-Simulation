@@ -31,7 +31,7 @@ const GOAL_BOTTOM = HEIGHT - 61;
 const RECEPTION_ANGLE = 15;
 
 
-const ROBOT_SIZE = 10.5;
+const ROBOT_SIZE = 11;
 const BALL_SIZE = 7.4;
 
 const NEUTRAL_POINT= [  new Vector(45 + LEFT, 31 + TOP),
