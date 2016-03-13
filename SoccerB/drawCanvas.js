@@ -1,6 +1,32 @@
 var canvas = document.getElementById('canvasField');
 var ctx = canvas.getContext("2d");
 
+fieldImage.src = 'res/textureField.png';
+ballImage.src = 'res/textureBall.png';
+robotImage.src = 'res/textureRobotTop.png';
+
+fieldImage.onload = function(){
+    ROBOT_ENABLE[0] = $('#enable0').is(':checked');
+    ROBOT_ENABLE[1] = $('#enable1').is(':checked');
+    ROBOT_ENABLE[2] = $('#enable2').is(':checked');
+    ROBOT_ENABLE[3] = $('#enable3').is(':checked');
+    draw();
+};
+ballImage.onload = function(){
+    ROBOT_ENABLE[0] = $('#enable0').is(':checked');
+    ROBOT_ENABLE[1] = $('#enable1').is(':checked');
+    ROBOT_ENABLE[2] = $('#enable2').is(':checked');
+    ROBOT_ENABLE[3] = $('#enable3').is(':checked');
+    draw();
+};
+robotImage.onload = function(){
+    ROBOT_ENABLE[0] = $('#enable0').is(':checked');
+    ROBOT_ENABLE[1] = $('#enable1').is(':checked');
+    ROBOT_ENABLE[2] = $('#enable2').is(':checked');
+    ROBOT_ENABLE[3] = $('#enable3').is(':checked');
+    draw();
+};
+
 function draw_robot(x,y,angle,visible)
 {
 

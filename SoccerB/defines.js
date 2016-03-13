@@ -10,7 +10,7 @@ const POV = false;
 const POVRobot = 0;
 
 const SPEED = 1;
-const SHOOT_POWER = 1.3;
+const SHOOT_POWER = 1.4;
 
 const SCALE = 3.69;
 
@@ -28,7 +28,7 @@ const PENALTY_AREA_HEIGHT  = 90;
 const GOAL_TOP = 61;
 const GOAL_BOTTOM = HEIGHT - 61;
 
-const RECEPTION_ANGLE = 20;
+const RECEPTION_ANGLE = 15;
 
 
 const ROBOT_SIZE = 10.5;

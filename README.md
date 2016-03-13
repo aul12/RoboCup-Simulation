@@ -149,7 +149,7 @@ function strikerRight() {
 ###Alias file
 To get the full compatibility with your real robot program there is the ```program/alias.js``` file. It is used to populate all global variables and provide a layer between the Soccer-API and your API.
 
-There are to main procedures which you can (and should) use. The first is ```setAlias``` which is called everytime before your logic is beeing executed and can be used to to set the values of your variables to the appropriate values of the API.
+There are to main procedures which you can (and should) use. The first is ```setAlias``` which is called every time before your logic is being executed and can be used to to set the values of your variables to the appropriate values of the API.
 The second procedure is ```getAlias``` which is used to give the values of your logic back to the Soccer-API.
 
 ####Example
@@ -159,6 +159,15 @@ var ballAngle;
 var dribblerPower;
 
 const SPEED_BALL = 80;
+
+//This function is called when the simulation has loaded
+function initAlias(){
+    //Some defines which are used in your program
+    var defines = "#define DEBUG true\n"+
+
+    //Load the original C++ code of your robot (see the Chapter "Loaders" for more informations)
+    loadCppFile("SoccerB/program/originalCode.cpp", "SoccerB/program/teamLeft.js" , defines);
+}
 
 //This function is called before your logic
 function setAlias(){
@@ -176,7 +185,27 @@ function driveRobot(angle, speed){
 	api.move(angle, speed);
 }
 
+//Call functions of you logic
+function goalieLeft(){
+	defense();
+}
+
+function strikerLeft(){
+    striker();
+}
+
 ```
+
+### Loaders
+Loaders are used to translate the syntax of the language of your robot program to javascript. 
+#### C++ Loader
+The C++ loader can load C and C++ code and translate it into javascript code. It uses the C++ preprocessor and can thus handle real preprocessor statements in your code.
+
+##### Example
+```javascript
+loadCppFile("SoccerB/program/originalCode.cpp", "SoccerB/program/teamLeft.js" , "#define DEBUG true");
+```
+
 
 ##API-Reference
 All methods listed below are part of the SoccerAPI class, which is predefined with the api object.

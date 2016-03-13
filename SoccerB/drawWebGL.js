@@ -4,6 +4,10 @@ var canvas = document.getElementById("canvasField");
 var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
 var loader = new THREE.ColladaLoader();
 
+console.warn = function(){
+    //Muhahah!
+};
+
 $("#canvasField").click(function(event){
     var planeZ = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
 
@@ -33,6 +37,12 @@ var controls = new THREE.OrbitControls( camera, renderer.domElement );
 controls.enableDamping = true;
 controls.dampingFactor = 0.25;
 controls.enableZoom = true;
+
+controls.center =  new THREE.Vector3(
+ 0,
+ 0,
+ 0
+);
 
 
 var light = new THREE.AmbientLight(0xA4A4A4);

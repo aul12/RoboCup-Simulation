@@ -1,30 +1,6 @@
 //######################Init#########################################
 start();
-fieldImage.src = 'res/textureField.png';
-ballImage.src = 'res/textureBall.png';
-robotImage.src = 'res/textureRobotTop.png';
 
-fieldImage.onload = function(){
-    ROBOT_ENABLE[0] = $('#enable0').is(':checked');
-    ROBOT_ENABLE[1] = $('#enable1').is(':checked');
-    ROBOT_ENABLE[2] = $('#enable2').is(':checked');
-    ROBOT_ENABLE[3] = $('#enable3').is(':checked');
-    draw();
-};
-ballImage.onload = function(){
-    ROBOT_ENABLE[0] = $('#enable0').is(':checked');
-    ROBOT_ENABLE[1] = $('#enable1').is(':checked');
-    ROBOT_ENABLE[2] = $('#enable2').is(':checked');
-    ROBOT_ENABLE[3] = $('#enable3').is(':checked');
-    draw();
-};
-robotImage.onload = function(){
-    ROBOT_ENABLE[0] = $('#enable0').is(':checked');
-    ROBOT_ENABLE[1] = $('#enable1').is(':checked');
-    ROBOT_ENABLE[2] = $('#enable2').is(':checked');
-    ROBOT_ENABLE[3] = $('#enable3').is(':checked');
-    draw();
-};
 
 $(document).ready(function(){
     $(document).keypress(function( event ) {
@@ -91,7 +67,6 @@ $(document).ready(function(){
                 ball.speed.y = 0;
                 break;
             default:
-                console.log(event.keyCode);
                 break;
         }
     });
@@ -105,7 +80,7 @@ $(document).ready(function(){
         draw();
     });
 
-
+    initAlias();
 });
 
 
