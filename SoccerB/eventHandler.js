@@ -76,9 +76,12 @@ $(document).ready(function(){
         ROBOT_ENABLE[1] = $('#enable1').is(':checked');
         ROBOT_ENABLE[2] = $('#enable2').is(':checked');
         ROBOT_ENABLE[3] = $('#enable3').is(':checked');
-
-        draw();
     });
+
+    ROBOT_ENABLE[0] = $('#enable0').is(':checked');
+    ROBOT_ENABLE[1] = $('#enable1').is(':checked');
+    ROBOT_ENABLE[2] = $('#enable2').is(':checked');
+    ROBOT_ENABLE[3] = $('#enable3').is(':checked');
 
     initAlias();
 });

@@ -23,6 +23,8 @@ $("#canvasField").click(function(event){
 
     ball.speed.x = 0;
     ball.speed.y = 0;
+
+    lackOfProgressCounter = 0;
 });
 
 renderer.setSize(WIDTH*SCALE, HEIGHT*SCALE);
@@ -37,13 +39,6 @@ var controls = new THREE.OrbitControls( camera, renderer.domElement );
 controls.enableDamping = true;
 controls.dampingFactor = 0.25;
 controls.enableZoom = true;
-
-controls.center =  new THREE.Vector3(
- 0,
- 0,
- 0
-);
-
 
 var light = new THREE.AmbientLight(0xA4A4A4);
 scene.add( light );

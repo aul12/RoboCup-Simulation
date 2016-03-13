@@ -5,7 +5,7 @@ A RoboCup Junior Soccer-B Simulation.
 [http://bodenseehaie.bplaced.de/](http://bodenseehaie.bplaced.de/)
 
 ##Known issues
-* Multiple defence and pushing aren't detected properly
+See [https://github.com/aul12/RoboCup-Simulation/issues](https://github.com/aul12/RoboCup-Simulation/issues) for the full list of bugs and enhancements.
 
 ##Dependencies
 * [http://electron.atom.io/](http://electron.atom.io/)
@@ -25,7 +25,7 @@ sudo npm install electron-packager -g
 ```
 
 ### Windows
-Install node.js and npm using the [Installer](http://www.nodejs.org)
+Install node.js and npm using the Installer ([http://www.nodejs.org](http://www.nodejs.org))
 ```
 npm install electron-prebuilt -g
 
@@ -51,23 +51,23 @@ to minify the program before compiling add
 ## Rendering Engine
 You have the choice between two rendering engines:
 ### Canvas
-The canvas renderer is a normal 2D canvas based algorithm. It should work without flaws, but doesn't support features like zooming and panning.
+The canvas renderer is a normal 2D canvas based algorithm. It should work without flaws, but doesn't support features like zooming and panning. On the other hand it uses much less resources and should run on every PC at a high frame rate.
 ### WebGL
-The WebGL renderer is still experimental, not all features are working. But it is fully 3D and the angle and position of the camera can be changed with the mouse.
+The WebGL renderer is the renderer of choice, it is fully 3D and the angle and position of the camera can be changed with the mouse. It uses real models of the objects and is quite realistic. The only problem is that the graphics needs much resources because of antialiasing, that means if your computer is slower you're better of with the canvas renderer.
 
 ### Changing the rendering engine
 The rendering engines are fully compatible you can choose which one to use by including the appropriate file at the end of ```index.html```
 
 To use WebGL:
 ```html
-<!--<script src="drawCanvas.js"></script>-->
-<script src="drawWebGL.js"></script>
+<!--<script src="renderer/drawCanvas.js"></script>-->
+<script src="renderer/drawWebGL.js"></script>
 ```
 
 to use Canvas
 ```html
-<script src="drawCanvas.js"></script>
-<!--<script src="drawWebGL.js"></script>-->
+<script src="renderer/drawCanvas.js"></script>
+<!--<script src="renderer/drawWebGL.js"></script>-->
 ```
 
 ## Keyboard Shortcuts
