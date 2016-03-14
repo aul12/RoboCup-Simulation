@@ -10,7 +10,7 @@ const POV = false;
 const POVRobot = 0;
 
 const SPEED = 1;
-const SHOOT_POWER = 1.4;
+const SHOOT_POWER = 1.5;
 
 const SCALE = 3.69;
 

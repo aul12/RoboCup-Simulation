@@ -88,6 +88,8 @@ function physics()
                     //Correct the Speed of the Ball
                     ball.speed.x += Math.cos(alpha) * robot[robot_counter].speed.abs() * 0.8;
                     ball.speed.y += Math.sin(alpha) * robot[robot_counter].speed.abs() * 0.8;
+
+                    ball.moveOutOf(robot[robot_counter]);
                 }
 
                 if (robotShoot[robot_counter]) {
@@ -110,6 +112,8 @@ function physics()
                 //Correct the Speed of the Ball
                 ball.speed.x += Math.cos(alpha) * robot[robot_counter].speed.abs() * 0.8;
                 ball.speed.y += Math.sin(alpha) * robot[robot_counter].speed.abs() * 0.8;
+
+                ball.moveOutOf(robot[robot_counter]);
             }
 
             robot[robot_counter].speed.x *= 0.9;
@@ -134,15 +138,13 @@ function physics()
                 var delta = 0;
 
                 //Ball in the Front
-               /*if (diff < RECEPTION_ANGLE){
+               if (diff < RECEPTION_ANGLE){
                     if(ball.distanceTo(robot[robot_counter]) < (BALL_SIZE/2 + ROBOT_SIZE - 3.0)) {
                         delta = ball.distanceTo(robot[robot_counter]) - (BALL_SIZE / 2 + ROBOT_SIZE - 3.0);
                     }
-                    else
-                        delta = 0;
-                }else{*/
+                }else{
                     delta = ball.distanceTo(robot[robot_counter]) - (BALL_SIZE/2 + ROBOT_SIZE);
-                //}
+                }
 
                 robot[robot_counter].x += Math.cos(alpha)*delta;
                 robot[robot_counter].y += Math.sin(alpha)*delta;
