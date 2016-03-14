@@ -38,12 +38,12 @@ function SoccerAPI(angle){
 
     this.moveToXY = function(xPos, yPos) {
         var xdiff = this.realDistance(this.distance.RIGHT)- xPos;
-        var ydiff = yPos - this.realDistance(this.distance.BACK);
+        var ydiff = this.realDistance(this.distance.BACK) - yPos;
 
         if(Math.abs(xdiff) < 2 && Math.abs(ydiff) < 2){
             this.move(0, 0);
         }else{
-            var angle = Math.atan2(xdiff, ydiff)*180/Math.PI;
+            var angle = Math.atan2(xdiff, -ydiff)*180/Math.PI;
 
             var dist = Math.sqrt(xdiff*xdiff + ydiff*ydiff) / 40;
 

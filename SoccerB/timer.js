@@ -10,6 +10,7 @@ function logicTimerTick()
                 switch(robot_counter)
                 {
                     case 0:
+                        communication.robotReceiver = 1;
                         try {
                             goalieLeft();
                         } catch (e) {
@@ -18,6 +19,7 @@ function logicTimerTick()
                         }
                         break;
                     case 1:
+                        communication.robotReceiver = 0;
                         try {
                             strikerLeft();
                         } catch (e) {
@@ -26,6 +28,7 @@ function logicTimerTick()
                         }
                         break;
                     case 2:
+                        communication.robotReceiver = 3;
                         try {
                             strikerRight();
                         } catch (e) {
@@ -34,6 +37,7 @@ function logicTimerTick()
                         }
                         break;
                     case 3:
+                        communication.robotReceiver = 2;
                         try {
                             goalieRight();
 

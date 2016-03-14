@@ -30,26 +30,31 @@
         <script>window.$ = window.jQuery = require('./lib/jquery/jquery.min.js');</script>
         <script src="lib/bootstrap/bootstrap.min.js"></script>
 
+        <!-- Threejs for WebGL -->
         <script src="lib/threejs/three.min.js"></script>
         <script src="lib/threejs/Projector.js"></script>
         <script src="lib/threejs/OrbitControls.js"></script>
         <script src="lib/threejs/ColladaLoader.js"></script>
 
-
+        <!-- Libraries and helper classes -->
         <script src="lib/gameObject.js"></script>
         <script src="lib/robotLoops.js"></script>
         <script src="lib/checkNaN.js"></script>
 
-        <script src="api.js"></script>
+        <!-- Api for controlling the robots -->
+        <script src="api/SoccerApi.js"></script>
+        <script src="api/CommunicationApi.js"></script>
+
 
         <script src="defines.js"></script>
         <script src="globals.js"></script>
-        <script src="timer.js"></script>
         <script src="renderer/drawWebGL.js"></script>
+        <script src="timer.js"></script>
         <script src="eventHandler.js"></script>
         <script src="physics.js"></script>
         <script src="rules.js"></script>
 
+        <!-- Loader and interpreter for C++ files -->
         <script src="loader/cppLoader.js"></script>
 
         <!-- These files have to be added for the programm to work, for examples see:

@@ -21,6 +21,7 @@ var physicTimerReference;
 var drawTimerReference;
 
 var api = new SoccerAPI(Angle.DEGREE);
+var communication= new CommunicationApi();
 
 var lastLOP = -1;
 
