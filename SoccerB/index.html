@@ -2,32 +2,50 @@
 <html>
 	<head>
 		<title>RoboCup Simulation</title>
+        <link rel="stylesheet" href="lib/photon/photon.min.css">
         <link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css">
 	</head>
 	<body>
-         <table>
-            <tr>
-                <td>
-                    <canvas id="canvasField" width="900" height="672"></canvas>
-                </td>
-                <td style="padding: 20px; vertical-align: top">
-                    <input type="checkbox" id="enable0" checked> Robot 0 (Goalie Left)<br>
-                    <input type="checkbox" id="enable1" checked> Robot 1 (Striker Left)<br>
-                    <input type="checkbox" id="enable2" > Robot 2 (Striker Right)<br>
-                    <input type="checkbox" id="enable3" > Robot 3 (Goalie Right)
-                    <hr>
-                    <div style="text-align: center">
-                        <strong style="font-size: xx-large; margin-left:auto; margin-right:auto;" id="status">0 : 0</strong>
+        <div class="window">
+            <div class="window-content">
+                <div class="pane-group">
+                    <div class="pane">
+                        <div style="text-align: center;">
+                            <canvas id="canvasField" width="10" height="10"></canvas>
+                        </div>
                     </div>
-                    <hr>
-                    <button style="margin: 4px" class="btn btn-primary btn-block" type="button" onclick="timerInit()" id="startBtn">Start</button>
-                    <button style="margin: 4px" class="btn btn-primary btn-block" type="button" onclick="resetButton()">Reset</button>
-                </td>
-            </tr>
-        </table>
+                    <div class="pane-sm sidebar" style="width: 400px">
+                        <div class="padded-more">
+                            <input type="checkbox" id="enable0" checked> Robot 0 (Goalie Left)<br>
+                            <input type="checkbox" id="enable1" checked> Robot 1 (Striker Left)<br>
+                            <input type="checkbox" id="enable2" > Robot 2 (Striker Right)<br>
+                            <input type="checkbox" id="enable3" > Robot 3 (Goalie Right)<br>
+                            <hr>
+                            <div style="text-align: center">
+                                <strong style="font-size: xx-large; margin-left:auto; margin-right:auto;" id="status">
+                                    0 : 0
+                                </strong>
+                            </div>
+                            <hr>
+                            <button class="btn btn-primary btn-block" type="button" onclick="timerInit()" id="startBtn">
+                                Start
+                            </button>
+                            <button class="btn btn-primary btn-block" type="button" onclick="resetButton()">
+                                Reset
+                            </button>
+                            <hr>
+                            <button class="btn btn-primary btn-block" type="button" onclick="reloadScript()">
+                                Reload Program
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- jQuery and Bootstrap -->
         <script>window.$ = window.jQuery = require('./lib/jquery/jquery.min.js');</script>
+        <script src="lib/jquery/jquery.min.js"></script>
         <script src="lib/bootstrap/bootstrap.min.js"></script>
 
         <!-- Threejs for WebGL -->
@@ -60,7 +78,7 @@
         <!-- These files have to be added for the programm to work, for examples see:
         https://github.com/aul12/RoboCup-Simulation/blob/master/README.md#Template-->
         <script src="program/alias.js"></script>
-        <script src="program/teamLeft.js"></script>
+        <script id="scriptTeamLeft"></script>
         <script src="program/teamRight.js"></script>
 
 

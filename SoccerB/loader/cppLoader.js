@@ -8,7 +8,7 @@ String.prototype.replaceAll = function(search, replacement) {
     return target.replace(new RegExp(search, 'g'), replacement);
 };
 
-function loadCppFile(fnameSrc, fnameDst, defines) {
+function loadCppFile(fnameSrc, fnameDst, defines, callback) {
     fs.readFile(fnameSrc, 'utf8', function (err, data) {
         data = data.replaceAll("void", "function").replaceAll("inline", "");
 
@@ -27,13 +27,17 @@ function loadCppFile(fnameSrc, fnameDst, defines) {
 
         data = defines + data;
 
+        console.log(data);
+
         fs.writeFile(fnameDst, data, function (err) {
             child = exec("cpp -P -Wundef -nostdinc -Wtrigraphs -C " + fnameDst, function (error, stdout, stderr) {
                 fs.writeFile(fnameDst, stdout, function (err) {
                     if (err) {
                         return console.log(err);
                     }
-                    console.log("The file was saved!");
+                    console.log("The file loaded!");
+
+                    callback();
                 });
             });
         });

@@ -1,5 +1,5 @@
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(75, WIDTH / HEIGHT, 0.1, 1000 );
+var camera = new THREE.PerspectiveCamera(75, (WIDTH + 41) / HEIGHT, 0.1, 1000 );
 var canvas = document.getElementById("canvasField");
 var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
 var loader = new THREE.ColladaLoader();
@@ -13,7 +13,7 @@ $("#canvasField").click(function(event){
 
     var raycaster = new THREE.Raycaster();
     var mouse = new THREE.Vector2();
-    mouse.x = ( event.clientX / (WIDTH*SCALE) ) * 2 - 1;
+    mouse.x = ( (event.clientX) / ((WIDTH + 41)*SCALE) ) * 2 - 1;
     mouse.y = - ( event.clientY / (HEIGHT*SCALE) ) * 2 + 1;
     raycaster.setFromCamera(mouse, camera);
     var pos = raycaster.ray.intersectPlane(planeZ);
@@ -27,13 +27,13 @@ $("#canvasField").click(function(event){
     lackOfProgressCounter = 0;
 });
 
-renderer.setSize(WIDTH*SCALE, HEIGHT*SCALE);
+renderer.setSize((WIDTH + 41)*SCALE, HEIGHT*SCALE);
 
 renderer.setClearColor( 0xffffff, 1);
 
 camera.position.x = 0;
-camera.position.y = -100;
-camera.position.z = 100;
+camera.position.y = -90;
+camera.position.z = 90;
 
 var controls = new THREE.OrbitControls( camera, renderer.domElement );
 controls.enableDamping = true;

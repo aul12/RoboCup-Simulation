@@ -87,8 +87,6 @@ $(document).ready(function(){
 });
 
 
-
-
 function start()
 {
     robot[0] = new gameObject(20+LEFT, HEIGHT/2, ROBOT_SIZE);
@@ -116,4 +114,10 @@ function resetButton(){
     draw();
     goals_team1 = goals_team2= 0;
     $("#status").html(goals_team2+" : "+goals_team1);
+}
+
+function reloadScript(){
+    loadCppFile("SoccerB/program/spiel.hpp", "SoccerB/program/teamLeft.js" , defines, function(){
+        location.reload();
+    });
 }
