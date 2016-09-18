@@ -25,8 +25,8 @@ app.on('window-all-closed', function() {
 app.on('ready', function() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-      'web-preferences': {
-        'web-security': false,
+      'webPreferences': {
+        'webSecurity': false,
         "webgl": true
       }
   });

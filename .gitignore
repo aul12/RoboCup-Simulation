@@ -1,5 +1,3 @@
-/SoccerB/program/defines.h
-/SoccerB/program/spiel.hpp
 /SoccerB/program/teamLeft.js
 /SoccerB/program/alias.js
 /SoccerB/program/teamRight.js
@@ -8,3 +6,4 @@
 .idea/
 SoccerB/res/Thumbs.db
 /3D-Models/Thumbs.db
+/spiel.hpp

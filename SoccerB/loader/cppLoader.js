@@ -10,6 +10,7 @@ String.prototype.replaceAll = function(search, replacement) {
 
 function loadCppFile(fnameSrc, fnameDst, defines, callback) {
     fs.readFile(fnameSrc, 'utf8', function (err, data) {
+        console.log(err);
         data = data.replaceAll("void", "function").replaceAll("inline", "");
 
         while (data.indexOf("\(function\)") > -1)
@@ -31,6 +32,7 @@ function loadCppFile(fnameSrc, fnameDst, defines, callback) {
 
         fs.writeFile(fnameDst, data, function (err) {
             child = exec("cpp -P -Wundef -nostdinc -Wtrigraphs -C " + fnameDst, function (error, stdout, stderr) {
+                eval(stdout);
                 fs.writeFile(fnameDst, stdout, function (err) {
                     if (err) {
                         return console.log(err);
@@ -39,6 +41,7 @@ function loadCppFile(fnameSrc, fnameDst, defines, callback) {
 
                     callback();
                 });
+
             });
         });
     });

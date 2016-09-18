@@ -117,7 +117,7 @@ function resetButton(){
 }
 
 function reloadScript(){
-    loadCppFile("SoccerB/program/spiel.hpp", "SoccerB/program/teamLeft.js" , defines, function(){
+    loadCppFile("spiel.hpp", "SoccerB/program/teamLeft.js" , defines, function(){
         location.reload();
     });
 }

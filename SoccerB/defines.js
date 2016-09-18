@@ -7,9 +7,9 @@ var ROBOT_ENABLE = [true, true, true, true];
 var TIMER_DIFF = 1;
 
 const POV = false;
-const POVRobot = 0;
+const POVRobot = 1;
 
-const SPEED = 1;
+const SPEED = 1.3;
 const SHOOT_POWER = 1.5;
 
 const SCALE = 3.9;
