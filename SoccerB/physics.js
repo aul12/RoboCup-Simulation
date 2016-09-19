@@ -1,5 +1,5 @@
 //######################Physic-Engine#########################################
-function physics()
+function physics(deltaT)
 {
     var alpha;
     var ballInDribbler = false;
@@ -19,18 +19,18 @@ function physics()
         robot[robot_counter].y = checkNaN(robot[robot_counter].y);
 
         //Rotate the robots
-        robot[robot_counter].rotationVelocity += robot[robot_counter].rotationAcceleration;
-        robot[robot_counter].rotationVelocity *= 0.8;
-        robot[robot_counter].rotation += robot[robot_counter].rotationVelocity;
+        robot[robot_counter].rotationVelocity += (robot[robot_counter].rotationAcceleration * deltaT);
+        robot[robot_counter].rotationVelocity *= Math.pow(0.8, deltaT);
+        robot[robot_counter].rotation += (robot[robot_counter].rotationVelocity * deltaT);
 
         //Move the robots
         //F=m*a ; v'=a ; s'=v
-        robot[robot_counter].speed.x += robot[robot_counter].acceleration.x;
-        robot[robot_counter].speed.y += robot[robot_counter].acceleration.y;
-        robot[robot_counter].speed.x *= 0.4;
-        robot[robot_counter].speed.y *= 0.4;
-        robot[robot_counter].x += robot[robot_counter].speed.x;
-        robot[robot_counter].y += robot[robot_counter].speed.y;
+        robot[robot_counter].speed.x += robot[robot_counter].acceleration.x * deltaT;
+        robot[robot_counter].speed.y += robot[robot_counter].acceleration.y * deltaT;
+        robot[robot_counter].speed.x *= Math.pow(0.4, deltaT);
+        robot[robot_counter].speed.y *= Math.pow(0.4, deltaT);
+        robot[robot_counter].x += robot[robot_counter].speed.x * deltaT;
+        robot[robot_counter].y += robot[robot_counter].speed.y * deltaT;
 
         //Check Maximum Speed
         if (robot[robot_counter].speed.abs() > 1) {
@@ -91,7 +91,6 @@ function physics()
 
                     ball.moveOutOf(robot[robot_counter]);
                 }
-
                 if (robotShoot[robot_counter]) {
                     var rot = -api.currentRotation();
 
@@ -165,10 +164,10 @@ function physics()
     }
 
     //Ball Rolling
-    ball.speed.x *= 0.98;
-    ball.speed.y *= 0.98;
-    ball.x+=ball.speed.x;
-    ball.y+=ball.speed.y;
+    ball.speed.x *= Math.pow(0.99, deltaT);
+    ball.speed.y *= Math.pow(0.99, deltaT);
+    ball.x+=ball.speed.x*deltaT;
+    ball.y+=ball.speed.y*deltaT;
 
 
     if(ballInDribbler)

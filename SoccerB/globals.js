@@ -20,6 +20,8 @@ var logicTimerReference;
 var physicTimerReference;
 var drawTimerReference;
 
+var physicsTimerPerf = 0;
+
 var api = new SoccerAPI(Angle.DEGREE);
 var communication= new CommunicationApi();
 

@@ -3,6 +3,22 @@ Angle = {
     RADIAN : 0
 };
 
+Accuracy = {
+    PERFECT : 0,
+    PRECISE : 1,
+    MEDIUM  : 2,
+    LOW     : 3,
+    REALISTIC : 4
+};
+
+function stdNormalDistribution (x) {
+    return Math.pow(Math.E,-Math.pow(x,2)/2)/Math.sqrt(2*Math.PI);
+}
+
+function createNoise(precision){
+    return stdNormalDistribution(Math.random()) * precision;
+}
+
 function SoccerAPI(angle){
 
     this.robotn = 0;
@@ -13,6 +29,10 @@ function SoccerAPI(angle){
         BACK  : 3,
         LEFT  : 4
     };
+
+
+
+    this.accuracy = Accuracy.PERFECT;
 
 
     this.move = function(angle, speed) {

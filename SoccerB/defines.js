@@ -9,8 +9,8 @@ var TIMER_DIFF = 1;
 const POV = false;
 const POVRobot = 1;
 
-const SPEED = 1.3;
-const SHOOT_POWER = 1.5;
+const SPEED = 6;
+const SHOOT_POWER = 1;
 
 const SCALE = 3.9;
 

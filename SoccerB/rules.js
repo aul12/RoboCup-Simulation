@@ -160,11 +160,18 @@ function checkLackOfProgress()
     if(lackOfProgressCounter > 600)
     {
         //Look for the Spot where the ball is in the middle of all robots
-        var minDistIndex = 0;
-        var dist = new Array(NEUTRAL_POINT.length);
+        var minDistIndex = 5;
+        var dist = new Array(NEUTRAL_POINT.length +1);
+        dist[NEUTRAL_POINT.length] = 65535;
+        var robotOnLop;
 
         for(var c=0; c < NEUTRAL_POINT.length; c++)
         {
+            robotOnLop = false;
+            forEveryRobot(function (robotn) {
+                robotOnLop |= robot[robotn].distanceTo(NEUTRAL_POINT[c]) < 20;
+            });
+
             var distLeft = 0;
             var distRight = 0;
 
@@ -188,7 +195,7 @@ function checkLackOfProgress()
 
             dist[c] = Math.abs(distLeft - distRight);
 
-            if(dist[c] < dist[minDistIndex] && c != lastLOP)
+            if(dist[c] < dist[minDistIndex] && c != lastLOP && !robotOnLop)
                 minDistIndex = c;
         }
 
