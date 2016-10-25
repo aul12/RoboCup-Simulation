@@ -67,7 +67,8 @@ function logicTimerTick()
 function physicTimerTick(){
     var deltaT = process.hrtime(physicsTimerPerf)[1] / 1e6;
     physicsTimerPerf = process.hrtime();
-    physics(deltaT);
+    //physics(deltaT);
+    physics(5);
 }
 
 function drawTimerTick(){

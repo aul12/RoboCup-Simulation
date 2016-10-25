@@ -16,21 +16,23 @@ function checkGoal(){
 
     if(ball.y > GOAL_TOP && ball.y < GOAL_BOTTOM)
     {
-        if(ball.x + BALL_SIZE/2 < LEFT && ball.x + BALL_SIZE > LEFT /*&& ball.speed.x < 0*/)
+        if(ball.x - BALL_SIZE/2 > RIGHT && ball.x - BALL_SIZE < RIGHT && ball.speed.x > 0)
         {
             goals_team1++;
+            showAlert("Goal Team 1", "alert-success");
             goal = true;
         }
-        else if(ball.x - BALL_SIZE/2 > RIGHT && ball.x - BALL_SIZE < RIGHT && ball.speed.x > 0)
+        else if(ball.x + BALL_SIZE/2 < LEFT && ball.x + BALL_SIZE > LEFT /*&& ball.speed.x < 0*/)
         {
             goals_team2++;
+            showAlert("Goal Team 2", "alert-success");
             goal = true;
         }
 
         if(goal){
             clearTimers();
             draw();
-            $("#status").html(goals_team2+" : "+goals_team1);
+            $("#status").html(goals_team1+" : "+goals_team2);
         }
     }
 }
@@ -101,7 +103,7 @@ function checkDoubleDefence(){
     //Check both Teams
     if(robot[0].isInArea(LEFT, (HEIGHT - PENALTY_AREA_HEIGHT)/2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT)
         && robot[1].isInArea(LEFT, (HEIGHT - PENALTY_AREA_HEIGHT)/2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT)){
-        showAlert("Double Defence of Team 1", "alert-warning");
+        showAlert("Double Defence of Team 1", "alert-danger");
 
         //Double Defence Team Left, check which robot is further from the ball
         if(robot[0].distanceTo(ball) > robot[1].distanceTo(ball)){
@@ -116,7 +118,7 @@ function checkDoubleDefence(){
     //Check both Teams
     if(robot[2].isInArea(RIGHT-PENALTY_AREA_WIDTH, (HEIGHT- PENALTY_AREA_HEIGHT)/2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT)
         && robot[3].isInArea(RIGHT-PENALTY_AREA_WIDTH, (HEIGHT - PENALTY_AREA_HEIGHT)/2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT)){
-        showAlert("Double Defence of Team 1", "alert-warning");
+        showAlert("Double Defence of Team 1", "alert-danger");
 
         //Double Defence Team Left, check which robot is further from the ball
         if(robot[2].distanceTo(ball) > robot[3].distanceTo(ball)){
@@ -149,7 +151,14 @@ function checkLine(){
 
 
             if (out) {
-                reset_robot(robot_counter);
+                showAlert("Robot " + robot_counter + " moved out of the field", "alert-danger");
+                robotInside[robot_counter] = false;
+                robot[robot_counter].x = WIDTH/2;
+                robot[robot_counter].y = HEIGHT/2;
+                robot[robot_counter].speed.x = 0;
+                robot[robot_counter].speed.y = 0;
+                robot[robot_counter].acceleration.x = 0;
+                robot[robot_counter].acceleration.y = 0;
             }
         }
     });
@@ -228,16 +237,8 @@ function checkLackOfProgress()
         ball.acceleration.y = 0;
 
         lackOfProgressCounter = 0;
-    }
-}
 
-function reset_robot(robotn)
-{
-    robotInside[robotn] = false;
-    robot[robotn].x = WIDTH/2;
-    robot[robotn].y = HEIGHT/2;
-    robot[robotn].speed.x = 0;
-    robot[robotn].speed.y = 0;
-    robot[robotn].acceleration.x = 0;
-    robot[robotn].acceleration.y = 0;
+        showAlert("Lack of Progress", "alert-danger");
+
+    }
 }
