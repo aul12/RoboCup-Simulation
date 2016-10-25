@@ -1,6 +1,6 @@
 function checkRules(){
     //checkPushing();
-    //checkDoubleDefence();
+    checkDoubleDefence();
     checkGoal();
     checkLine();
     checkLackOfProgress();
@@ -79,36 +79,54 @@ function checkPushing(){
  referee could take this action at any time when both robots linger in their penalty area.
  */
 function checkDoubleDefence(){
-    forEveryCombination(function(robot_counter, not_robot_counter){
-        /*
-         @TODO only check Robots of same Team; check both areas
-         */
-        if(robot[ robot_counter].isInArea(LEFT, ( canvas .height- PENALTY_AREA_HEIGHT)/2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT) && robot[ not_robot_counter].isInArea(LEFT, (canvas . height- PENALTY_AREA_HEIGHT)/2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT) && robot[
-                robot_counter].isTouching(robot[
-                not_robot_counter]))
-        {
-            console.log("Double defence");
-            if(
-                robot[ robot_counter] .distanceTo(ball ) < robot[
-                    not_robot_counter]
-                    .
-                    distanceTo(
-                        ball ) )
-            {
-                robot[
-                    robot_counter]. x=ctx
-                        . canvas.
-                        width/2;
-                robot[ robot_counter ].y
-                    =ctx. canvas. height/2;
-            }
-            else
-            {
-                robot[not_robot_counter ] .x=ctx.canvas. width/2;
-                robot[not_robot_counter] . y=ctx.canvas. height/2;
+    function getClosestLOP(robot){
+        var minIndex = 0, minDistance = 1e3;
+        for(var c=1; c<NEUTRAL_POINT.length; c++){
+            if(robot.distanceTo(NEUTRAL_POINT[c]) < minDistance){
+                minIndex = c;
+                minDistance = robot.distanceTo(NEUTRAL_POINT[c]);
+                console.log(minIndex, minDistance);
             }
         }
-    });
+        return minIndex;
+    }
+
+    function moveRobotToPoint(robot, point){
+        robot.x = point.x;
+        robot.y = point.y;
+        robot.speed.x = robot.speed.y = 0;
+        robot.acceleration.x = robot.acceleration.y = 0;
+    }
+
+    //Check both Teams
+    if(robot[0].isInArea(LEFT, (HEIGHT - PENALTY_AREA_HEIGHT)/2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT)
+        && robot[1].isInArea(LEFT, (HEIGHT - PENALTY_AREA_HEIGHT)/2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT)){
+        showAlert("Double Defence of Team 1", "alert-warning");
+
+        //Double Defence Team Left, check which robot is further from the ball
+        if(robot[0].distanceTo(ball) > robot[1].distanceTo(ball)){
+            //Move Robot 0
+            moveRobotToPoint(robot[0], NEUTRAL_POINT[getClosestLOP(robot[0])]);
+        }else{
+            //Move Robot 1
+            moveRobotToPoint(robot[1], NEUTRAL_POINT[getClosestLOP(robot[1])]);
+        }
+    }
+
+    //Check both Teams
+    if(robot[2].isInArea(RIGHT-PENALTY_AREA_WIDTH, (HEIGHT- PENALTY_AREA_HEIGHT)/2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT)
+        && robot[3].isInArea(RIGHT-PENALTY_AREA_WIDTH, (HEIGHT - PENALTY_AREA_HEIGHT)/2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT)){
+        showAlert("Double Defence of Team 1", "alert-warning");
+
+        //Double Defence Team Left, check which robot is further from the ball
+        if(robot[2].distanceTo(ball) > robot[3].distanceTo(ball)){
+            //Move Robot 2
+            moveRobotToPoint(robot[2], NEUTRAL_POINT[getClosestLOP(robot[2])]);
+        }else{
+            //Move Robot 3
+            moveRobotToPoint(robot[2], NEUTRAL_POINT[getClosestLOP(robot[2])]);
+        }
+    }
 }
 
 /*
