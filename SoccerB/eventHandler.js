@@ -89,10 +89,10 @@ $(document).ready(function(){
 
 function start()
 {
-    robot[0] = new gameObject(20+LEFT, HEIGHT/2, ROBOT_SIZE);
-    robot[1] = new gameObject((WIDTH/2)-40, HEIGHT/2, ROBOT_SIZE);
-    robot[2] = new gameObject((WIDTH/2)+40, HEIGHT/2, ROBOT_SIZE);
-    robot[3] = new gameObject(RIGHT-20, HEIGHT/2, ROBOT_SIZE);
+    robot[0] = new GameObject(20+LEFT, HEIGHT/2, ROBOT_SIZE);
+    robot[1] = new GameObject((WIDTH/2)-40, HEIGHT/2, ROBOT_SIZE);
+    robot[2] = new GameObject((WIDTH/2)+40, HEIGHT/2, ROBOT_SIZE);
+    robot[3] = new GameObject(RIGHT-20, HEIGHT/2, ROBOT_SIZE);
 
     ball.x = WIDTH /2;
     ball.y = HEIGHT /2;
@@ -112,7 +112,7 @@ function start()
 function resetButton(){
     start();
     draw();
-    goals_team1 = goals_team2= 0;
+    goalsTeam1 = goalsTeam2= 0;
     $("#status").html(goals_team2+" : "+goals_team1);
 }
 

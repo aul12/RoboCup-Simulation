@@ -71,9 +71,6 @@ function physicTimerTick(){
     physics(5);
 }
 
-function drawTimerTick(){
-    draw();
-}
 
 function clearTimers(){
     try {
@@ -104,8 +101,8 @@ function timerInit()
         clearTimers();
 
         logicTimerReference = setInterval(logicTimerTick,5);
-        physicTimerReference = setInterval(physicTimerTick, 10);
-        drawTimerReference = setInterval(drawTimerTick, 50);
+        physicTimerReference = setInterval(physicTimerTick, 5);
+        drawTimerReference = setInterval(draw, 50);
 
         physicsTimerPerf = process.hrtime();
 

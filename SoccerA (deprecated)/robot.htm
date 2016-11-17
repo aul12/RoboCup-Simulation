@@ -237,10 +237,7 @@ Todo:
                 robot_2_y-=40-delta_y;
             }
 
-            if((Math.abs(alt_ball_x-ball_x)+Math.abs(alt_ball_y-ball_y))<0.1)                                           //Lack of Progress
-                lack_of_progress=true;
-            else
-                lack_of_progress=false;
+            lack_of_progress = (Math.abs(alt_ball_x - ball_x) + Math.abs(alt_ball_y - ball_y)) < 0.1;
 			
 		}
 

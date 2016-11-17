@@ -18,13 +18,13 @@ function checkGoal(){
     {
         if(ball.x - BALL_SIZE/2 > RIGHT && ball.x - BALL_SIZE < RIGHT && ball.speed.x > 0)
         {
-            goals_team1++;
+            goalsTeam1++;
             showAlert("Goal Team 1", "alert-success");
             goal = true;
         }
         else if(ball.x + BALL_SIZE/2 < LEFT && ball.x + BALL_SIZE > LEFT /*&& ball.speed.x < 0*/)
         {
-            goals_team2++;
+            goalsTeam2++;
             showAlert("Goal Team 2", "alert-success");
             goal = true;
         }
@@ -32,7 +32,7 @@ function checkGoal(){
         if(goal){
             clearTimers();
             draw();
-            $("#status").html(goals_team1+" : "+goals_team2);
+            $("#status").html(goalsTeam1+" : "+goalsTeam2);
         }
     }
 }

@@ -1,4 +1,4 @@
-function gameObject(x,y,radius) {
+function GameObject(x,y,radius) {
     this.x = x;
     this.y = y;
 
