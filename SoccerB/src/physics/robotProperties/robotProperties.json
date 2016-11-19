@@ -1,0 +1,23 @@
+{
+  "motors":
+  [
+    {
+      "angle": 45,
+      "power": 17
+    },
+    {
+      "angle": 135,
+      "power": 17
+    },
+    {
+      "angle": 225,
+      "power": 17
+    },
+    {
+      "angle": 315,
+      "power": 17
+    }
+  ],
+  "mass": 2.4,
+  "radius": 21
+}

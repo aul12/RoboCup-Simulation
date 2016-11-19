@@ -9,20 +9,20 @@ function checkRules(){
 
 /*
  A goal is scored when the ball strikes or touches the back wall of the goal. Goals scored either by an attacking
- or defending robot have the same end result: they give one goal to the team on the opposite side
+ or defending robot have the same end result: they score one goal to the team on the opposite side
  */
 function checkGoal(){
     var goal = false;
 
     if(ball.y > GOAL_TOP && ball.y < GOAL_BOTTOM)
     {
-        if(ball.x - BALL_SIZE/2 > RIGHT && ball.x - BALL_SIZE < RIGHT && ball.speed.x > 0)
+        if(ball.x - BALL_SIZE/2 > RIGHT && ball.x - BALL_SIZE < RIGHT && ball.v.x > 0)
         {
             goalsTeam1++;
             showAlert("Goal Team 1", "alert-success");
             goal = true;
         }
-        else if(ball.x + BALL_SIZE/2 < LEFT && ball.x + BALL_SIZE > LEFT /*&& ball.speed.x < 0*/)
+        else if(ball.x + BALL_SIZE/2 < LEFT && ball.x + BALL_SIZE > LEFT && ball.v.x < 0)
         {
             goalsTeam2++;
             showAlert("Goal Team 2", "alert-success");
@@ -87,7 +87,6 @@ function checkDoubleDefence(){
             if(robot.distanceTo(NEUTRAL_POINT[c]) < minDistance){
                 minIndex = c;
                 minDistance = robot.distanceTo(NEUTRAL_POINT[c]);
-                console.log(minIndex, minDistance);
             }
         }
         return minIndex;
@@ -96,8 +95,8 @@ function checkDoubleDefence(){
     function moveRobotToPoint(robot, point){
         robot.x = point.x;
         robot.y = point.y;
-        robot.speed.x = robot.speed.y = 0;
-        robot.acceleration.x = robot.acceleration.y = 0;
+        robot.v.x = robot.v.y = 0;
+        robot.a.x = robot.a.y = 0;
     }
 
     //Check both Teams
@@ -155,10 +154,10 @@ function checkLine(){
                 robotInside[robot_counter] = false;
                 robot[robot_counter].x = WIDTH/2;
                 robot[robot_counter].y = HEIGHT/2;
-                robot[robot_counter].speed.x = 0;
-                robot[robot_counter].speed.y = 0;
-                robot[robot_counter].acceleration.x = 0;
-                robot[robot_counter].acceleration.y = 0;
+                robot[robot_counter].v.x = 0;
+                robot[robot_counter].v.y = 0;
+                robot[robot_counter].a.x = 0;
+                robot[robot_counter].a.y = 0;
             }
         }
     });
@@ -176,7 +175,7 @@ function checkLine(){
 function checkLackOfProgress()
 {
     //Check if ball is not moving
-    if(ball.speed.x < 0.00001 && ball.speed.y < 0.00001){
+    if(ball.v.x < 0.00001 && ball.v.y < 0.00001){
         lackOfProgressCounter++;
     }else{
         lackOfProgressCounter = 0;
@@ -189,14 +188,14 @@ function checkLackOfProgress()
         //Look for the Spot where the ball is in the middle of all robots
         var minDistIndex = 5;
         var dist = new Array(NEUTRAL_POINT.length +1);
-        dist[NEUTRAL_POINT.length] = 65535;
+        dist[minDistIndex] = 65535;
         var robotOnLop;
 
         for(var c=0; c < NEUTRAL_POINT.length; c++)
         {
             robotOnLop = false;
             forEveryRobot(function (robotn) {
-                robotOnLop |= robot[robotn].distanceTo(NEUTRAL_POINT[c]) < 20;
+                robotOnLop |= robot[robotn].distanceTo(NEUTRAL_POINT[c]) < 0.20;
             });
 
             var distLeft = 0;
@@ -231,10 +230,10 @@ function checkLackOfProgress()
         ball.x = NEUTRAL_POINT[minDistIndex].x;
         ball.y = NEUTRAL_POINT[minDistIndex].y;
 
-        ball.speed.x = 0;
-        ball.speed.y = 0;
-        ball.acceleration.x = 0;
-        ball.acceleration.y = 0;
+        ball.v.x = 0;
+        ball.v.y = 0;
+        ball.a.x = 0;
+        ball.a.y = 0;
 
         lackOfProgressCounter = 0;
 

@@ -1,6 +1,7 @@
 //######################Main#########################################
 function logicTimerTick()
 {
+
     forEveryRobot(function(robot_counter){
         if(robotInside[robot_counter])
         {

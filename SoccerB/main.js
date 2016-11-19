@@ -173,7 +173,7 @@ app.on('ready', function() {
   mainWindow.setMenu(menu);
 
   // and load the index.html of the app.
-  mainWindow.loadURL('file://' + __dirname + '/index.html');
+  mainWindow.loadURL('file://' + __dirname + '/src/index.html');
 
   // Open the DevTools.
   //mainWindow.webContents.openDevTools();

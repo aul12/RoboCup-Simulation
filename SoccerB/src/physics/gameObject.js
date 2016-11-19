@@ -2,15 +2,14 @@ function GameObject(x,y,radius) {
     this.x = x;
     this.y = y;
 
-    this.speed = new Vector(0,0);
-    this.acceleration = new Vector(0,0);
+    this.v = new Vector(0,0);
+    this.a = new Vector(0,0);
 
     this.rotation = 0;
     this.rotationVelocity = 0;
     this.rotationAcceleration = 0;
 
     this.radius = radius;
-
 
     this.distanceTo = function(object){
         var delta_x = this.x-object.x;
@@ -53,13 +52,4 @@ function GameObject(x,y,radius) {
         }
         return false;
     };
-}
-
-function Vector(x,y){
-    this.x = x;
-    this.y = y;
-
-    this.abs = function(){
-        return Math.sqrt(this.x*this.x + this.y*this.y);
-    }
 }

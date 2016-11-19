@@ -1,6 +1,6 @@
-/SoccerB/program/teamLeft.js
-/SoccerB/program/alias.js
-/SoccerB/program/teamRight.js
+/SoccerB/src/program/teamLeft.js
+/SoccerB/src/program/alias.js
+/SoccerB/src/program/teamRight.js
 *.xml
 *.iml
 .idea/

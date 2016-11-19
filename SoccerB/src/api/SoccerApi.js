@@ -51,8 +51,10 @@ function SoccerAPI(angle){
         else if(speed < -SPEED)
             speed = -SPEED;
 
-        robot[this.robotn].acceleration.x = (Math.cos(angle)*speed + robot[this.robotn].acceleration.x*39)/40;
-        robot[this.robotn].acceleration.y= (Math.sin(angle)*speed+ robot[this.robotn].acceleration.y*39)/40;
+        robot[this.robotn].a.x = Math.cos(angle)*speed;
+        robot[this.robotn].a.y = Math.sin(angle)*speed;
+
+        //@TODO fix Physics
 
     };
 
@@ -60,12 +62,12 @@ function SoccerAPI(angle){
         var xdiff = this.realDistance(this.distance.RIGHT)- xPos;
         var ydiff = this.realDistance(this.distance.BACK) - yPos;
 
-        if(Math.abs(xdiff) < 2 && Math.abs(ydiff) < 2){
+        if(Math.abs(xdiff) < 0.02 && Math.abs(ydiff) < 0.02){
             this.move(0, 0);
         }else{
             var angle = Math.atan2(xdiff, -ydiff)*180/Math.PI;
 
-            var dist = Math.sqrt(xdiff*xdiff + ydiff*ydiff) / 40;
+            var dist = Math.sqrt(xdiff*xdiff + ydiff*ydiff) / 0.40;
 
             if(dist>1)
                 dist = 1;
@@ -98,19 +100,19 @@ function SoccerAPI(angle){
 
 
 
-    this.ballDistanceCM = function() {
-        var delta_x = ball.x-robot[this.robotn].x;
-        var delta_y = ball.y-robot[this.robotn].y;
+    this.ballDistance = function() {
+        var delta_x = (ball.x-robot[this.robotn].x)*100;
+        var delta_y = (ball.y-robot[this.robotn].y)*100;
 
-        var dist = Math.sqrt(delta_x*delta_x+delta_y*delta_y)-ROBOT_SIZE+BALL_SIZE;
+        var dist = (Math.sqrt(delta_x*delta_x+delta_y*delta_y))-ROBOT_SIZE*100+BALL_SIZE*100;
 
         if(dist < 1)
             dist = 1;
-        return dist-ROBOT_SIZE;
+        return (dist/100)-ROBOT_SIZE;
     };
 
     this.ballIntensity = function(){
-        var ints = Math.log((this.ballDistanceCM()+10)/150) * -2000;
+        var ints = Math.log(((this.ballDistance()*100)+10)/150) * -2000;
         if(ints<0)
             ints = 0;
 
@@ -159,24 +161,24 @@ function SoccerAPI(angle){
         {
             case this.distance.FRONT:
             case this.distance.BACK:
-                if(this.distanceToWall(this.distance.LEFT) > 30 && this.distanceToWall(this.distance.RIGHT) > 30)
-                    dist -= 5;
+                if(this.distanceToWall(this.distance.LEFT) > 0.30 && this.distanceToWall(this.distance.RIGHT) > 0.30)
+                    dist -= 0.05;
                 break;
             case this.distance.RIGHT:
-                if(this.distanceToWall(this.distance.BACK) < 50 || this.distanceToWall(this.distance.FRONT) < 50){
-                    if(this.distanceToWall(this.distance.RIGHT) > 80)
-                        dist -= 60;
+                if(this.distanceToWall(this.distance.BACK) < 0.50 || this.distanceToWall(this.distance.FRONT) < 0.50){
+                    if(this.distanceToWall(this.distance.RIGHT) > 0.80)
+                        dist -= 0.60;
                 }
                 break;
             case this.distance.LEFT:
-                if(this.distanceToWall(this.distance.BACK) < 50 || this.distanceToWall(this.distance.FRONT) < 50){
-                    if(this.distanceToWall(this.distance.LEFT) > 80)
-                        dist -= 60;
+                if(this.distanceToWall(this.distance.BACK) < 0.50 || this.distanceToWall(this.distance.FRONT) < 0.50){
+                    if(this.distanceToWall(this.distance.LEFT) > 0.80)
+                        dist -= 0.60;
                 }
                 break;
         }
 
-        return dist + Math.random() * 8 - 4;
+        return dist; //+ Math.random() * 0.8 - 0.4; @TODO Fix noise generation
     };
 
     this.distanceToWall = function(direction) {
@@ -212,7 +214,7 @@ function SoccerAPI(angle){
     };
 
     this.ballInDribbler = function() {
-        if (this.ballDistanceCM() < 0){
+        if (this.ballDistance() < 0){
             var diff = this.ballAngle() % 360;
 
             if(diff > 180)

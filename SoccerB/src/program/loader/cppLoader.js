@@ -8,7 +8,15 @@ String.prototype.replaceAll = function(search, replacement) {
     return target.replace(new RegExp(search, 'g'), replacement);
 };
 
-function loadCppFile(fnameSrc, fnameDst, defines, callback) {
+function loadFile(fnameSrc, fnameDst, defines) {
+    reloadFile(fnameSrc, fnameDst, defines);
+    fs.watchFile(fnameSrc, function(curr, prev){
+        console.log("file changed");
+        reloadFile(fnameSrc, fnameDst, defines);
+    });
+}
+
+function reloadFile(fnameSrc, fnameDst, defines) {
     fs.readFile(fnameSrc, 'utf8', function (err, data) {
         data = data.replaceAll("void", "function").replaceAll("inline", "");
 
@@ -31,8 +39,6 @@ function loadCppFile(fnameSrc, fnameDst, defines, callback) {
                     if (err) {
                         return console.log(err);
                     }
-
-                    callback();
                 });
 
             });

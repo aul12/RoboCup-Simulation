@@ -100,8 +100,8 @@ $("#canvasField").click(function(evt){
     ball.y = HEIGHT - (p.top / SCALE);
 
 
-    ball.speed.x=0;
-    ball.speed.y=0;
+    ball.v.x=0;
+    ball.v.y=0;
 
     lackOfProgressCounter = 0;
 });

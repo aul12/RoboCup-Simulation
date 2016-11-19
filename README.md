@@ -48,28 +48,6 @@ to minify the program before compiling add
 --asar
 ``` 
 
-## Rendering Engine
-You have the choice between two rendering engines:
-### Canvas
-The canvas renderer is a normal 2D canvas based algorithm. It should work without flaws, but doesn't support features like zooming and panning. On the other hand it uses much less resources and should run on every PC at a high frame rate.
-### WebGL
-The WebGL renderer is the renderer of choice, it is fully 3D and the angle and position of the camera can be changed with the mouse. It uses real models of the objects and is quite realistic. The only problem is that the graphics needs much resources because of antialiasing, that means if your computer is slower you're better of with the canvas renderer.
-
-### Changing the rendering engine
-The rendering engines are fully compatible you can choose which one to use by including the appropriate file at the end of ```index.html```
-
-To use WebGL:
-```html
-<!--<script src="renderer/drawCanvas.js"></script>-->
-<script src="renderer/drawWebGL.js"></script>
-```
-
-to use Canvas
-```html
-<script src="renderer/drawCanvas.js"></script>
-<!--<script src="renderer/drawWebGL.js"></script>-->
-```
-
 ## Keyboard Shortcuts
 <kbd>0</kbd> Toggle Robot 0
 
@@ -166,7 +144,7 @@ function initAlias(){
     var defines = "#define DEBUG true\n"+
 
     //Load the original C++ code of your robot (see the Chapter "Loaders" for more informations)
-    loadCppFile("SoccerB/program/originalCode.cpp", "SoccerB/program/teamLeft.js" , defines);
+    loadFile("SoccerB/program/originalCode.cpp", "SoccerB/program/teamLeft.js" , defines);
 }
 
 //This function is called before your logic
@@ -203,7 +181,7 @@ The C++ loader can load C and C++ code and translate it into javascript code. It
 
 ##### Example
 ```javascript
-loadCppFile("SoccerB/program/originalCode.cpp", "SoccerB/program/teamLeft.js" , "#define DEBUG true");
+loadFile("SoccerB/program/originalCode.cpp", "SoccerB/program/teamLeft.js" , "#define DEBUG true");
 ```
 
 
@@ -260,9 +238,9 @@ Get the intensity of the ball. Comparable to a real analog IR-Sensor (aka TSOP).
 ___
 
 ```javascript
-api.ballDistanceCM();
+api.ballDistance();
 ```  
-Get the distance in centimeters of the robot to the ball. Distance is from the border of the robot to the border of the ball. This means if the robot touches the ball the distance is zero.
+Get the distance in meters of the robot to the ball. Distance is from the border of the robot to the border of the ball. This means if the robot touches the ball the distance is zero.
 
 ___ 
 
