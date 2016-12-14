@@ -1,0 +1,6 @@
+{
+  "mass": 0.095,
+  "radius": 0.037,
+  "rollingFriction": 0.01,
+  "staticFriction": 0.1
+}

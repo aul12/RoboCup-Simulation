@@ -1,0 +1,42 @@
+{
+  "mass": 2.4,
+  "radius": 0.11,
+  "rollingFriction": 0.02,
+  "staticFriction": 0.5,
+
+  "motors":
+  [
+    {
+      "angle": 0.25,
+      "power": 17,
+      "torque": 0.441,
+      "maxRPM": 476.2,
+      "status": 0
+    },
+    {
+      "angle": 0.75,
+      "power": 17,
+      "torque": 0.441,
+      "maxRPM": 476.2,
+      "status": 0
+    },
+    {
+      "angle": 1.25,
+      "power": 17,
+      "torque": 0.441,
+      "maxRPM": 476.2,
+      "status": 0
+    },
+    {
+      "angle": 1.75,
+      "power": 17,
+      "torque": 0.441,
+      "maxRPM": 476.2,
+      "status": 0
+    }
+  ],
+  "capturingAngle": 15,
+  "wheelSize": 0.07
+
+
+}

@@ -87,21 +87,28 @@ $(document).ready(function(){
 
 function start()
 {
-    robot[0] = new GameObject(0.20+LEFT, HEIGHT/2, ROBOT_SIZE);
-    robot[1] = new GameObject((WIDTH/2)-0.40, HEIGHT/2, ROBOT_SIZE);
-    robot[2] = new GameObject((WIDTH/2)+0.40, HEIGHT/2, ROBOT_SIZE);
-    robot[3] = new GameObject(RIGHT-0.20, HEIGHT/2, ROBOT_SIZE);
+    robot[0] = new GameObject(0.20+LEFT, HEIGHT/2);
+    robot[1] = new GameObject((WIDTH/2)-0.40, HEIGHT/2);
+    robot[2] = new GameObject((WIDTH/2)+0.40, HEIGHT/2);
+    robot[3] = new GameObject(RIGHT-0.20, HEIGHT/2);
 
     ball.x = WIDTH /2;
     ball.y = HEIGHT /2;
     ball.v.x = 0;
     ball.v.y = 0;
+    $.get("../physicalProperties/ballProperties.json", function (data) {
+        ball.props = JSON.parse(data);
+    });
 
-    forEveryRobot(function(robot_counter){
-        robot[robot_counter].v.x = 0;
-        robot[robot_counter].v.y = 0;
-        robot[robot_counter].a.x = 0;
-        robot[robot_counter].a.y = 0;
+    forEveryRobot(function(robotCounter){
+        robot[robotCounter].v.x = 0;
+        robot[robotCounter].v.y = 0;
+        robot[robotCounter].a.x = 0;
+        robot[robotCounter].a.y = 0;
+
+        $.get("../physicalProperties/robotProperties.json", function (data) {
+             robot[robotCounter].props = JSON.parse(data);
+        });
     });
 
     lackOfProgressCounter = 0;
@@ -116,10 +123,4 @@ function resetButton(){
     draw();
     goalsTeam1 = goalsTeam2= 0;
     $("#status").html(goals_team2+" : "+goals_team1);
-}
-
-function reloadScript(){
-    loadCppFile("spiel.hpp", "SoccerB/program/teamLeft.js" , defines, function(){
-        location.reload();
-    });
 }

@@ -1,11 +1,6 @@
-var ballIntens, ball_Winkel, ball_WinkelR;
-var LICHTSCHRANKE, TRICKSHOOT_ANGLE, ROBO;
-
-var US_pos = [2];
-
 var soll_phi = 0;
 
-var phi_jetzt, tor_winkel;
+var US_pos = [3];
 
 var _communicationData = [0,0,0,0];
 
@@ -37,9 +32,7 @@ function Schuss(){
 
 var ballda, schuss;
 
-const defines = "#define ROBO 0\n"+
-    "#define _PIXIE\n"+
-    "#define _SCHUSS\n";
+const defines = "#define _SIMULATION";
 
 function initAlias(){
 	ballda = new Ballda();
@@ -49,18 +42,13 @@ function initAlias(){
 }
 
 function setAlias(){
-	LICHTSCHRANKE = api.ballInDribbler();
-	TRICKSHOOT_ANGLE = 35;
-	ballIntens = api.ballIntensity();
-	ball_Winkel = ball_WinkelR = api.ballAngle();
-	US_pos[0] = api.distanceToWall(api.distance.RIGHT)*100;
-	US_pos[1] = api.distanceToWall(api.distance.BACK)*100;
-	ROBO = 0;
-	phi_jetzt = api.currentRotation();
     soll_phi = 0;
-	tor_winkel = api.goalAngle();
 
     communicationData = _communicationData[api.robotn];
+
+    US_pos[0] = (api.distanceToWall(api.distance.RIGHT)*100);
+    US_pos[1] = (api.distanceToWall(api.distance.BACK)*100);
+    US_pos[2] = (api.distanceToWall(api.distance.LEFT)*100);
 
     communication.registerReceiver(function(byte){
         _communicationData[communication.robotReceiver] = byte;
@@ -69,9 +57,9 @@ function setAlias(){
 
 function  getAlias(){
 	//PID
-	const P = 0.005/TIMER_DIFF, I = 0/TIMER_DIFF, D = 0.4/TIMER_DIFF;
+	const P = 0.005, I = 0, D = 0.4;
 
-    api.rotate((soll_phi-phi_jetzt) * P - api.rotationVelocity() * D);
+    api.rotate((soll_phi-api.currentRotation()) * P - api.omega() * D);
 }
 
 function FahrtrichtungB(angle, speed){
@@ -85,7 +73,7 @@ function Fahrtrichtung_XY(x,y){
 
 function goalieLeft(){
 	if (api.onLine())
-		api.move(api.lineAngle() + 180 - phi_jetzt, SPEED);
+		api.move(api.lineAngle() + 180 - api.currentRotation(), SPEED);
 	else
 		torwartB();
 }
@@ -93,15 +81,12 @@ function goalieLeft(){
 
 function strikerLeft(){
 	if (api.onLine())
-		api.move(api.lineAngle() + 180 - phi_jetzt, SPEED);
+		api.move(api.lineAngle() + 180 - api.currentRotation(), SPEED);
 	else
 		spielB2();
 }
 
 
-/**
- * @return {number}
- */
 function BETRAG(val){
 	return val>=0?val:-val;
 }

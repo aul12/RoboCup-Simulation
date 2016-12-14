@@ -70,7 +70,7 @@ loader.load('../res/GoalYellow.dae', function (result) {
     goalYellowMesh = result.scene;
     goalYellowMesh.position.set(0.30 - WIDTH/2, 0.605 - HEIGHT/2, 0);
     goalYellowMesh.scale.set(0.0254, 0.0254, 0.0254);
-    goalYellowMesh.rotation.z = Math.PI * 0.5;
+    goalYellowMesh.phi.z = Math.PI * 0.5;
     goalYellowMesh.visible = true;
     scene.add(goalYellowMesh);
 });
@@ -78,7 +78,7 @@ loader.load('../res/GoalBlue.dae', function (result) {
     goalBlueMesh = result.scene;
     goalBlueMesh.position.set(WIDTH-0.30 - WIDTH/2, 1.205 - HEIGHT/2, 0);
     goalBlueMesh.scale.set(0.0254, 0.0254, 0.0254);
-    goalBlueMesh.rotation.z = Math.PI * 1.5;
+    goalBlueMesh.phi.z = Math.PI * 1.5;
     goalBlueMesh.visible = true;
     scene.add(goalBlueMesh);
 });
@@ -127,9 +127,9 @@ function render() {
             robotMesh[c].position.x = robot[c].x - WIDTH / 2;
             robotMesh[c].position.y = robot[c].y - HEIGHT / 2;
             if(c<2)
-                robotMesh[c].rotation.z = robot[c].rotation / 180 * Math.PI;
+                robotMesh[c].phi.z = robot[c].phi / 180 * Math.PI;
             else
-                robotMesh[c].rotation.z = (robot[c].rotation / 180 * Math.PI) + Math.PI;
+                robotMesh[c].phi.z = (robot[c].phi / 180 * Math.PI) + Math.PI;
         }else{
             robotMesh[c].visible = false;
         }
@@ -140,21 +140,9 @@ function render() {
 
     if(running){
 
-        ballMesh.rotation.y = ball.x / 6 + ball.rotation;
-        ballMesh.rotation.z = ball.y / 6 + ball.rotation;
+        ballMesh.phi.y = ball.x / 6 + ball.phi;
+        ballMesh.phi.z = ball.y / 6 + ball.phi;
     }
-
-    if(POV){
-         camera.position.x = robotMesh[POVRobot].position.x + (POVRobot>=2?-4:4);
-         camera.position.y = robotMesh[POVRobot].position.y;
-         camera.position.z = 20;
-
-
-         camera.rotation.x = Math.PI/2;
-         camera.rotation.y = -Math.PI/2 + robotMesh[POVRobot].rotation.z;
-         camera.rotation.z = 0;
-    }
-
 
     renderer.render( scene, camera );
 }

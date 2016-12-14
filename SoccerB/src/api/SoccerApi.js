@@ -11,13 +11,6 @@ Accuracy = {
     REALISTIC : 4
 };
 
-function stdNormalDistribution (x) {
-    return Math.pow(Math.E,-Math.pow(x,2)/2)/Math.sqrt(2*Math.PI);
-}
-
-function createNoise(precision){
-    return stdNormalDistribution(Math.random()) * precision;
-}
 
 function SoccerAPI(angle){
 
@@ -31,12 +24,20 @@ function SoccerAPI(angle){
     };
 
 
-
     this.accuracy = Accuracy.PERFECT;
 
+    this.motorPower = function (motorID, power) {
+        if(Math.abs(power)>1)
+            power /= Math.abs(power);
 
+        if(motorID >= robot[this.robotn].props.motors.length)
+            return -1;
+        else
+            return robot[this.robotn].props.motors[motorID].status = power;
+    };
+
+    //@Deprecated
     this.move = function(angle, speed) {
-
         if(this.degree)
             angle=angle/180*Math.PI;
         if(this.robotn>=2) {
@@ -44,7 +45,7 @@ function SoccerAPI(angle){
             angle *= -1;
         }
 
-        angle += robot[this.robotn].rotation /180 * Math.PI;
+        angle += robot[this.robotn].phi /180 * Math.PI;
 
         if(speed > SPEED)
             speed = SPEED;
@@ -77,6 +78,10 @@ function SoccerAPI(angle){
     };
 
     this.ballAngle = function() {
+        return this.ballAngleAbsolute() + this.currentRotation();
+    };
+
+    this.ballAngleAbsolute = function () {
         var delta_x = ball.x-robot[this.robotn].x;
         var delta_y = ball.y-robot[this.robotn].y;
         var angle=Math.atan2(delta_y, delta_x);
@@ -93,8 +98,6 @@ function SoccerAPI(angle){
         if(this.degree)
             angle=angle*180/Math.PI;
 
-        angle += this.currentRotation();
-
         return angle;
     };
 
@@ -104,11 +107,11 @@ function SoccerAPI(angle){
         var delta_x = (ball.x-robot[this.robotn].x)*100;
         var delta_y = (ball.y-robot[this.robotn].y)*100;
 
-        var dist = (Math.sqrt(delta_x*delta_x+delta_y*delta_y))-ROBOT_SIZE*100+BALL_SIZE*100;
+        var dist = (Math.sqrt(delta_x*delta_x+delta_y*delta_y))-robot[this.robotn].props.radius*100+ball.props.radius*2*100;
 
         if(dist < 1)
             dist = 1;
-        return (dist/100)-ROBOT_SIZE;
+        return (dist/100)-robot[this.robotn].props.radius;
     };
 
     this.ballIntensity = function(){
@@ -120,26 +123,26 @@ function SoccerAPI(angle){
     };
 
     this.lineAngle = function() {
-        if ((robot[this.robotn].x - ROBOT_SIZE) <= LEFT)
+        if ((robot[this.robotn].x - robot[this.robotn].props.radius) <= LEFT)
             return this.robotn>=2?0:180;
-        else if ((robot[this.robotn].x + ROBOT_SIZE) >= RIGHT)
+        else if ((robot[this.robotn].x + robot[this.robotn].props.radius) >= RIGHT)
             return this.robotn>=2?180:0;
-        else if ((robot[this.robotn].y - ROBOT_SIZE) <= TOP)
+        else if ((robot[this.robotn].y - robot[this.robotn].props.radius) <= TOP)
             return 270;
-        else if ((robot[this.robotn].y + ROBOT_SIZE) >= BOTTOM)
+        else if ((robot[this.robotn].y + robot[this.robotn].props.radius) >= BOTTOM)
             return 90;
 
         return 0;
     };
 
     this.onLine = function(){
-        if ((robot[this.robotn].x - ROBOT_SIZE) <= LEFT)
+        if ((robot[this.robotn].x - robot[this.robotn].props.radius) <= LEFT)
             return true;
-        else if ((robot[this.robotn].x + ROBOT_SIZE) >= RIGHT)
+        else if ((robot[this.robotn].x + robot[this.robotn].props.radius) >= RIGHT)
             return true;
-        else if ((robot[this.robotn].y - ROBOT_SIZE) <= TOP)
+        else if ((robot[this.robotn].y - robot[this.robotn].props.radius) <= TOP)
             return true;
-        else if ((robot[this.robotn].y + ROBOT_SIZE) >= BOTTOM)
+        else if ((robot[this.robotn].y + robot[this.robotn].props.radius) >= BOTTOM)
             return true;
         else
             return false;
@@ -221,18 +224,18 @@ function SoccerAPI(angle){
                 diff -= 360;
 
             //Ball in the Front
-            if(diff < RECEPTION_ANGLE)
+            if(diff < robot[this.robotn].props.capturingAngle)
                 return true;
         }
         return false;
     };
 
     this.rotate = function(speed) {
-        robot[this.robotn].rotationAcceleration = -speed;
+        robot[this.robotn].alpha = -speed;
     };
 
     this.currentRotation = function() {
-        var angle = robot[this.robotn].rotation % 360;
+        var angle = robot[this.robotn].phi % 360;
 
 
         if(angle > 180)
@@ -242,8 +245,8 @@ function SoccerAPI(angle){
         return this.degree==Angle.DEGREE?(-angle):(-angle/180*Math.PI);
     };
 
-    this.rotationVelocity = function() {
-        return -robot[this.robotn].rotationVelocity;
+    this.omega = function() {
+        return -robot[this.robotn].omega;
     };
 
     this.goalAngle = function() {

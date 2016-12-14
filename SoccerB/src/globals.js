@@ -5,7 +5,7 @@ var robotOutTimer = [0,0,0,0];
 var robotDribblerEnabled = new Array(4);
 var robotShoot= new Array(4);
 
-var ball = new GameObject(WIDTH/2, HEIGHT/2, BALL_SIZE/2);
+var ball = new GameObject(WIDTH/2, HEIGHT/2);
 
 var goalsTeam1 = 0, goalsTeam2 = 0;
 

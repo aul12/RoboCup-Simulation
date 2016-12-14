@@ -86,7 +86,7 @@ THREE.RenderableSprite = function () {
 	this.y = 0;
 	this.z = 0;
 
-	this.rotation = 0;
+	this.phi = 0;
 	this.scale = new THREE.Vector2();
 
 	this.material = null;
@@ -716,7 +716,7 @@ THREE.Projector = function () {
 					_sprite.renderOrder = object.renderOrder;
 					_sprite.object = object;
 
-					_sprite.rotation = object.rotation;
+					_sprite.phi = object.phi;
 
 					_sprite.scale.x = object.scale.x * Math.abs( _sprite.x - ( _vector4.x + camera.projectionMatrix.elements[ 0 ] ) / ( _vector4.w + camera.projectionMatrix.elements[ 12 ] ) );
 					_sprite.scale.y = object.scale.y * Math.abs( _sprite.y - ( _vector4.y + camera.projectionMatrix.elements[ 5 ] ) / ( _vector4.w + camera.projectionMatrix.elements[ 13 ] ) );

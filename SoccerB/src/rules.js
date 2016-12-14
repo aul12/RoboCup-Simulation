@@ -16,13 +16,13 @@ function checkGoal(){
 
     if(ball.y > GOAL_TOP && ball.y < GOAL_BOTTOM)
     {
-        if(ball.x - BALL_SIZE/2 > RIGHT && ball.x - BALL_SIZE < RIGHT && ball.v.x > 0)
+        if(ball.x - ball.props.radius > RIGHT && ball.x - ball.props.radius*2 < RIGHT && ball.v.x > 0)
         {
             goalsTeam1++;
             showAlert("Goal Team 1", "alert-success");
             goal = true;
         }
-        else if(ball.x + BALL_SIZE/2 < LEFT && ball.x + BALL_SIZE > LEFT && ball.v.x < 0)
+        else if(ball.x + ball.props.radius < LEFT && ball.x + ball.props.radius*2 > LEFT && ball.v.x < 0)
         {
             goalsTeam2++;
             showAlert("Goal Team 2", "alert-success");
@@ -44,29 +44,29 @@ function checkGoal(){
  If a goal is scored as a result of this pushed-situation, it will not be granted
  */
 function checkPushing(){
-    forEveryCombination(function(robot_counter, not_robot_counter) {
-        if (robot[robot_counter].isTouching(robot[not_robot_counter]) && robot_counter != not_robot_counter && ROBOT_ENABLE[not_robot_counter]) {
-            if (robot[robot_counter].isInArea(LEFT, (canvas.height - PENALTY_AREA_HEIGHT) / 2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT) ||
-                robot[not_robot_counter].isInArea(LEFT, (canvas.height + PENALTY_AREA_HEIGHT) / 2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT)) {
-                if (robot_counter >= 2 && not_robot_counter < 2) {
-                    robot[not_robot_counter].x = ctx.canvas.width / 2;
-                    robot[not_robot_counter].y = ctx.canvas.height / 2;
+    forEveryCombination(function(robotCounter, not_robotCounter) {
+        if (robot[robotCounter].isTouching(robot[not_robotCounter]) && robotCounter != not_robotCounter && ROBOT_ENABLE[not_robotCounter]) {
+            if (robot[robotCounter].isInArea(LEFT, (canvas.height - PENALTY_AREA_HEIGHT) / 2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT) ||
+                robot[not_robotCounter].isInArea(LEFT, (canvas.height + PENALTY_AREA_HEIGHT) / 2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT)) {
+                if (robotCounter >= 2 && not_robotCounter < 2) {
+                    robot[not_robotCounter].x = ctx.canvas.width / 2;
+                    robot[not_robotCounter].y = ctx.canvas.height / 2;
                 }
-                else if (robot_counter < 2 && not_robot_counter >= 2) {
-                    robot[robot_counter].x = ctx.canvas.width / 2;
-                    robot[robot_counter].y = ctx.canvas.height / 2;
+                else if (robotCounter < 2 && not_robotCounter >= 2) {
+                    robot[robotCounter].x = ctx.canvas.width / 2;
+                    robot[robotCounter].y = ctx.canvas.height / 2;
                 }
                 console.log("Pushing");
             }
-            if (robot[robot_counter].isInArea(canvas.width - LEFT - PENALTY_AREA_WIDTH, (canvas.height - PENALTY_AREA_HEIGHT) / 2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT) ||
-                robot[not_robot_counter].isInArea(LEFT, (canvas.height + PENALTY_AREA_HEIGHT) / 2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT)) {
-                if (robot_counter >= 2 && not_robot_counter < 2) {
-                    robot[not_robot_counter].x = ctx.canvas.width / 2;
-                    robot[not_robot_counter].y = ctx.canvas.height / 2;
+            if (robot[robotCounter].isInArea(canvas.width - LEFT - PENALTY_AREA_WIDTH, (canvas.height - PENALTY_AREA_HEIGHT) / 2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT) ||
+                robot[not_robotCounter].isInArea(LEFT, (canvas.height + PENALTY_AREA_HEIGHT) / 2, PENALTY_AREA_WIDTH, PENALTY_AREA_HEIGHT)) {
+                if (robotCounter >= 2 && not_robotCounter < 2) {
+                    robot[not_robotCounter].x = ctx.canvas.width / 2;
+                    robot[not_robotCounter].y = ctx.canvas.height / 2;
                 }
-                else if (robot_counter < 2 && not_robot_counter >= 2) {
-                    robot[robot_counter].x = ctx.canvas.width / 2;
-                    robot[robot_counter].y = ctx.canvas.height / 2;
+                else if (robotCounter < 2 && not_robotCounter >= 2) {
+                    robot[robotCounter].x = ctx.canvas.width / 2;
+                    robot[robotCounter].y = ctx.canvas.height / 2;
                 }
                 console.log("Pushing");
             }
@@ -136,28 +136,28 @@ function checkDoubleDefence(){
  robot from the field
  */
 function checkLine(){
-    forEveryRobot(function(robot_counter){
-        if (robotInside[robot_counter]) {
+    forEveryRobot(function(robotCounter){
+        if (robotInside[robotCounter]) {
             var out = false;
-            if ((robot[robot_counter].x + ROBOT_SIZE) <= LEFT)																	//Linie
+            if ((robot[robotCounter].x + robot[robotCounter].props.radius) <= LEFT)																	//Linie
                 out = true;
-            else if ((robot[robot_counter].x - ROBOT_SIZE) >= RIGHT)
+            else if ((robot[robotCounter].x - robot[robotCounter].props.radius) >= RIGHT)
                 out = true;
-            if ((robot[robot_counter].y + ROBOT_SIZE) <= TOP)
+            if ((robot[robotCounter].y + robot[robotCounter].props.radius) <= TOP)
                 out = true;
-            else if ((robot[robot_counter].y - ROBOT_SIZE) >= BOTTOM)
+            else if ((robot[robotCounter].y - robot[robotCounter].props.radius) >= BOTTOM)
                 out = true;
 
 
             if (out) {
-                showAlert("Robot " + robot_counter + " moved out of the field", "alert-danger");
-                robotInside[robot_counter] = false;
-                robot[robot_counter].x = WIDTH/2;
-                robot[robot_counter].y = HEIGHT/2;
-                robot[robot_counter].v.x = 0;
-                robot[robot_counter].v.y = 0;
-                robot[robot_counter].a.x = 0;
-                robot[robot_counter].a.y = 0;
+                showAlert("Robot " + robotCounter + " moved out of the field", "alert-danger");
+                robotInside[robotCounter] = false;
+                robot[robotCounter].x = WIDTH/2;
+                robot[robotCounter].y = HEIGHT/2;
+                robot[robotCounter].v.x = 0;
+                robot[robotCounter].v.y = 0;
+                robot[robotCounter].a.x = 0;
+                robot[robotCounter].a.y = 0;
             }
         }
     });

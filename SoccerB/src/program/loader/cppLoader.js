@@ -34,7 +34,6 @@ function reloadFile(fnameSrc, fnameDst, defines) {
 
         fs.writeFile(fnameDst, data, function (err) {
             child = exec("cpp -P -Wundef -nostdinc -Wtrigraphs -C " + fnameDst, function (error, stdout, stderr) {
-                eval(stdout);
                 fs.writeFile(fnameDst, stdout, function (err) {
                     if (err) {
                         return console.log(err);

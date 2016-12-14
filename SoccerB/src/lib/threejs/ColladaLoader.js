@@ -5341,7 +5341,7 @@ THREE.ColladaLoader = function () {
 
 		if ( options.convertUpAxis ) {
 
-			// First fix rotation and scale
+			// First fix phi and scale
 
 			// Columns first
 			var arr = [ data[ 0 ], data[ 4 ], data[ 8 ] ];

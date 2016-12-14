@@ -1,15 +1,15 @@
-function GameObject(x,y,radius) {
+function GameObject(x,y) {
     this.x = x;
     this.y = y;
 
     this.v = new Vector(0,0);
     this.a = new Vector(0,0);
 
-    this.rotation = 0;
-    this.rotationVelocity = 0;
-    this.rotationAcceleration = 0;
+    this.phi = 0;
+    this.omega = 0;
+    this.alpha = 0;
 
-    this.radius = radius;
+    this.props = null;
 
     this.distanceTo = function(object){
         var delta_x = this.x-object.x;
@@ -20,25 +20,19 @@ function GameObject(x,y,radius) {
     };
 
     this.isTouching = function(object){
-        return this.distanceTo(object) < (this.radius + object.radius);
+        return this.distanceTo(object) < (this.props.radius + object.props.radius);
     };
 
     this.angleTo = function(object){
         var delta_x=this.x-object.x;
         var delta_y=this.y-object.y;
-        var alpha=Math.atan(delta_y/delta_x);
-        if(delta_x<0)
-            alpha-=Math.PI;
-        if(alpha>=2*Math.PI)
-            alpha-=2*Math.PI;
-
-        return alpha;
+        return Math.atan2(delta_y, delta_x);
     };
 
     this.moveOutOf = function(object){
 
         var alpha = object.angleTo(this);
-        var delta = object.distanceTo(this) - (object.radius- this.radius);
+        var delta = object.distanceTo(this) - (object.props.radius- this.props.radius);
         if(delta<=0)
             return;
         this.x -= Math.cos(alpha)*delta;

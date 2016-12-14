@@ -1,4 +1,3 @@
- // spiel.hpp: Spielfunktionen
 //////////////////
 // Definitionen //
 //////////////////
@@ -6,193 +5,105 @@
 // Funktionen //
 ////////////////
 //Anfahrt Prototyp
- function anfahrtB()
+ function anfahrtB( drehung)
 {
- if(ballIntens > 3000 || (ballIntens > 2800 && BETRAG(ball_Winkel) < 45)) { // Nahbereich-Anfahrt
-  if(ball_Winkel > 90){ // zwischen Ball und Tor rechts
-                FahrtrichtungB(-300+ball_Winkel, SPEED_KREIS);
-                soll_phi = tor_winkel;
-            }
-            else if(ball_Winkel < -90){ // zwischen Ball und Tor links
-                FahrtrichtungB(300+ball_Winkel, SPEED_KREIS);
-                soll_phi = tor_winkel;
-            }
-            else{ // hvarer Ball
-                FahrtrichtungB(2 * ball_Winkel, SPEED_NAH);
-                soll_phi = tor_winkel;
-            }
- }
- else if(ballIntens < 120) { // Ball nicht erkennbar
+  if(api.ballAngleAbsolute() < 90 && api.ballIntensity()>2400)
+   darfHalbRaus = 1;
+  if(api.ballIntensity() > 3000 || (api.ballIntensity() > 2800 && BETRAG(api.ballAngle()) < 45)) { // Nahbereich-Anfahrt
+   if(api.ballAngle() > 60){ // zwischen Ball und Tor rechts
+    FahrtrichtungB(-300+api.ballAngle(), SPEED_KREIS);
+    soll_phi = 0;
+   }
+   else if(api.ballAngle() < -60){ // zwischen Ball und Tor links
+    FahrtrichtungB(300+api.ballAngle(), SPEED_KREIS);
+    soll_phi = 0;
+   }
+   else{ // Parabel anfahrt
+    FahrtrichtungB(1.8 * api.ballAngle(), SPEED_NAH);
+    if(BETRAG(api.ballAngleAbsolute()) < 29)
+     soll_phi = -api.ballAngleAbsolute();
+   }
+  }
+  else if(api.ballIntensity() < 120) { // Ball nicht erkennbar
    if(0==0)
-    Fahrtrichtung_XY(90, 40);
+   Fahrtrichtung_XY(90, 40);
    else
-    Fahrtrichtung_XY(90, 30);
-  soll_phi = 0;
-  console.log(ballIntens);
- }
- else { // Fernbereich-Anfahrt 
-  var abstand = 4500-ballIntens;
-        FahrtrichtungB((ball_Winkel*1.1)>180?180:(ball_Winkel*1.2), SPEED_WEIT);
-        soll_phi = tor_winkel;
+   Fahrtrichtung_XY(90, 30);
+   soll_phi = 0;
+} else { // Fernbereich-Anfahrt
+   var abstand = 4500-api.ballIntensity();
+   FahrtrichtungB(api.ballAngle()*1.2, abstand * BALL_P);
+   soll_phi = 0;
  }
 }
 // Spielfunktion B-Feld
 function spielB1()
 {
-   if(LICHTSCHRANKE && ballIntens>3000 && BETRAG(ball_Winkel)<20) {
-  if(BETRAG(phi_jetzt) < 80) {
+   if(api.ballInDribbler()) {
+  if(BETRAG((api.currentRotation())) < 30)
    schuss.Kick();
-  }
   FahrtrichtungB(0, SPEED_BALL);
+  soll_phi = 0;
  }else{
-  anfahrtB();
+  darfHalbRaus = 0;
+  anfahrtB(0);
  }
 }
-// Spielfunktion B-Feld (Drehung zum Tor)################################################################################
-//#######################################################################################################################
+// Spielfunktion B-Feld (Drehung zum Tor)
 function spielB2()
 {
-  if(ballda.check() && ballIntens>4000 && BETRAG(ball_Winkel)<20) {
-   if(BETRAG(phi_jetzt) < 80) {
+ if(api.ballInDribbler()) {
+  if(US_pos[0]>60 && US_pos[0] < 120) {//In Mitte -> schie�en
+   if(BETRAG((api.currentRotation())) < 30){
     schuss.Kick();
    }
    FahrtrichtungB(0, SPEED_BALL);
-   soll_phi = tor_winkel;
+   super_turn = 0;
+  }else{ //Am Rand -> Richtung Tor drehen
+   super_turn = 0;
+   FahrtrichtungB(0, SPEED_BALL);
+    if(US_pos[0] < 90){
+     FahrtrichtungB(90, 600);
+    // soll_phi = -20;
+    }else{
+     FahrtrichtungB(90, 600);
+    // soll_phi = 20;
+    }
+  }
  }else{
-        anfahrtB();
+  darfHalbRaus = 0;
+  trick_shoot_turn = 0;
+  super_turn = 0;
+  anfahrtB(0);
  }
 }
 function torwartB(){
- if(ballIntens < 2000) { // Ball nicht erkennbar
-        Fahrtrichtung_XY(90, 50);
+ if(api.ballIntensity() < 2500) { // Ball nicht erkennbar
+        Fahrtrichtung_XY(90, 30);
         soll_phi = 0;
     }else{
         if(US_pos[0] > 60 && US_pos[0] < 120 && US_pos[1] < 80){
-            if(BETRAG(ball_Winkel) < 90)
-                FahrtrichtungB(ball_Winkel*1.2, SPEED_TORWART);
-            else
-                FahrtrichtungB(ball_Winkel*2, SPEED_TORWART);
+            if(BETRAG(api.ballAngle()) < 90){
+    FahrtrichtungB(api.ballAngle()*1.2, SPEED_TORWART);
+   }
+            else{
+    if(api.ballAngle() > 0){ // zwischen Ball und Tor rechts
+     FahrtrichtungB(-300+api.ballAngle(), SPEED_KREIS);
+     soll_phi = 0;
+    }
+    else{ // zwischen Ball und Tor links					FahrtrichtungB(300+ball_Winkel, SPEED_KREIS);
+     soll_phi = 0;
+   }
+   }
         }else{
-            Fahrtrichtung_XY(90, 50);
+            Fahrtrichtung_XY(90, 30);
         }
     }
-}
-// Spielfunktion A-Feld (in Mitte fahren)
-function spielA1()
-{
- if(ballda.check()) { // Wenn Ball da
-  if(US_Werte[0] + US_Werte[2] < 80) {
-   if(US_Werte[3] < 30 || US_Werte[1] < 30) {
-    if(US_Werte[0] < US_Werte[2]) {
-     Fahrtrichtung(90, SPEED_SEITE);
-    }
-    else {
-     Fahrtrichtung(-90, SPEED_SEITE);
-    }
-   }
-   else {
-     Fahrtrichtung(0, 0);
-     if(BETRAG(phi_jetzt) < 25)
-      schuss.Kick();
-   }
-  }
-  else if(US_Werte[0] < 40) { // zu weit rechts
-   Fahrtrichtung(90, SPEED_SEITE);
-  }
-  else if(US_Werte[2] < 40) { // zu weit links
-   Fahrtrichtung(-90, SPEED_SEITE);
-  }
-  else {
-    Fahrtrichtung(0, 0);
-    if(BETRAG(phi_jetzt) < 25)
-     schuss.Kick();
-  }
- }
-  else if(ballIntens > 4000 && BETRAG(ball_Winkel) < 15) { // Nahbereich-Anfahrt verlangsamen
-   Fahrtrichtung(2*ball_Winkel, SPEED_SEHRNAH);
-  }
- else if(ballIntens > 3000) { // Nahbereich-Anfahrt
-  if(ball_Winkel > 90) // zwischen Ball und Tor rechts
-   Fahrtrichtung(-270+ball_Winkel, SPEED_KREIS);
-  else if(ball_Winkel < -90) // zwischen Ball und Tor links
-   Fahrtrichtung(270+ball_Winkel, SPEED_KREIS);
-  else // hvarer Ball								
-   Fahrtrichtung(2*ball_Winkel, SPEED_NAH);
- }
- else if(ballIntens < 120) { // Ball nicht erkennbar
-  Fahrtrichtung_XY(60, 45);
- }
- else { // Fernbereich-Anfahrt
-  Fahrtrichtung(ball_Winkel, SPEED_WEIT);
- }
-}
-// Spielfunktion A-Feld (Drehung zum Tor)
-function spielA2()
-{
- if(ballda.check()) {
-   Fahrtrichtung(0, 0);
-   if(soll_phi == 0 && (US_Werte[2]+US_Werte[0] >= 140))
-    soll_phi = Round(atan2(US_pos[0]-61, US_Werte[3]+10)*180.0/M_PI);
-   if(BETRAG(phi_jetzt-soll_phi) < 10)
-    schuss.Kick();
- }
-  else if(ballIntens > 4000 && BETRAG(ball_Winkel) < 15) { // Nahbereich-Anfahrt verlangsamen
-   Fahrtrichtung(2*ball_Winkel, SPEED_SEHRNAH);
-   soll_phi = 0;
-  }
- else if(ballIntens > 3000) { // Nahbereich-Anfahrt
-  if(ball_Winkel > 90) // zwischen Ball und Tor rechts
-   Fahrtrichtung(-270+ball_Winkel, SPEED_KREIS);
-  else if(ball_Winkel < -90) // zwischen Ball und Tor links
-   Fahrtrichtung(270+ball_Winkel, SPEED_KREIS);
-  else // hvarer Ball								
-   Fahrtrichtung(2*ball_Winkel, SPEED_NAH);
-  soll_phi = 0;
- }
- else if(ballIntens < 120) { // Ball nicht erkennbar
-  Fahrtrichtung_XY(60, 45);
-  soll_phi = 0;
- }
- else { // Fernbereich-Anfahrt
-  Fahrtrichtung(ball_Winkel, SPEED_WEIT);
-  soll_phi = 0;
- }
-}
-// Torwartfunktion A-Feld
-function torwartA()
-{
- if(ballda.check()) {
-   Fahrtrichtung(0, 0);
-   if(BETRAG(phi_jetzt) < 10)
-    schuss.Kick();
- }
-  else if(ballIntens > 4000 && BETRAG(ball_Winkel) < 15 && US_Werte[1] < 30) { // Nahbereich-Anfahrt verlangsamen
-   Fahrtrichtung(2*ball_Winkel, SPEED_SEHRNAH);
-  }
- else if(ballIntens > 3000 && US_Werte[1] < 30) { // Anfahrt auf Ball
-  if(ball_Winkel > 0) {
-   FahrtrichtungB((ball_Winkel+20>90)?85:ball_Winkel+20, SPEED_TORWART);
-  }
-  else if(ball_Winkel < 0) {
-   FahrtrichtungB((ball_Winkel-20<-90)?-85:ball_Winkel-20, SPEED_TORWART);
-  }
-  else {
-   FahrtrichtungB(ball_Winkel, SPEED_TORWART);
-  }
- }
- else { // eigentliche Torwartaktion
-   if(BETRAG(ball_Winkel) < 20 || ballIntens < 40)
-    Fahrtrichtung_XY(61, 25);
-   else if(ball_Winkel < 0)
-    Fahrtrichtung_XY(80, 20);
-    else
-    Fahrtrichtung_XY(42, 20);
- }
 }
 // Nullprogramm @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 function PIDprogramm()
 {
- //soll_phi = tor_winkel;		
+ soll_phi = 0;
  FahrtrichtungB(0,0);
 }
 // Spielfunktion Superfield Linie (Legosensor)
@@ -201,30 +112,30 @@ function spielSuper1()
  while(ballda.check()) {
   wdt_reset();
    // Schie�en
-    if(BETRAG(phi_jetzt) < 45) {
+    if(BETRAG((api.currentRotation())) < 45) {
      schuss.Kick();
     }
     break;
  }
- if(ballIntens > 3700 || (ballIntens > 3000 && BETRAG(ball_Winkel) < 45)) { // Nahbereich-Anfahrt
+ if(api.ballIntensity() > 3700 || (api.ballIntensity() > 3000 && BETRAG(api.ballAngle()) < 45)) { // Nahbereich-Anfahrt
   super_turn = 0;
-  if(ball_Winkel > 90) // zwischen Ball und Tor rechts
-   FahrtrichtungB(-270+ball_Winkel, SPEED_KREIS);
-  else if(ball_Winkel < -90) // zwischen Ball und Tor links
-   FahrtrichtungB(270+ball_Winkel, SPEED_KREIS);
+  if(api.ballAngle() > 90) // zwischen Ball und Tor rechts
+   FahrtrichtungB(-270+api.ballAngle(), SPEED_KREIS);
+  else if(api.ballAngle() < -90) // zwischen Ball und Tor links
+   FahrtrichtungB(270+api.ballAngle(), SPEED_KREIS);
   else // hvarer Ball								
-   FahrtrichtungB(2*ball_Winkel, SPEED_NAH);
+   FahrtrichtungB(2*api.ballAngle(), SPEED_NAH);
   soll_phi = 0;
  }
- else if(ballIntens > 800) { // Fernbereichanfahrt
+ else if(api.ballIntensity() > 800) { // Fernbereichanfahrt
   super_turn = 0;
-  FahrtrichtungB(ball_Winkel, SPEED_WEIT);
+  FahrtrichtungB(api.ballAngle(), SPEED_WEIT);
   soll_phi = 0;
  }
   // TSOP-Diode
   else if(TSOP < 2000) {
    super_turn = 0;
-   soll_phi = phi_jetzt;
+   soll_phi = (api.currentRotation());
    FahrtrichtungB(0, SPEED_SUPER);
   }
  else { // Ball nicht erkennbar
@@ -235,36 +146,36 @@ function spielSuper1()
 // Spielfunktion Superfield (Legosensor)
 function spielSuper2()
 {
- if(LICHTSCHRANKE) {
+ if(api.ballInDribbler()) {
   super_turn = 0;
-   if(BETRAG(phi_jetzt) < 45) {
+   if(BETRAG((api.currentRotation())) < 45) {
     schuss.Kick();
    }
  }
-  else if(ballIntens > 4500 && BETRAG(ball_Winkel) < 60) { // Nahbereich-Anfahrt verlangsamen
+  else if(api.ballIntensity() > 4500 && BETRAG(api.ballAngle()) < 60) { // Nahbereich-Anfahrt verlangsamen
    super_turn = 0;
-   FahrtrichtungB(2*ball_Winkel, SPEED_SEHRNAH);
+   FahrtrichtungB(2*api.ballAngle(), 0);
    soll_phi = 0;
   }
- else if(ballIntens > 3700 || (ballIntens > 3000 && BETRAG(ball_Winkel) < 45)) { // Nahbereich-Anfahrt
+ else if(api.ballIntensity() > 3700 || (api.ballIntensity() > 3000 && BETRAG(api.ballAngle()) < 45)) { // Nahbereich-Anfahrt
   super_turn = 0;
-  if(ball_Winkel > 90) // zwischen Ball und Tor rechts
-   FahrtrichtungB(-270+ball_Winkel, SPEED_KREIS);
-  else if(ball_Winkel < -90) // zwischen Ball und Tor links
-   FahrtrichtungB(270+ball_Winkel, SPEED_KREIS);
+  if(api.ballAngle() > 90) // zwischen Ball und Tor rechts
+   FahrtrichtungB(-270+api.ballAngle(), SPEED_KREIS);
+  else if(api.ballAngle() < -90) // zwischen Ball und Tor links
+   FahrtrichtungB(270+api.ballAngle(), SPEED_KREIS);
   else // hvarer Ball								
-   FahrtrichtungB(2*ball_Winkel, SPEED_NAH);
+   FahrtrichtungB(2*api.ballAngle(), SPEED_NAH);
   soll_phi = 0;
  }
- else if(ballIntens > 800) { // Fernbereichanfahrt
+ else if(api.ballIntensity() > 800) { // Fernbereichanfahrt
   super_turn = 0;
-  FahrtrichtungB(ball_Winkel, SPEED_WEIT);
+  FahrtrichtungB(api.ballAngle(), SPEED_WEIT);
   soll_phi = 0;
  }
   // TSOP-Diode
   else if(TSOP < 2000) {
    super_turn = 0;
-   soll_phi = phi_jetzt;
+   soll_phi = (api.currentRotation());
    FahrtrichtungB(0, SPEED_SUPER);
   }
  else { // Ball nicht erkennbar
@@ -275,48 +186,48 @@ function spielSuper2()
 // Spielfunktion Superfield (TSOP schnell)
 function spielSuper3()
 {
- soll_phi = tor_winkel;
- if(ballda.check() && ballIntens>3000 && BETRAG(ball_Winkel)<20) {
-  if(BETRAG(phi_jetzt-tor_winkel) < 1 || (NO_OBJECT && BETRAG(phi_jetzt<45))) {
+ soll_phi = api.goalAngle();
+ if(ballda.check() && api.ballIntensity()>3000 && BETRAG(api.ballAngle())<20) {
+  if(BETRAG((api.currentRotation())-api.goalAngle()) < 1 || (NO_OBJECT && BETRAG((api.currentRotation())<45))) {
    schuss.Kick();
-   FahrtrichtungB(tor_winkel-phi_jetzt,SPEED_BALL);
+   FahrtrichtungB(api.goalAngle()-(api.currentRotation()),SPEED_BALL);
   }
-  soll_phi = tor_winkel;
+  soll_phi = api.goalAngle();
   super_back = 1;
  }
- else if(ballIntens > 4200 && BETRAG(ball_Winkel) < 45) { // Nahbereich-Anfahrt verlangsamen
-  FahrtrichtungB((1.6*ball_WinkelR), SPEED_SEHRNAH);
-  soll_phi = tor_winkel;
+ else if(api.ballIntensity() > 4200 && BETRAG(api.ballAngle()) < 45) { // Nahbereich-Anfahrt verlangsamen
+  FahrtrichtungB((1.6*api.ballAngle()), 0);
+  soll_phi = api.goalAngle();
   super_back = 1;
  }
- else if(ballIntens > 3000 || (ballIntens > 2800 && BETRAG(ball_Winkel) < 45)) { // Nahbereich-Anfahrt
-  soll_phi = tor_winkel;
+ else if(api.ballIntensity() > 3000 || (api.ballIntensity() > 2800 && BETRAG(api.ballAngle()) < 45)) { // Nahbereich-Anfahrt
+  soll_phi = api.goalAngle();
   super_back = 1;
-  if(ball_WinkelR > 90){ // zwischen Ball und Tor rechts
-   FahrtrichtungB(-270+ball_WinkelR, SPEED_KREIS);
+  if(api.ballAngle() > 90){ // zwischen Ball und Tor rechts
+   FahrtrichtungB(-270+api.ballAngle(), SPEED_KREIS);
    //FahrtrichtungB(0.0005*(ball_Winkel-130)*(ball_Winkel-130)*(ball_Winkel-130)+0.6*ball_Winkel+100, SPEED_KREIS);
   }
-  else if(ball_Winkel < -90){ // zwischen Ball und Tor links
-   FahrtrichtungB(270+ball_WinkelR, SPEED_KREIS);
+  else if(api.ballAngle() < -90){ // zwischen Ball und Tor links
+   FahrtrichtungB(270+api.ballAngle(), SPEED_KREIS);
    //FahrtrichtungB(-(0.0005*(ball_Winkel-130)*(ball_Winkel-130)*(ball_Winkel-130)+0.6*ball_Winkel+100), SPEED_KREIS);
   }
   else{ // hvarer Ball
-   FahrtrichtungB(1.8 *ball_WinkelR, SPEED_NAH);
+   FahrtrichtungB(1.8 *api.ballAngle(), SPEED_NAH);
   }
  }
- else if(ballIntens>280) { // Fernbereich-Anfahrt
-  var abstand = 4500-ballIntens;
-  FahrtrichtungB(ball_WinkelR, abstand * BALL_P);
-  soll_phi = tor_winkel;
+ else if(api.ballIntensity()>280) { // Fernbereich-Anfahrt
+  var BETRAGtand = 4500-api.ballIntensity();
+  FahrtrichtungB(api.ballAngle(), BETRAGtand * BALL_P);
+  soll_phi = api.goalAngle();
  }
   else{
-   if(TSOP_Werte[0]>1300 && TSOP_Werte[1]>1300 && TSOP_Werte[2]>1300 && TSOP_Werte[3]>1300){
-    FahrtrichtungB(0,0);
-   }
-   else{
-    FahrtrichtungB(ball_Winkel_TSOP, SPEED_SUPER);
-   }
-   soll_phi = tor_winkel;
+   /*if(TSOP_Werte[0]>1300 && TSOP_Werte[1]>1300 && TSOP_Werte[2]>1300 && TSOP_Werte[3]>1300){
+				FahrtrichtungB(0,0);	
+			}
+			else{
+				FahrtrichtungB(ball_Winkel_TSOP, SPEED_SUPER);
+			}*/
+   soll_phi = api.goalAngle();
   }
  /*#else
 		// TSOP-Diode
