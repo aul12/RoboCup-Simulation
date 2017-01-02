@@ -1,4 +1,17 @@
-//######################Physic-Engine#########################################
+//http://www.maxonmotor.de/medias/sys_master/8797816094750/maxonMotorData-Handzettel.pdf?attachment=true
+function getMaxTorqueAtRpm(motor){
+    if(motor.status > 0)
+        return motor.torque - motor.torque*Math.abs(motor.status);
+    else
+        return -(motor.torque - motor.torque*Math.abs(motor.status));
+}
+/*
+Api.motorPower(0,1);
+Api.motorPower(1,1);
+Api.motorPower(2,1);
+Api.motorPower(3,1);
+*/
+
 function physics(deltaT)
 {
     var alpha;
@@ -7,46 +20,43 @@ function physics(deltaT)
     var ballTouchCounter = 0;
 
     forEveryRobot(function(robotCounter){
-        //Check for wrong values and set them zero
-        robot[robotCounter].alpha = checkNaN(robot[robotCounter].alpha);
-        robot[robotCounter].omega = checkNaN(robot[robotCounter].omega);
-        robot[robotCounter].phi = checkNaN(robot[robotCounter].phi);
-        robot[robotCounter].a.x = checkNaN(robot[robotCounter].a.x);
-        robot[robotCounter].a.y = checkNaN(robot[robotCounter].a.y);
-        robot[robotCounter].v.x = checkNaN(robot[robotCounter].v.x);
-        robot[robotCounter].v.y = checkNaN(robot[robotCounter].v.y);
-        robot[robotCounter].x = checkNaN(robot[robotCounter].x);
-        robot[robotCounter].y = checkNaN(robot[robotCounter].y);
-
+        //@TODO physics at the moment are complete bullsh*t
         // a = M/(s*m)
-        var f = new Vector(0,0);
+      /*  var f = new Vector(0,0);
         for(var c=0; c<robot[robotCounter].props.motors.length; c++){
-            f.x += robot[robotCounter].props.motors[c].torque
-                    * robot[robotCounter].props.motors[c].status
-                    * -Math.sin(robot[robotCounter].props.motors[c].angle * Math.PI);
-            f.y += robot[robotCounter].props.motors[c].torque
-                    * robot[robotCounter].props.motors[c].status
-                    * Math.cos(robot[robotCounter].props.motors[c].angle * Math.PI);
+            //Calculate torque at current rpm
+            var torque = getMaxTorqueAtRpm(robot[robotCounter].props.motors[c])
+                * robot[robotCounter].props.motors[c].status;
 
+            //Calculate the torque in the direction
+            f.x += torque * Math.cos(robot[robotCounter].props.motors[c].angle * Math.PI);
+            f.y += torque * Math.sin(robot[robotCounter].props.motors[c].angle * Math.PI);
         }
+        // Calculate the force at the wheel
         f.multiply(1/robot[robotCounter].props.wheelSize);
 
-        if(f.abs() > 0){
-            // Fr = c * Fn
-            var rollFriction = robot[robotCounter].props.rollingFriction *
-                robot[robotCounter].props.mass * GRAVITY_CONSTANT;
 
-            if(Math.abs(rollFriction) > f.abs())
-                rollFriction = f.abs()*Math.sign(rollFriction);
+        // Fr = c * Fn
+        var rollFriction = robot[robotCounter].props.rollingFriction *
+            robot[robotCounter].props.mass * GRAVITY_CONSTANT;
 
+        // Calculate the rolling friction
+        if(f.abs() > rollFriction){
             f.x -=rollFriction * f.x/(Math.abs(f.x) + Math.abs(f.y));
             f.y -=rollFriction * f.y/(Math.abs(f.x) + Math.abs(f.y));
+        }else{
+            f.multiply(0);
         }
 
+        // Calculate the acceleration
         f.multiply(1/robot[robotCounter].props.mass);
 
-        console.log(f);
+        f.multiply(0.02);
 
+       // f.multiply(0.1);
+        //console.log(f);
+
+        robot[robotCounter].a = f;*/
 
         //Rotate the robots
         robot[robotCounter].omega += (robot[robotCounter].alpha * deltaT);
@@ -106,8 +116,8 @@ function physics(deltaT)
             alpha = ball.angleTo(robot[robotCounter]);
 
             //Calculate the angle of the ball to the robot
-            api.robotn = robotCounter;
-            var diff = api.ballAngle() % 360;
+            Api.robotn = robotCounter;
+            var diff = Api.ballAngle() % 360;
 
             if(diff > 180)
                 diff -= 360;
@@ -122,7 +132,7 @@ function physics(deltaT)
                     ball.moveOutOf(robot[robotCounter]);
                 }
                 if (robotShoot[robotCounter]) {
-                    var rot = -api.currentRotation();
+                    var rot = -Api.currentRotation();
 
                     if(robotCounter>=2)
                         rot += 180;
@@ -158,8 +168,8 @@ function physics(deltaT)
                 var alpha = ball.angleTo(robot[robot_counter]);
 
 
-                api.robotn = robot_counter;
-                var diff = api.ballAngle() % 360;
+                Api.robotn = robot_counter;
+                var diff = Api.ballAngle() % 360;
 
                 if(diff > 180)
                     diff -= 360;

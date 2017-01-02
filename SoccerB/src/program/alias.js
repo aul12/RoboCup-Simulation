@@ -18,75 +18,59 @@ var SPEED_BALL =  1400;
 var US_MAX_POWER =  1200;
 var BALL_P = 0.4;
 
-function Ballda(){
-	this.check = function(){
-		return api.ballInDribbler();
-	}
-}
-
-function Schuss(){
-    this.Kick = function(){
-        api.shoot();
+var ballda = {
+	check: function () {
+        return Api.ballInDribbler();
     }
-}
+};
 
-var ballda, schuss;
-
-const defines = "#define _SIMULATION";
+var schuss = {
+	Kick: function () {
+        Api.shoot();
+    }
+};
 
 function initAlias(){
-	ballda = new Ballda();
-	schuss = new Schuss();
-
-    loadFile("spiel.hpp", "SoccerB/src/program/teamLeft.js" , defines);
+    loadFile("spiel.hpp", "SoccerB/src/program/teamLeft.js" , "#define _SIMULATION");
 }
 
 function setAlias(){
     soll_phi = 0;
 
-    communicationData = _communicationData[api.robotn];
+    communicationData = _communicationData[Api.robotn];
 
-    US_pos[0] = (api.distanceToWall(api.distance.RIGHT)*100);
-    US_pos[1] = (api.distanceToWall(api.distance.BACK)*100);
-    US_pos[2] = (api.distanceToWall(api.distance.LEFT)*100);
-
-    communication.registerReceiver(function(byte){
-        _communicationData[communication.robotReceiver] = byte;
-    });
+    US_pos[0] = (Api.distanceToWall(Api.distance.RIGHT)*100);
+    US_pos[1] = (Api.distanceToWall(Api.distance.BACK)*100);
+    US_pos[2] = (Api.distanceToWall(Api.distance.LEFT)*100);
 }
 
 function  getAlias(){
 	//PID
 	const P = 0.005, I = 0, D = 0.4;
 
-    api.rotate((soll_phi-api.currentRotation()) * P - api.omega() * D);
+    Api.rotate((soll_phi-Api.currentRotation()) * P - Api.omega() * D);
 }
 
 function FahrtrichtungB(angle, speed){
-	speed = speed/1500 * SPEED;
-	api.move(angle, speed);
+	speed = speed/1500 * MAX_SPEED;
+	Api.move(angle, speed);
 }
 
 function Fahrtrichtung_XY(x,y){
-    api.moveToXY(x/100, y/100);
+    Api.moveToXY(x/100, y/100);
 }
 
 function goalieLeft(){
-	if (api.onLine())
-		api.move(api.lineAngle() + 180 - api.currentRotation(), SPEED);
+	if (Api.onLine())
+		Api.move(Api.lineAngle() + 180 - Api.currentRotation(), MAX_SPEED);
 	else
 		torwartB();
 }
 
 
 function strikerLeft(){
-	if (api.onLine())
-		api.move(api.lineAngle() + 180 - api.currentRotation(), SPEED);
+	if (Api.onLine())
+		Api.move(Api.lineAngle() + 180 - Api.currentRotation(), MAX_SPEED);
 	else
 		spielB2();
-}
-
-
-function BETRAG(val){
-	return val>=0?val:-val;
 }

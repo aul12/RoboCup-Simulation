@@ -1,5 +1,14 @@
 $(document).ready(function(){
-    start();
+    init();
+
+    Gui.init();
+    Gui.bindEvents();
+
+    WebGlRenderer.init();
+    setTimeout(WebGlRenderer.render, 200);
+
+
+    initAlias();
 
     $(document).keypress(function( event ) {
         if ( event.which == 13 ) {
@@ -10,26 +19,22 @@ $(document).ready(function(){
             case 48:
                 ROBOT_ENABLE[0] = !ROBOT_ENABLE[0];
                 $('#enable0').prop('checked', ROBOT_ENABLE[0]);
-                draw();
                 break;
             case 49:
                 ROBOT_ENABLE[1] = !ROBOT_ENABLE[1];
                 $('#enable1').prop('checked', ROBOT_ENABLE[1]);
-                draw();
                 break;
             case 50:
                 ROBOT_ENABLE[2] = !ROBOT_ENABLE[2];
                 $('#enable2').prop('checked', ROBOT_ENABLE[2]);
-                draw();
                 break;
             case 51:
                 ROBOT_ENABLE[3] = !ROBOT_ENABLE[3];
                 $('#enable3').prop('checked', ROBOT_ENABLE[3]);
-                draw();
                 break;
             case 115:   //s
             case 112:   //p
-                timerInit();
+                TimerManager.toggle();
                 break;
             case 114:   //r
                 resetButton();
@@ -68,24 +73,10 @@ $(document).ready(function(){
                 break;
         }
     });
-
-    $('input:checkbox').change(function(){
-        ROBOT_ENABLE[0] = $('#enable0').is(':checked');
-        ROBOT_ENABLE[1] = $('#enable1').is(':checked');
-        ROBOT_ENABLE[2] = $('#enable2').is(':checked');
-        ROBOT_ENABLE[3] = $('#enable3').is(':checked');
-    });
-
-    ROBOT_ENABLE[0] = $('#enable0').is(':checked');
-    ROBOT_ENABLE[1] = $('#enable1').is(':checked');
-    ROBOT_ENABLE[2] = $('#enable2').is(':checked');
-    ROBOT_ENABLE[3] = $('#enable3').is(':checked');
-
-    initAlias();
 });
 
 
-function start()
+function init()
 {
     robot[0] = new GameObject(0.20+LEFT, HEIGHT/2);
     robot[1] = new GameObject((WIDTH/2)-0.40, HEIGHT/2);
@@ -111,16 +102,5 @@ function start()
         });
     });
 
-    lackOfProgressCounter = 0;
-
-
-    if(!renderRunning)
-        setTimeout(render, 100);
-}
-
-function resetButton(){
-    start();
-    draw();
-    goalsTeam1 = goalsTeam2= 0;
-    $("#status").html(goals_team2+" : "+goals_team1);
+    Rules.lackOfProgressCounter = 0;
 }

@@ -18,19 +18,17 @@
                         <div class="padded-more">
                             <input type="checkbox" id="enable0" checked> Robot 0 (Goalie Left)<br>
                             <input type="checkbox" id="enable1" checked> Robot 1 (Striker Left)<br>
-                            <input type="checkbox" id="enable2" > Robot 2 (Striker Right)<br>
-                            <input type="checkbox" id="enable3" > Robot 3 (Goalie Right)<br>
+                            <input type="checkbox" id="enable2"> Robot 2 (Striker Right)<br>
+                            <input type="checkbox" id="enable3"> Robot 3 (Goalie Right)<br>
                             <hr>
                             <div style="text-align: center">
-                                <strong style="font-size: xx-large; margin-left:auto; margin-right:auto;" id="status">
-                                    0 : 0
-                                </strong>
+                                <strong style="font-size: xx-large; margin-left:auto; margin-right:auto;" id="status"></strong>
                             </div>
                             <hr>
-                            <button class="btn btn-primary btn-block" type="button" onclick="timerInit()" id="startBtn">
+                            <button class="btn btn-primary btn-block" type="button" id="btnStartStop">
                                 Start
                             </button>
-                            <button class="btn btn-primary btn-block" type="button" onclick="resetButton()">
+                            <button class="btn btn-primary btn-block" type="button" id="btnReset">
                                 Reset
                             </button>
                             <hr>
@@ -64,12 +62,11 @@
 
         <!-- Api for controlling the robots -->
         <script src="api/SoccerApi.js"></script>
-        <script src="api/CommunicationApi.js"></script>
-
 
         <script src="defines.js"></script>
         <script src="globals.js"></script>
-        <script src="renderer/drawWebGL.js"></script>
+        <script src="gui/drawWebGL.js"></script>
+        <script src="gui/gui.js"></script>
         <script src="eventHandler/timer.js"></script>
         <script src="eventHandler/eventHandler.js"></script>
         <script src="physics/physics.js"></script>

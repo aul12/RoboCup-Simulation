@@ -1,6 +1,6 @@
 var ROBOT_ENABLE = [true, true, true, true];
 
-const SPEED = 0.02;
+const MAX_SPEED = 0.02;
 const SHOOT_POWER = 0.008;
 
 const SCALE = 399;

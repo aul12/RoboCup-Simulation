@@ -10,28 +10,24 @@
       "angle": 0.25,
       "power": 17,
       "torque": 0.441,
-      "maxRPM": 476.2,
       "status": 0
     },
     {
       "angle": 0.75,
       "power": 17,
       "torque": 0.441,
-      "maxRPM": 476.2,
       "status": 0
     },
     {
       "angle": 1.25,
       "power": 17,
       "torque": 0.441,
-      "maxRPM": 476.2,
       "status": 0
     },
     {
       "angle": 1.75,
       "power": 17,
       "torque": 0.441,
-      "maxRPM": 476.2,
       "status": 0
     }
   ],

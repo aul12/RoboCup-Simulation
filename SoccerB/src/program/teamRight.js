@@ -1,8 +1,8 @@
 //Program of the goalie on the right side
 function goalieRight()
 {
-    if(api.onLine()){
-        api.move(api.lineAngle()+180 , SPEED);
+    if(Api.onLine()){
+        Api.move(Api.lineAngle()+180 , MAX_SPEED);
     }else{
         if(ballIntens < 2500) { // Ball nicht erkennbar
             Fahrtrichtung_XY(90, 50);
@@ -22,12 +22,12 @@ function goalieRight()
 
 //Program for the Striker on the right side
 function strikerRight() {
-    if (api.onLine()) {
-        api.move(api.lineAngle() + 180, SPEED);
+    if (Api.onLine()) {
+        Api.move(Api.lineAngle() + 180, MAX_SPEED);
     }else {
         if(LICHTSCHRANKE && ballIntens>3000 && BETRAG(ball_Winkel)<20) {
             if(BETRAG(phi_jetzt) < 80) {
-                api.shoot();
+                Api.shoot();
             }
             FahrtrichtungB(0, SPEED_BALL);
 

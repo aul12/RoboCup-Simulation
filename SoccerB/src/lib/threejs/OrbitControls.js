@@ -244,7 +244,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 	var scope = this;
 
 	var changeEvent = { type: 'change' };
-	var startEvent = { type: 'start' };
+	var startEvent = { type: 'init' };
 	var endEvent = { type: 'end' };
 
 	var STATE = { NONE : - 1, ROTATE : 0, DOLLY : 1, PAN : 2, TOUCH_ROTATE : 3, TOUCH_DOLLY : 4, TOUCH_PAN : 5 };
@@ -920,7 +920,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 
 	window.addEventListener( 'keydown', onKeyDown, false );
 
-	// force an update at start
+	// force an update at init
 
 	this.update();
 
