@@ -1,17 +1,17 @@
-#RoboCup-Simulation
+# RoboCup-Simulation
 
 A RoboCup Junior Soccer-B Simulation.
 
 [http://bodenseehaie.bplaced.de/](http://bodenseehaie.bplaced.de/)
 
-##Known issues
+## Known issues
 See [https://github.com/aul12/RoboCup-Simulation/issues](https://github.com/aul12/RoboCup-Simulation/issues) for the full list of bugs and enhancements.
 
-##Dependencies
+## Dependencies
 * [http://electron.atom.io/](http://electron.atom.io/)
 * [https://www.npmjs.com/package/electron-packager](https://www.npmjs.com/package/electron-packager)
 
-##Installation (for building yourself)
+## Installation (for building yourself)
 ### Linux
 ```
 sudo apt-get install nodejs
@@ -65,12 +65,12 @@ to minify the program before compiling add
 
 <kbd>c</kbd>, <kbd>v</kbd>, <kbd>b</kbd>, <kbd>n</kbd>, <kbd>m</kbd> Set the ball to one of the neutral points
 
-##Writing your own logic for the robots
+## Writing your own logic for the robots
 You have to write your own logic for the robots. Do this by editing the right function in the ```program```
 folder (logic for both teams are divided in ```teamLeft.js``` and ```teamRight.js```). Please don't use any loops in the function, it is called regularly by the 
 event handler.
 
-####Template
+#### Template
 ```javascript
 //Program of the goalie on the right side
 function goalieRight()
@@ -124,13 +124,13 @@ function strikerRight() {
 }
 ```  
 
-###Alias file
+### Alias file
 To get the full compatibility with your real robot program there is the ```program/alias.js``` file. It is used to populate all global variables and provide a layer between the Soccer-API and your API.
 
 There are to main procedures which you can (and should) use. The first is ```setAlias``` which is called every time before your logic is being executed and can be used to to set the values of your variables to the appropriate values of the API.
 The second procedure is ```getAlias``` which is used to give the values of your logic back to the Soccer-API.
 
-####Example
+#### Example
 ```javascript
 //Some global variables which you need in your logic
 var ballAngle;
@@ -185,9 +185,9 @@ loadFile("SoccerB/program/originalCode.cpp", "SoccerB/program/teamLeft.js" , "#d
 ```
 
 
-##API-Reference
+## API-Reference
 All methods listed below are part of the SoccerAPI class, which is predefined with the api object.
-###Outputs
+### Outputs
 ```javascript
 api.move(angle,speed);
 ```
@@ -221,7 +221,7 @@ ___
 api.rotate(angle);
 ```  
 Rotate the robot with a certain speed. Positive speed values are clockwise, negative counter clockwise rotation.
-###Sensors
+### Sensors
 
 ```javascript
 api.ballAngle();
@@ -298,7 +298,7 @@ api.rotationVelocity();
 ```  
 Returns the current angular velocity of the robot (rotation around the z-Axis). Comparable to a gyro sensor.
 
-###Constants
+### Constants
 
 Directions (for ```distanceToWall``` and ```realDistance```) can be:   
 ```javascript
@@ -314,7 +314,7 @@ api.distance.BACK
 api.distance.LEFT
 ```  
 
-###Configuration
+### Configuration
 ```javascript
 api.degree
 ``` 
