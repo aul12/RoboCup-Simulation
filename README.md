@@ -2,8 +2,6 @@
 
 A RoboCup Junior Soccer-B Simulation.
 
-[http://bodenseehaie.bplaced.de/](http://bodenseehaie.bplaced.de/)
-
 ## Known issues
 See [https://github.com/aul12/RoboCup-Simulation/issues](https://github.com/aul12/RoboCup-Simulation/issues) for the full list of bugs and enhancements.
 
